@@ -9,7 +9,6 @@ const rootReducer = combineReducers(
     {
         books: booksReducer,
         authors: authorsReducer,
-
     }
 )
 
