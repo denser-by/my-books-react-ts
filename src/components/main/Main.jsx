@@ -7,17 +7,40 @@ import Author from "./author/Author";
 
 const Main = () => {
     const dispatch = useDispatch()
-    const books = useSelector(state => state.books.items)
-    const authors = useSelector(state => state.authors.items)
-    const isFetching = useSelector(state => state.books.isFetching)
+    
+    const booksItems = useSelector(state => state.books.items)
+    const booksIsFetching = useSelector(state => state.books.isFetching)
+    const booksCurrentPage = useSelector(state => state.books.currentPage)
+    const booksTotalCount = useSelector(state => state.books.totalCount)
+    const booksPerPage = useSelector(state => state.books.perPage)
+
+    const authorsItems = useSelector(state => state.authors.items)
+    const authorsIsFetching = useSelector(state => state.authors.isFetching)
+    const authorsCurrentPage = useSelector(state => state.authors.currentPage)
+    const authorsTotalCount = useSelector(state => state.authors.totalCount)
+    const authorsPerPage = useSelector(state => state.authors.perPage)
+
     const [searchValue, setSearchValue] = useState("")
 
+    const pagesCount = Math.ceil(totalCount / perPage)
+    const pages = []
+    createPages(pages, pagesCount, currentPage)
+
     useEffect(() => {
-        dispatch(getBooks)
-    }, [])
+        dispatch(getBooks(searchValue, currentPage, perPage))
+    }, [currentPage])
 
     function searchBooksHandler() {
-        dispatch(getBooks(searchValue))
+        dispatch(setCurrentPage(1))
+        dispatch(getBooks(searchValue, currentPage, perPage))
+    }
+
+    function createPages(pages, pagesCount, currentPage) {
+        pages.push(1)
+        pages.push(2)
+        pages.push(3)
+        pages.push(4)
+        pages.push(5)
     }
 
     return (
@@ -32,18 +55,27 @@ const Main = () => {
                 {
                 isFetching === false
                 ?
-                books.map(book =>
+                booksItems.map(book =>
                     <Book book={book} />)
                 :
                 <div className="fetching">
 
                 </div>
                 }
+
+                <div className="pages">
+                    {pages.map((page, index) => <span
+                     key={index} 
+                     className={currentPage == page ? "current-page" : "page" }
+                     onClick={() => dispatch(setCurrentPage(page))}>{page}</span>)}
+                </div>
+
+
             </div>
             
 
             <div>
-                {authors.map(author => <Author author={author} />)}
+                {authorsItems.map(author => <Author author={author} />)}
             </div>
 
 
