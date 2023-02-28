@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './main.less'
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "../actions/books";
+import { getAuthors } from "../actions/authors";
 import Book from "./book/Book";
 import Author from "./author/Author";
 
@@ -22,12 +23,17 @@ const Main = () => {
 
     const [searchValue, setSearchValue] = useState("")
 
-    const pagesCount = Math.ceil(totalCount / perPage)
-    const pages = []
-    createPages(pages, pagesCount, currentPage)
+    const booksPagesCount = Math.ceil(booksTotalCount / booksPerPage)
+    const booksPages = []
+    createPages(booksPages, booksPagesCount, booksCurrentPage)
+
+    const authorsPagesCount = Math.ceil(authorsTotalCount / authorsPerPage)
+    const authorsPages = []
+    createPages(authorsPages, authorsPagesCount, authorsCurrentPage)
 
     useEffect(() => {
-        dispatch(getBooks(searchValue, currentPage, perPage))
+        dispatch(getBooks(searchValue, booksCurrentPage, booksPerPage))
+        dispatch(getAuthors(searchValue, authorsCurrentPage, authorsPerPage))
     }, [currentPage])
 
     function searchBooksHandler() {
@@ -36,11 +42,8 @@ const Main = () => {
     }
 
     function createPages(pages, pagesCount, currentPage) {
-        pages.push(1)
-        pages.push(2)
-        pages.push(3)
-        pages.push(4)
-        pages.push(5)
+        for(i = 0; i < pagesCount; i++)
+            pages.push(i+1)
     }
 
     return (
