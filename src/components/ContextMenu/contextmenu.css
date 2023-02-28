@@ -1,0 +1,22 @@
+.leftPanel {
+    background-color: silver;
+    position: absolute;
+    left: 0;
+    width: 15vw;
+    height: 100vh;
+    margin-top: 0;
+}
+
+.contextOp {
+    font-weight: 800;
+    cursor: pointer;
+    border: 2px solid chartreuse;
+    border-radius: 15px;
+    margin: 3px;
+}
+
+.contextOp.above {
+    background-color: aquamarine;
+    color: darkblue;
+    border: 2px solid darkblue;
+}

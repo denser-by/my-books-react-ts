@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 import {setBooks, setIsFetching} from "../../reducers/booksReducer";
 
 export const getBooks = (bookSearchFilter = "Authors:", currentPage, perPage) => {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import NavItem from './components/NavItem/NavItem';
+import MainPage from './components/main/MainPage';
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
       </nav>
 
       <main>
-        Hello
+        <MainPage selectedItem={navItemSelected} setSelectedItem={setNavItemSelected} navigator={navBarItems} />
       </main>
 
     </div>
