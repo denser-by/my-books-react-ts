@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './orderpage.css'
 
-const OrderPage = ({ selectedItem, setSelectedItem }) => {
+const OrderPage = () => {
     return (
         <span className="orderShape">
             Order Page

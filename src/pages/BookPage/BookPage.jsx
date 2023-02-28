@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './bookpage.css'
 
-const BookPage = ({ selectedItem, setSelectedItem }) => {
+const BookPage = () => {
     return (
         <span className="bookShape">
             Book Page

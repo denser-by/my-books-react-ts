@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './infopage.css'
 
-const InfoPage = ({ selectedItem, setSelectedItem }) => {
+const InfoPage = () => {
     return (
         <span className="infoShape">
             Info

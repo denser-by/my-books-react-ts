@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './authorpage.css'
 
-const AuthorPage = ({ selectedItem, setSelectedItem }) => {
+const AuthorPage = () => {
     return (
         <span className="authorShape">
             Author Page

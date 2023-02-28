@@ -16,3 +16,12 @@ h4 {
 .centerPanel {
     color: red;
 }
+
+.pageVisible {
+    display: inline;
+}
+
+.pageHidden {
+    display: none;
+
+}

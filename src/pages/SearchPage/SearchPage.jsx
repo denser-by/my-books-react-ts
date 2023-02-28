@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './searchpage.css'
 
-const SearchPage = ({ selectedItem, setSelectedItem }) => {
+const SearchPage = () => {
     return (
         <span className="searchShape">
             Search Page

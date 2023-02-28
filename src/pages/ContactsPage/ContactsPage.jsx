@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './contactspage.css'
 
-const ContactsPage = ({ selectedItem, setSelectedItem }) => {
+const ContactsPage = () => {
     return (
         <span className="contactsShape">
             Contacts
