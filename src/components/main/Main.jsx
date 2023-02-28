@@ -14,10 +14,20 @@ const Main = () => {
 
     return (
         <div>
-            {books.map(book =>
-                <Book book={book} />
-            )}
+
+            <div>
+                {books.map(book =>
+                    <Book book={book} />
+                )}
+            </div>
+            
+            <button onClick={()=>onCountClick()}>Count</button>
+            
+            <div>{count}</div>
+        
         </div>
+
+
     );
 };
 

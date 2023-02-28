@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import './index.less';
+import { bookStore } from './reducers/index.js';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
