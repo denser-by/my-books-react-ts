@@ -5,6 +5,8 @@
     width: 15vw;
     height: 100vh;
     margin-top: 0;
+    animation-duration: 0.5s;
+
 }
 
 .contextOp {
@@ -17,6 +19,12 @@
 
 .contextOp.above {
     background-color: aquamarine;
+    color: darkblue;
+    border: 2px solid darkblue;
+}
+
+.contextOp.selected {
+    background-color: brown;
     color: darkblue;
     border: 2px solid darkblue;
 }
