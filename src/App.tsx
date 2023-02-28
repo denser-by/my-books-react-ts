@@ -18,9 +18,11 @@ function App() {
     <div className="App">
 
       <nav className='navBar'>
-        {navBarItems.map(item =>
-          <NavItem selectedItem={navItemSelected} setSelectedItem={setNavItemSelected} icon={item.icon} text={item.text} />
-        )}
+        <span className='navBarWrap'>
+          {navBarItems.map(item =>
+            <NavItem selectedItem={navItemSelected} setSelectedItem={setNavItemSelected} icon={item.icon} text={item.text} />
+          )}
+        </span>
       </nav>
 
       <main>

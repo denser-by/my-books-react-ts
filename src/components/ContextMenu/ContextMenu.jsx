@@ -24,7 +24,7 @@ const ContextMenu = ({ selectedItem, operations, pageRef, setPageRef }) => {
             <ul>
                 {operations.map(op =>
                     <li id={op.href}
-                        className={curSelect.id == op.name ? "contextOp selected" : (aboutSelect.id == op.name ? "contextOp above" : "contextOp")}
+                        className={curSelect.id == op.href ? "contextOp selected" : (aboutSelect.id == op.name ? "contextOp above" : "contextOp")}
                         onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>{op.name}</li>
                 )}
             </ul>

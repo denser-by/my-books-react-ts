@@ -1,6 +1,19 @@
 .navBar {
-  background-color: goldenrod;
+  background-color: silver;
   height: 70px;
+}
+
+.navBarWrap {
+  background-color: goldenrod;
+  border: 3px silver solid;
+  width: 100%;
+  height: 100%;
+  margin: 3px;
+  border-radius: 9px;
+  align-items: left;
+  justify-content: left;
+  padding-right: 50%;
+
 }
 
 .App {
@@ -57,7 +70,6 @@ nav {
 
 main {
   padding: 50px;
-
 }
 
 p {
