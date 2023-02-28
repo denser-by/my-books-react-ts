@@ -1,0 +1,32 @@
+.navBarItem {
+    height: 50px;
+    position: relative;
+    cursor: pointer;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.navBarButton {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+.navBarText {
+    color: silver;
+    font-weight: 700;
+    margin-left: 5px;
+    position: relative;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.navBarButton.selected {
+    border: 2px purple dotted;
+}
+
+.navBarText.selected {
+    color: purple;
+    text-decoration: underline;
+}
