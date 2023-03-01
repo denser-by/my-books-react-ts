@@ -21,7 +21,7 @@ Book.init({
         name: "Book_1",
         info: "Description_1",
         year: 2002,
-        cover_img: MyImage1,
+        cover_img: BookImage1,
         creator_id: 1,
         modified: new Date(2002, 3, 2)
     });

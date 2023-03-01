@@ -21,7 +21,7 @@ Author.init({
         info: "Biography_1",
         book_id: 1,
         age: 2002,
-        photo: MyImage1,
+        photo: AuthorImage1,
         creator_id: 1,
         modified: new Date(2002, 3, 2)
     });
