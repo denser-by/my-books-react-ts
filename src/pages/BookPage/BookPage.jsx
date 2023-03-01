@@ -25,9 +25,7 @@ const BookPage = ({ book }) => {
                 </span>
                 <div className="book-info">
                     <span className="book-info-label">Book description:</span>
-                    <textarea id="bookInfo" name="bookInfo" rows="4" cols="12">
-                        {book.info}
-                    </textarea>
+                    <textarea id="bookInfo" name="bookInfo" rows="4" cols="12" value={book.info} />
                 </div>
 
                 <input type="submit" value="Save" />

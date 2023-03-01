@@ -16,7 +16,7 @@ const AuthorPage = ({ author }) => {
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">Born in:</span>
-                            <input id="authorYear" name="authorYear" type="text" value={author.year} />
+                            <input id="authorYear" name="authorYear" type="text" value={author.age} />
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">List of books:</span>
@@ -26,14 +26,9 @@ const AuthorPage = ({ author }) => {
                 </span>
                 <div className="author-info">
                     <span className="author-info-label">Biography:</span>
-                    <textarea id="authorInfo" name="authorInfo" rows="4" cols="12">
-                        {author.info}
-                    </textarea>
+                    <textarea id="authorInfo" name="authorInfo" rows="4" cols="12" value={author.info} />
                 </div>
 
-                {/* <a href={book.url_view} className="book-link"><image src={book.cover_img} />View book</a>
-                <a href={book.url_edit} className="book-link"><image src={book.cover_img} />Edit book</a>
-                <a href={book.url_delete} className="book-link"><image src={book.cover_img} />Delete book</a> */}
                 <input type="submit" value="Save" />
             </span>
 
