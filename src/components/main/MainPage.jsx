@@ -9,6 +9,18 @@ import AuthorsListPage from '../../pages/AuthorsListPage/AuthorsListPage';
 import ContactsPage from '../../pages/ContactsPage/ContactsPage';
 import OrderPage from '../../pages/OrderPage/OrderPage';
 import InfoPage from '../../pages/InfoPage/InfoPage';
+import MyImage1 from './../../images/1.jpg';
+import MyImage2 from './../../images/2.jpg';
+import MyImage3 from './../../images/3.jpg';
+import MyImage4 from './../../images/4.jpg';
+import MyImage5 from './../../images/5.jpg';
+import MyImage6 from './../../images/6.jpg';
+import MyImage7 from './../../images/7.jpg';
+import MyImage8 from './../../images/8.jpg';
+import MyImage9 from './../../images/9.jpg';
+import MyImage10 from './../../images/10.jpg';
+import MyImage11 from './../../images/11.jpg';
+import MyImage12 from './../../images/12.jpg';
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const [pageRef, setPageRef] = useState("")
@@ -49,36 +61,36 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     ]
 
     const bookItems = [
-        { id: 1, name: "Book1", authors: [1, 5], info: "Book Description 1", year: "1999", cover_img: "anchor" },
-        { id: 2, name: "Book2", authors: [3, 5], info: "Book Description 2", year: "1995", cover_img: "anchor" },
-        { id: 3, name: "Book3", authors: [1, 3], info: "Book Description 3", year: "2001", cover_img: "anchor" },
-        { id: 4, name: "Book4", authors: [1], info: "Book Description 4", year: "2003", cover_img: "anchor" },
-        { id: 5, name: "Book5", authors: [3, 5], info: "Book Description 5", year: "2004", cover_img: "anchor" },
-        { id: 6, name: "Book6", authors: [1, 3, 5], info: "Book Description 6", year: "2001", cover_img: "anchor" },
-        { id: 7, name: "Book7", authors: [1, 5], info: "Book Description 7", year: "2010", cover_img: "anchor" },
-        { id: 8, name: "Book8", authors: [3, 5], info: "Book Description 8", year: "1992", cover_img: "anchor" },
-        { id: 9, name: "Book9", authors: [1, 3], info: "Book Description 9", year: "1995", cover_img: "anchor" },
-        { id: 10, name: "Book10", authors: [1, 3, 5], info: "Book Description 10", year: "2011", cover_img: "anchor" },
-        { id: 11, name: "Book11", authors: [1, 5], info: "Book Description 11", year: "1999", cover_img: "anchor" },
-        { id: 12, name: "Book12", authors: [3, 5], info: "Book Description 12", year: "1995", cover_img: "anchor" },
-        { id: 13, name: "Book13", authors: [1, 3], info: "Book Description 13", year: "2001", cover_img: "anchor" },
-        { id: 14, name: "Book14", authors: [1], info: "Book Description 14", year: "2003", cover_img: "anchor" },
-        { id: 15, name: "Book15", authors: [3, 5], info: "Book Description 15", year: "2004", cover_img: "anchor" },
-        { id: 16, name: "Book16", authors: [1, 3, 5], info: "Book Description 16", year: "2001", cover_img: "anchor" },
-        { id: 17, name: "Book17", authors: [1, 5], info: "Book Description 17", year: "2010", cover_img: "anchor" },
-        { id: 18, name: "Book18", authors: [3, 5], info: "Book Description 18", year: "1992", cover_img: "anchor" },
-        { id: 19, name: "Book19", authors: [1, 3], info: "Book Description 19", year: "1995", cover_img: "anchor" },
-        { id: 20, name: "Book20", authors: [1, 3, 5], info: "Book Description 20", year: "2011", cover_img: "anchor" },
-        { id: 21, name: "Book21", authors: [1, 5], info: "Book Description 21", year: "1999", cover_img: "anchor" },
-        { id: 22, name: "Book22", authors: [3, 5], info: "Book Description 22", year: "1995", cover_img: "anchor" },
-        { id: 23, name: "Book23", authors: [1, 3], info: "Book Description 23", year: "2001", cover_img: "anchor" },
-        { id: 24, name: "Book24", authors: [1], info: "Book Description 24", year: "2003", cover_img: "anchor" },
-        { id: 25, name: "Book25", authors: [3, 5], info: "Book Description 25", year: "2004", cover_img: "anchor" },
-        { id: 26, name: "Book26", authors: [1, 3, 5], info: "Book Description 26", year: "2001", cover_img: "anchor" },
-        { id: 27, name: "Book27", authors: [1, 5], info: "Book Description 27", year: "2010", cover_img: "anchor" },
-        { id: 28, name: "Book28", authors: [3, 5], info: "Book Description 28", year: "1992", cover_img: "anchor" },
-        { id: 29, name: "Book29", authors: [1, 3], info: "Book Description 29", year: "1995", cover_img: "anchor" },
-        { id: 30, name: "Book30", authors: [1, 3, 5], info: "Book Description 30", year: "2011", cover_img: "anchor" }
+        { id: 1, name: "Book1", authors: [1, 5], info: "Book Description 1", year: "1999", cover_img: MyImage1 },
+        { id: 2, name: "Book2", authors: [3, 5], info: "Book Description 2", year: "1995", cover_img: MyImage2 },
+        { id: 3, name: "Book3", authors: [1, 3], info: "Book Description 3", year: "2001", cover_img: MyImage3 },
+        { id: 4, name: "Book4", authors: [1], info: "Book Description 4", year: "2003", cover_img: MyImage4 },
+        { id: 5, name: "Book5", authors: [3, 5], info: "Book Description 5", year: "2004", cover_img: MyImage5 },
+        { id: 6, name: "Book6", authors: [1, 3, 5], info: "Book Description 6", year: "2001", cover_img: MyImage6 },
+        { id: 7, name: "Book7", authors: [1, 5], info: "Book Description 7", year: "2010", cover_img: MyImage7 },
+        { id: 8, name: "Book8", authors: [3, 5], info: "Book Description 8", year: "1992", cover_img: MyImage8 },
+        { id: 9, name: "Book9", authors: [1, 3], info: "Book Description 9", year: "1995", cover_img: MyImage9 },
+        { id: 10, name: "Book10", authors: [1, 3, 5], info: "Book Description 10", year: "2011", cover_img: MyImage10 },
+        { id: 11, name: "Book11", authors: [1, 5], info: "Book Description 11", year: "1999", cover_img: MyImage11 },
+        { id: 12, name: "Book12", authors: [3, 5], info: "Book Description 12", year: "1995", cover_img: MyImage12 },
+        { id: 13, name: "Book13", authors: [1, 3], info: "Book Description 13", year: "2001", cover_img: MyImage1 },
+        { id: 14, name: "Book14", authors: [1], info: "Book Description 14", year: "2003", cover_img: MyImage2 },
+        { id: 15, name: "Book15", authors: [3, 5], info: "Book Description 15", year: "2004", cover_img: MyImage3 },
+        { id: 16, name: "Book16", authors: [1, 3, 5], info: "Book Description 16", year: "2001", cover_img: MyImage4 },
+        { id: 17, name: "Book17", authors: [1, 5], info: "Book Description 17", year: "2010", cover_img: MyImage5 },
+        { id: 18, name: "Book18", authors: [3, 5], info: "Book Description 18", year: "1992", cover_img: MyImage6 },
+        { id: 19, name: "Book19", authors: [1, 3], info: "Book Description 19", year: "1995", cover_img: MyImage7 },
+        { id: 20, name: "Book20", authors: [1, 3, 5], info: "Book Description 20", year: "2011", cover_img: MyImage8 },
+        { id: 21, name: "Book21", authors: [1, 5], info: "Book Description 21", year: "1999", cover_img: MyImage9 },
+        { id: 22, name: "Book22", authors: [3, 5], info: "Book Description 22", year: "1995", cover_img: MyImage10 },
+        { id: 23, name: "Book23", authors: [1, 3], info: "Book Description 23", year: "2001", cover_img: MyImage11 },
+        { id: 24, name: "Book24", authors: [1], info: "Book Description 24", year: "2003", cover_img: MyImage12 },
+        { id: 25, name: "Book25", authors: [3, 5], info: "Book Description 25", year: "2004", cover_img: MyImage1 },
+        { id: 26, name: "Book26", authors: [1, 3, 5], info: "Book Description 26", year: "2001", cover_img: MyImage2 },
+        { id: 27, name: "Book27", authors: [1, 5], info: "Book Description 27", year: "2010", cover_img: MyImage3 },
+        { id: 28, name: "Book28", authors: [3, 5], info: "Book Description 28", year: "1992", cover_img: MyImage4 },
+        { id: 29, name: "Book29", authors: [1, 3], info: "Book Description 29", year: "1995", cover_img: MyImage5 },
+        { id: 30, name: "Book30", authors: [1, 3, 5], info: "Book Description 30", year: "2011", cover_img: MyImage6 }
     ]
 
     const authorItems = [

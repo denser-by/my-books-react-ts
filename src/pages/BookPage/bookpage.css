@@ -1,6 +1,6 @@
 .bookShape {
-    text-align: left;
-    font-size: xx-large;
+    /* text-align: left;
+    font-size: xx-large; */
     border: solid 5px blue;
     border-radius: 15px;
     padding: 20px;
@@ -13,10 +13,22 @@
     flex-direction: row;
 }
 
+
 .picture {
+    display: inline-flex;
     width: 240px;
     height: 320px;
     border: black 1px solid;
+}
+
+input {
+    background-color: white;
+    color: black;
+}
+
+.textInput {
+    background-color: white;
+    color: black;
 }
 
 .icons-right {
@@ -25,8 +37,26 @@
 }
 
 .book-info {
-    position: relative;
+    /* position: relative; */
     background-color: lightblue;
+    border: 3px black solid;
+    border-radius: 10px;
+    margin: 2px;
+    display: inline-flex;
+    flex-direction: column;
+
+}
+
+.book-info-label {
+    margin: 2px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.fieldCurrent {
+    /* display: none; */
+    display: inline;
+    text-align: left;
 }
 
 .book-year-label {
