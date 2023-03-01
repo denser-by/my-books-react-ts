@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './authorslistpage.css'
 import './../../components/ContextMenu/contextmenu.css'
 
-const AuthorsListPage = ({ authorItems }) => {
+const AuthorsListPage = ({ authorItems, pageRef, setPageRef }) => {
     const [aboutSelect, setAboutSelect] = useState("")
     const [curSelect, setCurSelect] = useState("")
 
@@ -29,16 +29,16 @@ const AuthorsListPage = ({ authorItems }) => {
                     <span className='authorsInfoSpace'>&nbsp;</span>
                     <span className='authorsInfoItem'>Amount of books: {author.numOfBooks}</span>
 
-                    <span id={"/viewAuthor?" + author.id}
-                        className={curSelect.id == "/viewAuthor?" + author.id ? "contextOp selected" : (aboutSelect.id == "/viewAuthor?" + author.id ? "contextOp above" : "contextOp")}
+                    <span id={"/viewAuthor?id=" + author.id}
+                        className={curSelect.id == "/viewAuthor?id=" + author.id ? "contextOp selected" : (aboutSelect.id == "/viewAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
                         onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>View</span>
 
-                    <span id={"/editAuthor?" + author.id}
-                        className={curSelect.id == "/editAuthor?" + author.id ? "contextOp selected" : (aboutSelect.id == "/editAuthor?" + author.id ? "contextOp above" : "contextOp")}
+                    <span id={"/editAuthor?id=" + author.id}
+                        className={curSelect.id == "/editAuthor?id=" + author.id ? "contextOp selected" : (aboutSelect.id == "/editAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
                         onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>Edit</span>
 
-                    <span id={"/deleteAuthor?" + author.id}
-                        className={curSelect.id == "/deleteAuthor?" + author.id ? "contextOp selected" : (aboutSelect.id == "/deleteAuthor?" + author.id ? "contextOp above" : "contextOp")}
+                    <span id={"/deleteAuthor?id=" + author.id}
+                        className={curSelect.id == "/deleteAuthor?id=" + author.id ? "contextOp selected" : (aboutSelect.id == "/deleteAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
                         onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>Delete</span>
                 </div>
             )}

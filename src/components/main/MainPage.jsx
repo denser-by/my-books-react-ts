@@ -27,14 +27,14 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     const contextOpsBooks = [
-        { icon: "anchor", href: "/viewBooksAll", name: "View All" },
+        { icon: "anchor", href: "/viewBooksAll", name: "All Books" },
         { icon: "anchor", href: "/createBook", name: "Create Book" },
         { icon: "anchor", href: "/eraseAllBooks", name: "Erase All" },
         { icon: "anchor", href: "/generate20Books", name: "Generate 20" }
     ]
 
     const contextOpsAuthors = [
-        { icon: "anchor", href: "/viewAuthorsAll", name: "View All" },
+        { icon: "anchor", href: "/viewAuthorsAll", name: "All Authors" },
         { icon: "anchor", href: "/createAuthor", name: "Create Author" },
         { icon: "anchor", href: "/generate20Authors", name: "Generate 20" }
     ]
@@ -112,11 +112,32 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     ]
 
     function getBook(idx) {
-        return bookItems[idx];
+        if (("" + idx).length >= 1 && idx > 0)
+            return bookItems[idx - 1];
+        return bookItems[0];
     }
 
     function getAuthor(idx) {
-        return authorItems[idx];
+        if (("" + idx).length >= 1 && idx > 0)
+            return authorItems[idx - 1];
+        return authorItems[0];
+    }
+
+    function getId(ref) {
+        if (ref != null) {
+            var text = "" + ref
+            var idx = text.indexOf("?id=");
+            return text.substring(idx + "?id=".length);
+        }
+        return "";
+    }
+
+    function requestCheck(ref, pattern) {
+        if (ref.startsWith(pattern + "?id="))
+            return true;
+        if (ref.startsWith(pattern + "?"))
+            return true;
+        return false;
     }
 
     return (
@@ -125,20 +146,19 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             <ContextMenu selectedItem={selectedItem} operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
                 pageRef={pageRef} setPageRef={setPageRef} />
 
-            <span className={pageRef == "/createBook" ? "pageVisible" : "pageHidden"}><BookPage book={getBook(0)} /></span>
-            <span className={pageRef == "/viewBook" ? "pageVisible" : "pageHidden"}><BookPage book={getBook(1)} /></span>
-            <span className={pageRef == "/editBook" ? "pageVisible" : "pageHidden"}><BookPage book={getBook(2)} /></span>
+            <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} /></span>
+            <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} /></span>
+            <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} /></span>
 
-            <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage bookItems={bookItems} /></span>
+            <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} /></span>
+            <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} /></span>
+            <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} /></span>
 
-            <span className={pageRef == "/deleteBook" ? "pageVisible" : "pageHidden"}><ConfirmationPage book={getBook(2)} /></span>
+            <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage bookItems={bookItems} pageRef={pageRef} setPageRef={setPageRef} /></span>
+            <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage authorItems={authorItems} pageRef={pageRef} setPageRef={setPageRef} /></span>
+
+            <span className={pageRef == "/deleteBook" ? "pageVisible" : "pageHidden"}><ConfirmationPage book={getBook(getId(pageRef))} /></span>
             <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage books={bookItems} /></span>
-
-            <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage authorItems={authorItems} /></span>
-
-            <span className={pageRef == "/createAuthor" ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(0)} /></span>
-            <span className={pageRef == "/viewAuthor" ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(1)} /></span>
-            <span className={pageRef == "/editAuthor" ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(3)} /></span>
 
             <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
             <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>
