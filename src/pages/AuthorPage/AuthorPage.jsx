@@ -11,11 +11,11 @@ const AuthorPage = ({ author }) => {
                     <span className="material-icons picture">anchor</span>
                     <span className="icons-right">
                         <span className="author-info">
-                            <span className="author-info-label">Name:</span>
+                            <span className="author-info-label">Author name:</span>
                             <input id="authorName" name="authorName" type="text" value={author.name} />
                         </span>
                         <span className="author-info">
-                            <span className="author-info-label">Since:</span>
+                            <span className="author-info-label">Born in:</span>
                             <input id="authorYear" name="authorYear" type="text" value={author.year} />
                         </span>
                         <span className="author-info">
