@@ -1,0 +1,11 @@
+.booksList {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.booksListItem {
+    background-color: green;
+    margin: 2px;
+    border-radius: 9px;
+    color: black;
+}
