@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import './bookpage.css'
 
 const BookPage = ({ book, edit }) => {
-
     return (
-        // <form action="/bookSave" type="get">
         <span className="bookShape">
             <span className='bookShapeHeader'>
                 <span className="picture">
@@ -33,10 +31,8 @@ const BookPage = ({ book, edit }) => {
                 <textarea id="bookInfo" name="bookInfo" readOnly={!edit} />
                 <div className="fieldCurrent">{book.info}</div>
             </div>
-
             <input type={edit ? "submit" : "hidden"} value="Save" />
         </span>
-        // </form>
     );
 };
 

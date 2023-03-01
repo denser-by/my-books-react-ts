@@ -1,6 +1,4 @@
 .bookShape {
-    /* text-align: left;
-    font-size: xx-large; */
     border: solid 5px blue;
     border-radius: 15px;
     padding: 20px;
@@ -12,7 +10,6 @@
     display: inline-flex;
     flex-direction: row;
 }
-
 
 .picture {
     display: inline-flex;
@@ -37,14 +34,12 @@ input {
 }
 
 .book-info {
-    /* position: relative; */
     background-color: lightblue;
     border: 3px black solid;
     border-radius: 10px;
     margin: 2px;
     display: inline-flex;
     flex-direction: column;
-
 }
 
 .book-info-label {
@@ -54,7 +49,6 @@ input {
 }
 
 .fieldCurrent {
-    /* display: none; */
     display: inline;
     text-align: left;
 }
