@@ -37,9 +37,6 @@ const AuthorsListPage = ({ authorItems, pageRef, setPageRef }) => {
                         className={curSelect.id == "/editAuthor?id=" + author.id ? "contextOp selected" : (aboutSelect.id == "/editAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
                         onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>Edit</span>
 
-                    <span id={"/deleteAuthor?id=" + author.id}
-                        className={curSelect.id == "/deleteAuthor?id=" + author.id ? "contextOp selected" : (aboutSelect.id == "/deleteAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>Delete</span>
                 </div>
             )}
         </span>

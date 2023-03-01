@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './bookpage.css'
 
-const BookPage = ({ book }) => {
+const BookPage = ({ book, edit }) => {
 
     return (
         <form action="/bookSave" type="get">
@@ -28,7 +28,7 @@ const BookPage = ({ book }) => {
                     <textarea id="bookInfo" name="bookInfo" rows="4" cols="12" value={book.info} />
                 </div>
 
-                <input type="submit" value="Save" />
+                <input type={edit ? "submit" : "hidden"} value="Save" />
             </span>
         </form>
     );

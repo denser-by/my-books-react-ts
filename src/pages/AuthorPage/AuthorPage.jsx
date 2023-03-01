@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './authorpage.css'
 
-const AuthorPage = ({ author }) => {
+const AuthorPage = ({ author, edit }) => {
 
     return (
         <form action="/authorSave" type="get">
@@ -29,7 +29,7 @@ const AuthorPage = ({ author }) => {
                     <textarea id="authorInfo" name="authorInfo" rows="4" cols="12" value={author.info} />
                 </div>
 
-                <input type="submit" value="Save" />
+                <input type={edit ? "submit" : "hidden"} value="Save" />
             </span>
 
         </form>

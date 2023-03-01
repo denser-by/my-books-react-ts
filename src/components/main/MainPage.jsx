@@ -144,8 +144,11 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     function getId(ref) {
         if (ref != null) {
             var text = "" + ref
-            var idx = text.indexOf("?id=");
-            return text.substring(idx + "?id=".length);
+            if (text.length >= 1) {
+                var idx = text.indexOf("?id=");
+                if (idx >= 0)
+                    return text.substring(idx + "?id=".length);
+            }
         }
         return "";
     }
@@ -158,6 +161,37 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         return false;
     }
 
+    function getDeleteBookMsg(bookId) {
+        if (bookId != null && ("" + bookId).length > 0) {
+            let first = bookItems.filter(book => bookId == book.id)[0];
+            let message = "Are you sure? Delete \"" + first.name + "\" book.";
+            return message;
+        }
+        return "";
+    }
+
+    function deleteBookOk(bookId) {
+        alert('deleteBookOk' + bookId)
+
+    }
+
+    function deleteBookCancel(bookId) {
+        alert('deleteBookCancel' + bookId)
+    }
+
+    function getDeleteAllBooksMsg() {
+        let message = "Are you sure? Delete all " + bookItems.length + " books items.";
+        return message;
+    }
+
+    function deleteAllBooksOk() {
+        alert('deleteAllBooksOk')
+    }
+
+    function deleteAllBooksCancel() {
+        alert('deleteAllBooksCancel')
+    }
+
     return (
         <div className="mainPage">
             <h4>{displayCurrent(selectedItem)}</h4>
@@ -165,25 +199,22 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 pageRef={pageRef} setPageRef={setPageRef} />
 
             <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage book={getNewBook()} /></span>
-            <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} /></span>
-            <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} /></span>
+            <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} edit={false} /></span>
+            <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} edit={true} /></span>
 
             <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getNewAuthor()} /></span>
-            <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} /></span>
-            <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} /></span>
+            <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} edit={false} /></span>
+            <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} edit={true} /></span>
 
             <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage bookItems={bookItems} pageRef={pageRef} setPageRef={setPageRef} /></span>
             <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage authorItems={authorItems} pageRef={pageRef} setPageRef={setPageRef} /></span>
 
-            <span className={pageRef == "/deleteBook" ? "pageVisible" : "pageHidden"}><ConfirmationPage book={getBook(getId(pageRef))} /></span>
-            <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage books={bookItems} /></span>
+            <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} /></span>
+            <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} /></span>
 
             <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
             <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>
             <span className={pageRef == "/info" ? "pageVisible" : "pageHidden"}><InfoPage /></span>
-
-            <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage /></span>
-            <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage /></span>
         </div>
     );
 };
