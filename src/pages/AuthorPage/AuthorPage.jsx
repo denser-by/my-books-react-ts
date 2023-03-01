@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './authorpage.css'
+import {Form, Input, Button} from 'reactstrap';
 
 const AuthorPage = ({ author, edit }) => {
     return (
@@ -11,7 +12,10 @@ const AuthorPage = ({ author, edit }) => {
                 <span className="icons-right">
                     <span className="author-info">
                         <span className="author-info-label">Author name:</span>
-                        <textarea id="authorName" name="authorName" readOnly={!edit} />
+                        {/* <textarea id="authorName" name="authorName" readOnly={!edit} /> */}
+
+                        <Input id="authorName" name="authorName" type="search" readOnly={!edit} className="mr-3" placeholder="Author name" />
+
                         <span className="fieldCurrent">{author.name}</span>
                     </span>
                     <span className="author-info">

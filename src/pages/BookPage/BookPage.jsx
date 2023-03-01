@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './bookpage.css'
+import {Form, Input, Button} from 'reactstrap';
 
 const BookPage = ({ book, edit }) => {
     return (
@@ -11,7 +12,10 @@ const BookPage = ({ book, edit }) => {
                 <span className="icons-right">
                     <span className="book-info">
                         <span className="book-info-label">Book title:</span>
-                        <textarea id="bookName" name="bookName" readOnly={!edit} />
+                        {/* <textarea id="bookName" name="bookName" readOnly={!edit} /> */}
+                        
+                        <Input id="bookName" name="bookName" type="search" readOnly={!edit} className="mr-3" placeholder="Book name with short description" />
+
                         <span className="fieldCurrent">{book.name}</span>
                     </span>
                     <span className="book-info">
