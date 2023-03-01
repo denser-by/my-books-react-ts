@@ -6,7 +6,7 @@ const AuthorsListPage = ({ authorItems }) => {
     return (
         <span className='authorsList'>
             {authorItems.map(author =>
-                <div className='authorsListItem'>List of authors {author.name}</div>
+                <div className='authorsListItem'>Author: {author.name}</div>
             )}
         </span>
     );

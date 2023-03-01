@@ -6,7 +6,7 @@ const BooksListPage = ({ bookItems }) => {
     return (
         <span className='booksList'>
             {bookItems.map(book =>
-                <div className='booksListItem'>List of books {book.name}</div>
+                <div className='booksListItem'>Book item: {book.name}</div>
             )}
         </span>
     );

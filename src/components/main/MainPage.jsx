@@ -31,17 +31,19 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const contextOpsBooks = [
         { icon: "anchor", href: "/viewBooksAll", name: "View All" },
         { icon: "anchor", href: "/createBook", name: "Create" },
-        { icon: "anchor", href: "/deleteBook", name: "Delete" },
         { icon: "anchor", href: "/viewBook", name: "View" },
         { icon: "anchor", href: "/editBook", name: "Edit" },
+        { icon: "anchor", href: "/deleteBook", name: "Delete" },
         { icon: "anchor", href: "/eraseAllBooks", name: "Erase All" },
         { icon: "anchor", href: "/generate20Books", name: "Generate 20" }
     ]
 
     const contextOpsAuthors = [
         { icon: "anchor", href: "/viewAuthorsAll", name: "View All" },
+        { icon: "anchor", href: "/createAuthor", name: "Create" },
         { icon: "anchor", href: "/viewAuthor", name: "View" },
-        { icon: "anchor", href: "/editAuthor", name: "Edit" }
+        { icon: "anchor", href: "/editAuthor", name: "Edit" },
+        { icon: "anchor", href: "/generate20Authors", name: "Generate 20" }
     ]
 
     const contextOpsSearch = [
@@ -144,12 +146,20 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
             <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage authorItems={authorItems} /></span>
 
+            <span className={pageRef == "/createAuthor" ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(0)} /></span>
             <span className={pageRef == "/viewAuthor" ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(1)} /></span>
             <span className={pageRef == "/editAuthor" ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(3)} /></span>
 
             <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
             <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>
             <span className={pageRef == "/info" ? "pageVisible" : "pageHidden"}><InfoPage /></span>
+
+
+            <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage  /></span>
+            <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage  /></span>
+
+            
+            
 
         </div>
     );
