@@ -2,12 +2,27 @@ import React, { useState } from 'react';
 import './authorpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
+// import Author from './../../model/Author';
 
 const AuthorPage = ({ author, edit }) => {
 
+    // const author2 =  Author.findByPk(1);
+
+    const [state, setState] = useState({
+        name: author.name,
+        age: author.age,
+        info: author.info
+    })
+
+    function handleInfoChange(event) {
+        // alert(event.target.value)
+        setState({ info: event.target.value });
+    }
+
     function handleSubmit(event) {
-        alert('form submited: ' + this.state.value);
         event.preventDefault();
+        author.info = state.info;
+        // alert('Info: ' + state.info);
     }
 
     return (
@@ -40,8 +55,13 @@ const AuthorPage = ({ author, edit }) => {
                 </span>
                 <div className="author-info">
                     <span className="author-info-label">Biography:</span>
+                    {/* <Input type="textarea" id="authorInfo" name="authorInfo" readOnly={!edit} placeholder="Short books related description"
+                        className={!edit ? "ctrlHidden" : "fieldCurrent"} /> */}
+
                     <Input type="textarea" id="authorInfo" name="authorInfo" readOnly={!edit} placeholder="Short books related description"
-                        className={!edit ? "ctrlHidden" : "fieldCurrent"} />
+                        className={!edit ? "ctrlHidden" : "fieldCurrent"}
+                        value={state.info} onChange={handleInfoChange} />
+
                     <div className="fieldCurrent">{author.info}</div>
                 </div>
                 <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>

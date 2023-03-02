@@ -1,4 +1,5 @@
 import MyImage1 from './../components/main/MainPage';
+import MyImage2 from './../components/main/MainPage';
 
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
@@ -26,4 +27,16 @@ Book.init({
         modified: new Date(2002, 3, 2)
     });
     console.log(book1.toJSON());
+    const book2 = await Book.create({
+        id: 2,
+        name: "Book_2",
+        info: "Description_2",
+        year: 2003,
+        cover_img: BookImage2,
+        creator_id: 2,
+        modified: new Date(2003, 3, 2)
+    });
+    console.log(book2.toJSON());
 })();
+
+export default Book;

@@ -2,18 +2,29 @@ import React, { useState } from 'react';
 import './bookpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
+// import Book from './../../model/Book';
 
 const BookPage = ({ book, edit }) => {
 
-    // const [state, setState] = useState({
-    //     name: book.name,
-    //     year: book.year,
-    //     info: "3"
-    // })
+    // const book2 =  Book.findByPk(1);
+
+    const [state, setState] = useState({
+        name: book.name,
+        year: book.year,
+        info: book.info
+    })
+
+    // setState({info: book.info});
+
+    function handleInfoChange(event) {
+        // alert(event.target.value)
+        setState({ info: event.target.value });
+    }
 
     function handleSubmit(event) {
-        alert('form submited: ' + this.state.value);
         event.preventDefault();
+        book.info = state.info;
+        // alert('Info: ' + state.info);
     }
 
     return (
@@ -46,8 +57,13 @@ const BookPage = ({ book, edit }) => {
                 </span>
                 <div className="book-info">
                     <span className="book-info-label">Book description:</span>
+                    {/* <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Remarkable book notes"
+                        className={!edit ? "ctrlHidden" : "fieldCurrent"} /> */}
+
                     <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Remarkable book notes"
-                        className={!edit ? "ctrlHidden" : "fieldCurrent"} />
+                        className={!edit ? "ctrlHidden" : "fieldCurrent"}
+                        value={state.info} onChange={handleInfoChange} />
+
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
                 <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>

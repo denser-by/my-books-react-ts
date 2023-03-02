@@ -21,6 +21,8 @@
     "react-scripts": "5.0.1",
     "reactstrap": "^9.1.6",
     "redux-devtools-extension": "^2.13.9",
+    "sequelize": "^6.29.0",
+    "sqlite": "^4.1.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },

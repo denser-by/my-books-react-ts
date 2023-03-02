@@ -26,4 +26,15 @@ Author.init({
         modified: new Date(2002, 3, 2)
     });
     console.log(author1.toJSON());
+    const author2 = await Author.create({
+        id: 2,
+        name: "Author_2",
+        info: "Biography_2",
+        book_id: 2,
+        age: 2003,
+        photo: AuthorImage2,
+        creator_id: 2,
+        modified: new Date(2003, 3, 2)
+    });
+    console.log(author2.toJSON());
 })();
