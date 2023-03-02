@@ -1,12 +1,12 @@
 import Author from '../model/Author.js';
+import SvcAuthors from '../service/SvcAuthors.js';
 
 class CtrlAuthors {
 
     async create(req, res) {
         try {
-            const { author, title, content, picture } = req.body;
-            const authorCreated = await Author.create({ author, title, content, picture });
-            res.json(authorCreated);
+            const author = await SvcAuthors.create(req.body);
+            res.json(author);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -14,7 +14,7 @@ class CtrlAuthors {
 
     async getAll(req, res) {
         try {
-            const authors = await Author.find();
+            const authors = await SvcAuthors.getAll();
             return res.json(authors);
         } catch (e) {
             res.status(500).json(e);
@@ -23,10 +23,7 @@ class CtrlAuthors {
 
     async getOne(req, res) {
         try {
-            const { id } = req.params;
-            if (!id)
-                res.status(400).json({ message: 'Id не указан' });
-            const author = await Author.findById(id);
+            const author = await SvcAuthors.getOne(req.params.id);
             return res.json(author);
         } catch (e) {
             res.status(500).json(e);
@@ -35,22 +32,16 @@ class CtrlAuthors {
 
     async update(req, res) {
         try {
-            const author = req.body;
-            if (!author._id)
-                res.status(400).json({ message: 'Id не указан' });
-            const updatedAuthor = await Author.findByIdAndUpdate(author._id, author, { new: true });
+            const updatedAuthor = await SvcAuthors.update(req.body);
             return res.json(updatedAuthor);
         } catch (e) {
-            res.status(500).json(e);
+            res.status(500).json(e.message);
         }
     }
 
     async delete(req, res) {
         try {
-            const { id } = req.params;
-            if (!id)
-                res.status(400).json({ message: 'Id не указан' });
-            const author = await Author.findByIdAndDelete(id);
+            const author = await SvcAuthors.delete(req.params.id);
             return res.json(author);
         } catch (e) {
             res.status(500).json(e);
@@ -58,4 +49,4 @@ class CtrlAuthors {
     }
 }
 
-export default CtrlAuthors;
+export default new CtrlAuthors();

@@ -1,12 +1,12 @@
 import Book from '../model/Book.js';
+import SvcBooks from '../service/SvcBooks.js';
 
 class CtrlBooks {
 
     async create(req, res) {
         try {
-            const { book, title, content, picture } = req.body;
-            const bookCreated = await Book.create({ book, title, content, picture });
-            res.json(bookCreated);
+            const book = await SvcBooks.create(req.body);
+            res.json(book);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -14,7 +14,7 @@ class CtrlBooks {
 
     async getAll(req, res) {
         try {
-            const books = await Book.find();
+            const books = await SvcBooks.getAll();
             return res.json(books);
         } catch (e) {
             res.status(500).json(e);
@@ -23,10 +23,7 @@ class CtrlBooks {
 
     async getOne(req, res) {
         try {
-            const { id } = req.params;
-            if (!id)
-                res.status(400).json({ message: 'Id не указан' });
-            const book = await Book.findById(id);
+            const book = await SvcBooks.getOne(req.params.id);
             return res.json(book);
         } catch (e) {
             res.status(500).json(e);
@@ -35,22 +32,16 @@ class CtrlBooks {
 
     async update(req, res) {
         try {
-            const book = req.body;
-            if (!book._id)
-                res.status(400).json({ message: 'Id не указан' });
-            const updatedBook = await Book.findByIdAndUpdate(book._id, book, { new: true });
+            const updatedBook = await SvcBooks.update(req.body);
             return res.json(updatedBook);
         } catch (e) {
-            res.status(500).json(e);
+            res.status(500).json(e.message);
         }
     }
 
     async delete(req, res) {
         try {
-            const { id } = req.params;
-            if (!id)
-                res.status(400).json({ message: 'Id не указан' });
-            const book = await Book.findByIdAndDelete(id);
+            const book = await SvcBooks.delete(req.params.id);
             return res.json(book);
         } catch (e) {
             res.status(500).json(e);
@@ -58,4 +49,4 @@ class CtrlBooks {
     }
 }
 
-export default CtrlBooks;
+export default new CtrlBooks();
