@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import NavItem from './components/NavItem/NavItem';
 import MainPage from './components/main/MainPage';
+import { LoginForm } from './pages/LoginForm';
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
 
   return (
     <div className="App">
+
+      {/* <LoginForm /> */}
 
       <nav className='navBar'>
         <span className='navBarWrap'>

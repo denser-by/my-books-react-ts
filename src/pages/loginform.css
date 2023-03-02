@@ -1,0 +1,8 @@
+.loginForm {
+    background-color: darkred;
+    width: 400px;
+    height: 190px;
+    border:2px coral dotted;
+    border-radius: 10px;
+    align-items: center;
+}
