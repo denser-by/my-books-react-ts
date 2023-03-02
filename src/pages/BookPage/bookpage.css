@@ -11,13 +11,6 @@
     flex-direction: row;
 }
 
-.picture {
-    display: inline-flex;
-    width: 240px;
-    height: 320px;
-    border: black 1px solid;
-}
-
 input {
     background-color: white;
     color: black;
@@ -34,12 +27,13 @@ input {
 }
 
 .book-info {
-    background-color: lightblue;
-    border: 3px black solid;
+    background-color: blue;
+    border: 4px blue solid;
     border-radius: 10px;
     margin: 2px;
     display: inline-flex;
     flex-direction: column;
+    color: white;
 }
 
 .book-info-label {
@@ -51,6 +45,7 @@ input {
 .fieldCurrent {
     display: inline;
     text-align: left;
+    background-color: white;
 }
 
 .book-year-label {

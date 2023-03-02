@@ -1,0 +1,10 @@
+.picture {
+    display: inline-flex;
+    width: 240px;
+    height: 320px;
+    border: white 2px dashed;
+}
+
+.ctrlHidden {
+    display: none;
+}

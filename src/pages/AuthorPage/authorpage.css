@@ -1,5 +1,5 @@
 .authorShape {
-    border: solid 5px blue;
+    border: solid 5px brown;
     border-radius: 15px;
     padding: 20px;
     display: inline-flex;
@@ -9,13 +9,6 @@
 .authorShapeHeader {
     display: inline-flex;
     flex-direction: row;
-}
-
-.picture {
-    display: inline-flex;
-    width: 240px;
-    height: 320px;
-    border: black 1px solid;
 }
 
 input {
@@ -34,12 +27,13 @@ input {
 }
 
 .author-info {
-    background-color: lightblue;
-    border: 3px black solid;
+    background-color: brown;
+    border: 4px brown solid;
     border-radius: 10px;
     margin: 2px;
     display: inline-flex;
     flex-direction: column;
+    color: white;
 }
 
 .author-info-label {
@@ -51,6 +45,7 @@ input {
 .fieldCurrent {
     display: inline;
     text-align: left;
+    background-color: white;
 }
 
 .author-year-label {
