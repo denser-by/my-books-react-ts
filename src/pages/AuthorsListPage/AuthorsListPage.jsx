@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './authorslistpage.css'
-import './../../components/ContextMenu/contextmenu.css'
+import './authorslistpage.css';
+import './../../components/ContextMenu/contextmenu.css';
 
 const AuthorsListPage = ({ authorItems, pageRef, setPageRef }) => {
     const [aboutSelect, setAboutSelect] = useState("")

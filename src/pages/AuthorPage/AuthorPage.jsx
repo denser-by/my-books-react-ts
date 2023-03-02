@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './authorpage.css'
-import './../common.css'
+import './authorpage.css';
+import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 
 const AuthorPage = ({ author, edit }) => {

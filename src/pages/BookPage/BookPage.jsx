@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './bookpage.css'
-import './../common.css'
+import './bookpage.css';
+import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 
 const BookPage = ({ book, edit }) => {

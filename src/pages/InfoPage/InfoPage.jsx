@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './infopage.css'
+import './infopage.css';
 
 const InfoPage = () => {
     return (
