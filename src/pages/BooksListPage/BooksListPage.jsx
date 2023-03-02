@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import './bookslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import axios from 'axios';
+import BooksProvider from '../../model/BooksProvider';
 
-const BooksListPage = ({ bookItems, pageRef, setPageRef }) => {
+const BooksListPage = ({ pageRef, setPageRef }) => {
     const [aboutSelect, setAboutSelect] = useState("")
     const [curSelect, setCurSelect] = useState("")
 
@@ -34,6 +35,7 @@ const BooksListPage = ({ bookItems, pageRef, setPageRef }) => {
         .then(response => response.json())
         .then(data => allData = data);
 
+    let bookItems = BooksProvider.all();
 
     return (
         <span className='booksList'>

@@ -3,6 +3,7 @@
     width: 240px;
     height: 320px;
     border: white 2px dashed;
+    margin: 3px;
 }
 
 .ctrlHidden {
