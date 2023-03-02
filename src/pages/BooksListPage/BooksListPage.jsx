@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './bookslistpage.css'
-import './../../components/ContextMenu/contextmenu.css'
+import './bookslistpage.css';
+import './../../components/ContextMenu/contextmenu.css';
+import axios from 'axios';
 
 const BooksListPage = ({ bookItems, pageRef, setPageRef }) => {
     const [aboutSelect, setAboutSelect] = useState("")
@@ -19,12 +20,29 @@ const BooksListPage = ({ bookItems, pageRef, setPageRef }) => {
         setPageRef(e.target.id)
     }
 
+    var allRepos = [];
+    var allData = '';
+    var apiUrl = 'http://localhost:3001/books';
+
+
+    axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+    axios.get(apiUrl).then((repos) => {
+        allRepos = repos.data;
+    });
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => allData = data);
+
+
     return (
         <span className='booksList'>
             {bookItems.map(book =>
                 <div className='booksListItem'>
                     <span className='booksInfoItem'>Name: {book.name}</span>
+                    <span className='booksInfoSpace'>A{allRepos}A</span>
                     <span className='booksInfoSpace'>&nbsp;</span>
+                    <span className='booksInfoSpace'>B{allData}B</span>
                     <span className='booksInfoItem'>Published: {book.year}</span>
 
                     <span id={"/viewBook?id=" + book.id}
