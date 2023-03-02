@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './authorslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
+import AuthorsProvider from '../../model/AuthorsProvider';
 
-const AuthorsListPage = ({ authorItems, pageRef, setPageRef }) => {
+const AuthorsListPage = ({ pageRef, setPageRef }) => {
     const [aboutSelect, setAboutSelect] = useState("")
     const [curSelect, setCurSelect] = useState("")
 
@@ -18,6 +19,8 @@ const AuthorsListPage = ({ authorItems, pageRef, setPageRef }) => {
         setCurSelect(e.target)
         setPageRef(e.target.id)
     }
+
+    let authorItems = AuthorsProvider.all();
 
     return (
         <span className='authorsList'>
