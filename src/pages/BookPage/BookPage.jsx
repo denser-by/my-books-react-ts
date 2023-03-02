@@ -17,7 +17,7 @@ const BookPage = ({ book, edit }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             <span className="bookShape">
                 <span className='bookShapeHeader'>
                     <span className="picture">
@@ -26,19 +26,19 @@ const BookPage = ({ book, edit }) => {
                     <span className="icons-right">
                         <span className="book-info">
                             <span className="book-info-label">Book title:</span>
-                            <textarea id="bookName" name="bookName" readOnly={!edit} placeholder="Book name with short description"
+                            <Input type="textarea" id="bookName" name="bookName" readOnly={!edit} placeholder="Book name with short description"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"} />
                             <span className="fieldCurrent">{book.name}</span>
                         </span>
                         <span className="book-info">
                             <span className="book-info-label">Year of publication:</span>
-                            <textarea id="bookYear" name="bookYear" readOnly={!edit} placeholder="Year of publication"
+                            <Input type="textarea" id="bookYear" name="bookYear" readOnly={!edit} placeholder="Year of publication"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"} />
                             <span className="fieldCurrent">{book.year}</span>
                         </span>
                         <span className="book-info">
                             <span className="book-info-label">Authors:</span>
-                            <textarea id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authorship entry"
+                            <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authorship entry"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"} />
                             <span className="fieldCurrent">{book.authors}</span>
                         </span>
@@ -46,15 +46,15 @@ const BookPage = ({ book, edit }) => {
                 </span>
                 <div className="book-info">
                     <span className="book-info-label">Book description:</span>
-                    <textarea id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Remarkable book notes"
+                    <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Remarkable book notes"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"} />
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
                 <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
-                    <input type="submit" value="Save" />
+                    <Button type="submit">Save</Button>
                 </span>
             </span>
-        </form>
+        </Form>
     );
 };
 
