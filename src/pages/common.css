@@ -13,4 +13,11 @@
     display: inline;
     text-align: left;
     background-color: white;
+    color:black;
+}
+
+.fieldSubmit {
+    display: inline;
+    text-align: center;
+    padding: 2px;
 }

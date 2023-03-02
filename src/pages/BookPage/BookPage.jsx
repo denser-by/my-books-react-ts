@@ -11,9 +11,13 @@ const BookPage = ({ book, edit }) => {
     //     info: "3"
     // })
 
+    function handleSubmit(event) {
+        alert('form submited: ' + this.state.value);
+        event.preventDefault();
+    }
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <span className="bookShape">
                 <span className='bookShapeHeader'>
                     <span className="picture">
@@ -46,7 +50,9 @@ const BookPage = ({ book, edit }) => {
                         className={!edit ? "ctrlHidden" : "fieldCurrent"} />
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
-                <input type={edit ? "submit" : "hidden"} value="Save" />
+                <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
+                    <input type="submit" value="Save" />
+                </span>
             </span>
         </form>
     );
