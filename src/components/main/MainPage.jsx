@@ -190,8 +190,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     }
 
-    function deleteBookCancel(bookId) {
-        alert('deleteBookCancel' + bookId)
+    function deleteBookCancel() {
+        setPageRef(contextOpsBooks[0].href)
     }
 
     function getDeleteAllBooksMsg() {
@@ -204,7 +204,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function deleteAllBooksCancel() {
-        alert('deleteAllBooksCancel')
+        setPageRef(contextOpsBooks[0].href)
     }
 
     return (
@@ -224,8 +224,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage bookItems={bookItems} pageRef={pageRef} setPageRef={setPageRef} /></span>
             <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage authorItems={authorItems} pageRef={pageRef} setPageRef={setPageRef} /></span>
 
-            <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} /></span>
-            <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} /></span>
+            <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} btnLabels={['Ok','Cancel']} /></span>
+            <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} btnLabels={['Yes','No']} /></span>
 
             <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
             <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>
