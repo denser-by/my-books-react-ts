@@ -17,12 +17,29 @@ const AuthorPage = ({ author, edit }) => {
                             className={!edit ? "ctrlHidden" : "fieldCurrent"} />
                         <span className="fieldCurrent">{author.name}</span>
                     </span>
+
+
+
                     <span className="author-info">
                         <span className="author-info-label">Born in:</span>
                         <textarea id="authorAge" name="authorAge" readOnly={!edit} placeholder="born in"
                             className={!edit ? "ctrlHidden" : "fieldCurrent"} />
                         <span className="fieldCurrent">{author.age}</span>
                     </span>
+
+
+                    {/* <span className="book-info">
+                        <span className="book-info-label">Year of publication:</span>
+                        <textarea id="bookYear" name="bookYear" readOnly={!edit} placeholder="Year of publication"
+                            className={!edit ? "ctrlHidden" : "fieldCurrent"} />
+                        <span className="fieldCurrent">{book.year}</span>
+                    </span> */}
+
+
+
+
+
+
                     <span className="author-info">
                         <span className="author-info-label">List of books:</span>
                         <textarea id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="published books list"

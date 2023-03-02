@@ -8,3 +8,9 @@
 .ctrlHidden {
     display: none;
 }
+
+.fieldCurrent {
+    display: inline;
+    text-align: left;
+    background-color: white;
+}

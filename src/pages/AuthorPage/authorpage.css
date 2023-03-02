@@ -42,12 +42,6 @@ input {
     text-align: right;
 }
 
-.fieldCurrent {
-    display: inline;
-    text-align: left;
-    background-color: white;
-}
-
 .author-year-label {
     background-color: white;
     color: black;

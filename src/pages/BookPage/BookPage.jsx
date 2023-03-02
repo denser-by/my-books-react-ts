@@ -5,11 +5,12 @@ import { Form, Input, Button } from 'reactstrap';
 
 const BookPage = ({ book, edit }) => {
 
-    const [state, setState] = useState({
-        name: book.name,
-        year: book.year,
-        info: "3"
-    })
+    // const [state, setState] = useState({
+    //     name: book.name,
+    //     year: book.year,
+    //     info: "3"
+    // })
+
 
     return (
         <form>
