@@ -53,12 +53,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     ]
 
     function getNewBook() {
-        const bookNewItems = [
-            { id: 1, name: "", authors: [], info: "", year: "", cover_img: "" },
-        ]
-        var newBook = bookNewItems[0];
-        newBook.id = BooksProvider.size() + 1;
-        // newBook.id = book2Items.length + 1;
+        var newBook = BooksProvider.newBook();
         return newBook;
     }
 
@@ -71,12 +66,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function getNewAuthor() {
-        const authorNewItems = [
-            { id: 1, name: "", info: "", age: "", photo: "" },
-        ]
-        var newAuthor = authorNewItems[0];
-        newAuthor.id = AuthorsProvider.size() + 1;
-        // newAuthor.id = author2Items.length + 1;
+        var newAuthor = AuthorsProvider.newAuthor();
         return newAuthor;
     }
 

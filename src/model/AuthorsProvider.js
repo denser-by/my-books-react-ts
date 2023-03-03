@@ -60,6 +60,15 @@ class AuthorsProvider {
         var book = find(id);
         authorItems.delete(book);
     }
+
+    static newAuthor() {
+        var authorNewItems = [
+            { id: 1, name: "", books: [], info: "", age: 2000, photo: "" }
+        ]
+        var newAuthor = authorNewItems[0];
+        newAuthor.id = AuthorsProvider.size() + 1;
+        return newAuthor;
+    }
 }
 
 export default AuthorsProvider;

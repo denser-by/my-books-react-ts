@@ -72,6 +72,15 @@ class BooksProvider {
         var book = find(id);
         bookItems.delete(book);
     }
+
+    static newBook() {
+        var bookNewItems = [
+            { id: 1, name: "", authors: [], info: "", year: 2000, cover_img: "" }
+        ]
+        var newBook = bookNewItems[0];
+        newBook.id = BooksProvider.size() + 1;
+        return newBook;
+    }
 }
 
 export default BooksProvider;
