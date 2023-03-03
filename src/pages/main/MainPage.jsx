@@ -95,6 +95,19 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         return message;
     }
 
+    function getGenerate20BooksMsg() {
+        let message = "Are you sure? Generate 20 additional books.";
+        return message;
+    }
+
+    function generate20BooksOk() {
+        alert('generate 20 Books Ok');
+    }
+
+    function generate20BooksCancel() {
+        alert('cancel book generation');
+    }
+
     function deleteAllBooksOk() {
         const oneByOneDelete = false;
         if (oneByOneDelete) {
@@ -136,6 +149,11 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
             <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} btnLabels={['Ok', 'Cancel']} /></span>
             <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} btnLabels={['Yes', 'No']} /></span>
+
+            {/* { icon: "anchor", href: "/generate20Books", name: "Generate 20" } */}
+            <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerate20BooksMsg()} answerYesProc={generate20BooksOk} answerNoProc={generate20BooksCancel} btnLabels={['Yes', 'No']} /></span>
+
+
 
             <span className={pageRef == "/search" ? "pageVisible" : "pageHidden"}><SearchPage /></span>
 
