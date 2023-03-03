@@ -57,7 +57,7 @@ class AuthorsProvider {
     }
 
     static delete(id) {
-        var author = find(id);
+        let author = authorItems.filter(author => id == author.id)[0];
         const authorIdx = authorItems.indexOf(author);
         authorItems.splice(authorIdx, 1);
     }

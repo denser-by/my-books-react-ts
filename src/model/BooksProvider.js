@@ -69,7 +69,7 @@ class BooksProvider {
     }
 
     static delete(id) {
-        var book = find(id);
+        let book = bookItems.filter(book => id == book.id)[0];
         const bookIdx = bookItems.indexOf(book);
         bookItems.splice(bookIdx, 1);
     }

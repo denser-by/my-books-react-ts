@@ -82,11 +82,12 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function deleteBookOk(bookId) {
-        alert('deleteBookOk' + bookId)
+        BooksProvider.delete(bookId);
+        setPageRef(contextOpsBooks[0].href);
     }
 
     function deleteBookCancel() {
-        setPageRef(contextOpsBooks[0].href)
+        setPageRef(contextOpsBooks[0].href);
     }
 
     function getDeleteAllBooksMsg() {
@@ -95,11 +96,13 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function deleteAllBooksOk() {
-        alert('deleteAllBooksOk')
+        let booksAll = BooksProvider.all();
+        booksAll.map(book => BooksProvider.delete(book.id));
+        setPageRef(contextOpsBooks[0].href);
     }
 
     function deleteAllBooksCancel() {
-        setPageRef(contextOpsBooks[0].href)
+        setPageRef(contextOpsBooks[0].href);
     }
 
     return (
