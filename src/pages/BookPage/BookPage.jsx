@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './bookpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
-import BooksProvider from '../../model/BooksProvider';
+import BooksProvider from '../../model/BooksProvider.js';
 
 const BookPage = ({ book, edit }) => {
 
