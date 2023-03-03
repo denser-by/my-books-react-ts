@@ -1,5 +1,5 @@
-import MyImage1 from './../components/main/MainPage';
-import MyImage2 from './../components/main/MainPage';
+import MyImage1 from '../pages/main/MainPage';
+import MyImage2 from '../pages/main/MainPage';
 
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');

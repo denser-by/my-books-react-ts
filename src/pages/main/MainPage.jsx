@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import './mainpage.css'
-import ContextMenu from './../ContextMenu/ContextMenu';
-import BookPage from '../../pages/BookPage/BookPage';
-import BooksListPage from '../../pages/BooksListPage/BooksListPage';
-import ConfirmationPage from '../../pages/ConfirmationPage/ConfirmationPage';
-import AuthorPage from '../../pages/AuthorPage/AuthorPage';
-import AuthorsListPage from '../../pages/AuthorsListPage/AuthorsListPage';
-import ContactsPage from '../../pages/ContactsPage/ContactsPage';
-import OrderPage from '../../pages/OrderPage/OrderPage';
-import InfoPage from '../../pages/InfoPage/InfoPage';
-import SearchPage from '../../pages/SearchPage/SearchPage';
-import BooksProvider from './../../model/BooksProvider';
+import ContextMenu from '../../components/ContextMenu/ContextMenu';
+import BookPage from '../BookPage/BookPage';
+import BooksListPage from '../BooksListPage/BooksListPage';
+import ConfirmationPage from '../ConfirmationPage/ConfirmationPage';
+import AuthorPage from '../AuthorPage/AuthorPage';
+import AuthorsListPage from '../AuthorsListPage/AuthorsListPage';
+import ContactsPage from '../ContactsPage/ContactsPage';
+import OrderPage from '../OrderPage/OrderPage';
+import InfoPage from '../InfoPage/InfoPage';
+import SearchPage from '../SearchPage/SearchPage';
+import BooksProvider from '../../model/BooksProvider';
 import AuthorsProvider from '../../model/AuthorsProvider';
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
@@ -51,7 +51,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         { icon: "anchor", href: "/order", name: "Order" },
         { icon: "anchor", href: "/info", name: "Info" }
     ]
-
 
     function getNewBook() {
         const bookNewItems = [
@@ -121,7 +120,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     function deleteBookOk(bookId) {
         alert('deleteBookOk' + bookId)
-
     }
 
     function deleteBookCancel() {
@@ -157,9 +155,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} edit={true} /></span>
 
             <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage pageRef={pageRef} setPageRef={setPageRef} /></span>
-            {/* <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage book2Items={book3Items} pageRef={pageRef} setPageRef={setPageRef} /></span> */}
             <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage pageRef={pageRef} setPageRef={setPageRef} /></span>
-            {/* <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage author2Items={author2Items} pageRef={pageRef} setPageRef={setPageRef} /></span> */}
 
             <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} btnLabels={['Ok', 'Cancel']} /></span>
             <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} btnLabels={['Yes', 'No']} /></span>
