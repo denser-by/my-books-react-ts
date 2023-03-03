@@ -110,7 +110,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function authorEditorClose() {
-        setPageRef(contextOpsBooks[0].href);
+        setPageRef(contextOpsAuthors[0].href);
     }
 
     function deleteAllBooksCancel() {

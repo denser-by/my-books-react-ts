@@ -12,6 +12,7 @@ let authorItems = [
     { id: 7, name: "Author7", books: [1, 3], info: "Author Description 7", age: 2005, photo: AuthorImage1 },
     { id: 8, name: "Author8", books: [2, 4], info: "Author Description 8", age: 2006, photo: AuthorImage2 },
     { id: 9, name: "Author9", books: [1, 3], info: "Author Description 9", age: 2007, photo: AuthorImage3 },
+    { id: 10, name: "Author10", books: [2, 3], info: "Author Description 10", age: 2005, photo: AuthorImage2 },
     { id: 11, name: "Author11", books: [2, 4], info: "Author Description 11", age: 1999, photo: AuthorImage1 },
     { id: 12, name: "Author12", books: [1, 3], info: "Author Description 12", age: 2000, photo: AuthorImage2 },
     { id: 13, name: "Author13", books: [2, 4], info: "Author Description 13", age: 2001, photo: AuthorImage3 },
@@ -21,6 +22,7 @@ let authorItems = [
     { id: 17, name: "Author17", books: [2, 4], info: "Author Description 17", age: 2005, photo: AuthorImage1 },
     { id: 18, name: "Author18", books: [1, 3], info: "Author Description 18", age: 2006, photo: AuthorImage2 },
     { id: 19, name: "Author19", books: [2, 4], info: "Author Description 19", age: 2007, photo: AuthorImage3 },
+    { id: 20, name: "Author20", books: [4], info: "Author Description 20", age: 2004, photo: AuthorImage2 },
     { id: 21, name: "Author21", books: [1, 3], info: "Author Description 21", age: 1999, photo: AuthorImage1 },
     { id: 22, name: "Author22", books: [2, 4], info: "Author Description 22", age: 2000, photo: AuthorImage2 },
     { id: 23, name: "Author23", books: [1, 3], info: "Author Description 23", age: 2001, photo: AuthorImage3 },
@@ -29,7 +31,8 @@ let authorItems = [
     { id: 26, name: "Author26", books: [2, 4], info: "Author Description 26", age: 2004, photo: AuthorImage3 },
     { id: 27, name: "Author27", books: [1, 3], info: "Author Description 27", age: 2005, photo: AuthorImage1 },
     { id: 28, name: "Author28", books: [2, 4], info: "Author Description 28", age: 2006, photo: AuthorImage2 },
-    { id: 29, name: "Author29", books: [1, 3], info: "Author Description 29", age: 2007, photo: AuthorImage3 }
+    { id: 29, name: "Author29", books: [1, 3], info: "Author Description 29", age: 2007, photo: AuthorImage3 },
+    { id: 30, name: "Author30", books: [2], info: "Author Description 30", age: 2003, photo: AuthorImage1 }
 ]
 
 
