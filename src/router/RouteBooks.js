@@ -9,4 +9,5 @@ bookRoutes.get('/books/:id', CtrlBooks.getOne);
 bookRoutes.put('/books', CtrlBooks.update);
 bookRoutes.delete('/books/:id', CtrlBooks.delete);
 
+
 export default bookRoutes;
