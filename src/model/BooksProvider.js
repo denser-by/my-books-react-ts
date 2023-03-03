@@ -103,6 +103,21 @@ class BooksProvider {
         };
         return newBook;
     }
+
+    static generate20Books() {
+        [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1].map(time => {
+                let book = this.newBook();
+                book.name = "Book_" + book.id;
+                book.authors = book.id % 2 == 0 ? [1, 2, 3] : [4, 5, 6];
+                book.info = "Description_" + book.id;
+                book.year = book.id % 2 == 0 ? 2002 : 2004;
+                book.cover_img = book.id % 2 == 0 ? BookImage4 : (book.id % 3 == 0 ? BookImage7 : BookImage9);
+                this.create(book);
+            });
+    }
 }
 
 export default BooksProvider;

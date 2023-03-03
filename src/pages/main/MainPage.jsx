@@ -101,11 +101,12 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function generate20BooksOk() {
-        alert('generate 20 Books Ok');
+        BooksProvider.generate20Books();
+        setPageRef(contextOpsBooks[0].href);
     }
 
     function generate20BooksCancel() {
-        alert('cancel book generation');
+        setPageRef(contextOpsBooks[0].href);
     }
 
     function getGenerate20AuthorsMsg() {
@@ -114,11 +115,12 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function generate20AuthorsOk() {
-        alert('generate 20 Authors Ok');
+        AuthorsProvider.generate20Authors();
+        setPageRef(contextOpsAuthors[0].href);
     }
 
     function generate20AuthorsCancel() {
-        alert('cancel authors generation');
+        setPageRef(contextOpsAuthors[0].href);
     }
 
     function deleteAllBooksOk() {
