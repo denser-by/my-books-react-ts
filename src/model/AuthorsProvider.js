@@ -74,6 +74,12 @@ class AuthorsProvider {
         authorItems.splice(authorIdx, 1);
     }
 
+    static deleteAll() {
+        const authorIdx = 1 - 1;
+        const count = this.size();
+        authorItems.splice(authorIdx, count);
+    }
+
     static newAuthor() {
         var newAuthor = {
             id: this.size() + 1,

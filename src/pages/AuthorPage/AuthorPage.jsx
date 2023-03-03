@@ -14,7 +14,7 @@ const AuthorPage = ({ authorId, edit }) => {
         return AuthorsProvider.anyFirst();
     }
 
-    let author = authorId != null ? getAuthor(authorId) : author2;
+    let author = (authorId != null && (""+authorId).length > 0) ? getAuthor(authorId) : author2;
 
     const [state, setState] = useState({
         name: author.name,

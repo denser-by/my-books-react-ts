@@ -86,6 +86,12 @@ class BooksProvider {
         bookItems.splice(bookIdx, 1);
     }
 
+    static deleteAll() {
+        const bookIdx = 1 - 1;
+        const count = this.size();
+        bookItems.splice(bookIdx, count);
+    }
+
     static newBook() {
         var newBook = {
             id: this.size() + 1,

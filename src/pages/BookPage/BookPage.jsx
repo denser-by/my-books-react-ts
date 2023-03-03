@@ -14,7 +14,7 @@ const BookPage = ({ bookId, edit }) => {
         return BooksProvider.anyFirst();
     }
 
-    let book = bookId != null ? getBook(bookId) : book2;
+    let book = (bookId != null && (""+bookId).length > 0) ? getBook(bookId) : book2;
 
     const [state, setState] = useState({
         name: book.name,

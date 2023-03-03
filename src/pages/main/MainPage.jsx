@@ -96,8 +96,12 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function deleteAllBooksOk() {
-        let booksAll = BooksProvider.all();
-        booksAll.map(book => BooksProvider.delete(book.id));
+        const oneByOneDelete = false;
+        if (oneByOneDelete) {
+            let booksAll = BooksProvider.all();
+            booksAll.map(book => BooksProvider.delete(book.id));
+        }
+        BooksProvider.deleteAll();
         setPageRef(contextOpsBooks[0].href);
     }
 
