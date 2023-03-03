@@ -68,6 +68,18 @@ class BooksProvider {
         bookItems.push(data);
     }
 
+    static update(data) {
+        let book = bookItems.filter(book => data.id == book.id)[0];
+        const bookIdx = bookItems.indexOf(book);
+        bookItems[bookIdx].name = data.name;
+        bookItems[bookIdx].year = data.year;
+        bookItems[bookIdx].authors = data.authors;
+        bookItems[bookIdx].info = data.info;
+        bookItems[bookIdx].cover_img = data.cover_img;
+        console.log(' complete ' + bookIdx + '  ' + JSON.stringify(bookItems[bookIdx])
+            + '  ' + JSON.stringify(data))
+    }
+
     static delete(id) {
         let book = bookItems.filter(book => id == book.id)[0];
         const bookIdx = bookItems.indexOf(book);

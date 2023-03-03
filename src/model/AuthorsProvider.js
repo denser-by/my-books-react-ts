@@ -56,6 +56,18 @@ class AuthorsProvider {
         authorItems.push(data);
     }
 
+    static update(data) {
+        let author = authorItems.filter(author => data.id == author.id)[0];
+        const authorIdx = authorItems.indexOf(author);
+        authorItems[authorIdx].name = data.name;
+        authorItems[authorIdx].age = data.age;
+        authorItems[authorIdx].books = data.authors;
+        authorItems[authorIdx].info = data.info;
+        authorItems[authorIdx].photo = data.photo;
+        console.log(' complete ' + authorIdx + '  ' + JSON.stringify(authorItems[authorIdx])
+            + '  ' + JSON.stringify(data))
+    }
+
     static delete(id) {
         let author = authorItems.filter(author => id == author.id)[0];
         const authorIdx = authorItems.indexOf(author);
