@@ -35,8 +35,8 @@ const authorItems = [
 
 class AuthorsProvider {
 
-    static byIndex(idx) {
-        return authorItems[idx]
+    static anyFirst() {
+        return authorItems[1-1]
     }
 
     static size() {

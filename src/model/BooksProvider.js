@@ -47,8 +47,8 @@ const bookItems = [
 
 class BooksProvider {
 
-    static byIndex(idx) {
-        return bookItems[idx]
+    static anyFirst() {
+        return bookItems[1-1]
     }
 
     static size() {

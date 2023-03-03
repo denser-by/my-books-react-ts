@@ -57,12 +57,10 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         return newBook;
     }
 
-    function getBook(idx) {
-        if (("" + idx).length >= 1 && idx > 0)
-            return BooksProvider.byIndex(idx - 1);
-        // return book2Items[idx - 1];
-        return BooksProvider.byIndex(0);
-        // return book2Items[0];
+    function getBook(bookId) {
+        if (("" + bookId).length >= 1 && bookId > 0)
+            return BooksProvider.find(bookId);
+        return BooksProvider.anyFirst();
     }
 
     function getNewAuthor() {
@@ -70,12 +68,10 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         return newAuthor;
     }
 
-    function getAuthor(idx) {
-        if (("" + idx).length >= 1 && idx > 0)
-            return AuthorsProvider.byIndex(idx - 1);
-        // return author2Items[idx - 1];
-        return AuthorsProvider.byIndex(0);
-        // return author2Items[0];
+    function getAuthor(authorId) {
+        if (("" + authorId).length >= 1 && authorId > 0)
+            return AuthorsProvider.find(authorId);
+        return AuthorsProvider.anyFirst();
     }
 
     function getId(ref) {
