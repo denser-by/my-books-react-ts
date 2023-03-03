@@ -4,7 +4,7 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import AuthorsProvider from '../../model/AuthorsProvider.js';
 
-const AuthorPage = ({ authorId, edit }) => {
+const AuthorPage = ({ authorId, edit, create }) => {
 
     var author2 = AuthorsProvider.newAuthor();
 
@@ -14,7 +14,7 @@ const AuthorPage = ({ authorId, edit }) => {
         return AuthorsProvider.anyFirst();
     }
 
-    let author = (authorId != null && (""+authorId).length > 0) ? getAuthor(authorId) : author2;
+    let author = (authorId != null && ("" + authorId).length > 0) ? getAuthor(authorId) : author2;
 
     const [state, setState] = useState({
         name: author.name,
@@ -86,7 +86,7 @@ const AuthorPage = ({ authorId, edit }) => {
                     <div className="fieldCurrent">{author.info}</div>
                 </div>
                 <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">{create ? "Create" : "Save"}</Button>
                 </span>
             </span>
         </Form>

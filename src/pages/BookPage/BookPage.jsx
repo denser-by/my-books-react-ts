@@ -4,7 +4,7 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import BooksProvider from '../../model/BooksProvider.js';
 
-const BookPage = ({ bookId, edit }) => {
+const BookPage = ({ bookId, edit, create }) => {
 
     var book2 = BooksProvider.newBook();
 
@@ -14,7 +14,7 @@ const BookPage = ({ bookId, edit }) => {
         return BooksProvider.anyFirst();
     }
 
-    let book = (bookId != null && (""+bookId).length > 0) ? getBook(bookId) : book2;
+    let book = (bookId != null && ("" + bookId).length > 0) ? getBook(bookId) : book2;
 
     const [state, setState] = useState({
         name: book.name,
@@ -88,7 +88,7 @@ const BookPage = ({ bookId, edit }) => {
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
                 <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">{create ? "Create" : "Save"}</Button>
                 </span>
             </span>
         </Form>
