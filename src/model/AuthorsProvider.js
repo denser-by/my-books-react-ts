@@ -36,7 +36,7 @@ const authorItems = [
 class AuthorsProvider {
 
     static anyFirst() {
-        return authorItems[1-1]
+        return authorItems[1 - 1];
     }
 
     static size() {
@@ -62,11 +62,14 @@ class AuthorsProvider {
     }
 
     static newAuthor() {
-        var authorNewItems = [
-            { id: 1, name: "", books: [], info: "", age: 2000, photo: "" }
-        ]
-        var newAuthor = authorNewItems[0];
-        newAuthor.id = AuthorsProvider.size() + 1;
+        var newAuthor = {
+            id: this.size() + 1,
+            name: "",
+            books: [],
+            info: "",
+            age: 2000,
+            photo: ""
+        };
         return newAuthor;
     }
 }

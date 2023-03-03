@@ -48,7 +48,7 @@ const bookItems = [
 class BooksProvider {
 
     static anyFirst() {
-        return bookItems[1-1]
+        return bookItems[1 - 1];
     }
 
     static size() {
@@ -74,11 +74,14 @@ class BooksProvider {
     }
 
     static newBook() {
-        var bookNewItems = [
-            { id: 1, name: "", authors: [], info: "", year: 2000, cover_img: "" }
-        ]
-        var newBook = bookNewItems[0];
-        newBook.id = BooksProvider.size() + 1;
+        var newBook = {
+            id: this.size() + 1,
+            name: "",
+            authors: [],
+            info: "",
+            year: 2000,
+            cover_img: ""
+        };
         return newBook;
     }
 }
