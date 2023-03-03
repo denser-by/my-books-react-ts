@@ -105,6 +105,14 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         setPageRef(contextOpsBooks[0].href);
     }
 
+    function bookEditorClose() {
+        setPageRef(contextOpsBooks[0].href);
+    }
+
+    function authorEditorClose() {
+        setPageRef(contextOpsBooks[0].href);
+    }
+
     function deleteAllBooksCancel() {
         setPageRef(contextOpsBooks[0].href);
     }
@@ -115,13 +123,13 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             <ContextMenu selectedItem={selectedItem} operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
                 pageRef={pageRef} setPageRef={setPageRef} />
 
-            <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage create={true} edit={true} /></span>
-            <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage bookId={getId(pageRef)} edit={false} /></span>
-            <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage bookId={getId(pageRef)} edit={true} /></span>
+            <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage create={true} edit={true} closeProc={bookEditorClose} /></span>
+            <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage bookId={getId(pageRef)} edit={false} closeProc={bookEditorClose} /></span>
+            <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage bookId={getId(pageRef)} edit={true} closeProc={bookEditorClose} /></span>
 
-            <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage create={true} edit={true} /></span>
-            <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage authorId={getId(pageRef)} edit={false} /></span>
-            <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage authorId={getId(pageRef)} edit={true} /></span>
+            <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage create={true} edit={true} closeProc={authorEditorClose} /></span>
+            <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage authorId={getId(pageRef)} edit={false} closeProc={authorEditorClose} /></span>
+            <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage authorId={getId(pageRef)} edit={true} closeProc={authorEditorClose} /></span>
 
             <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage pageRef={pageRef} setPageRef={setPageRef} /></span>
             <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage pageRef={pageRef} setPageRef={setPageRef} /></span>

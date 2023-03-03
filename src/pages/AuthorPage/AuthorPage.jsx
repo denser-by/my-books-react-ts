@@ -4,7 +4,7 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import AuthorsProvider from '../../model/AuthorsProvider.js';
 
-const AuthorPage = ({ authorId, edit, create }) => {
+const AuthorPage = ({ authorId, edit, create, closeProc }) => {
 
     var author2 = AuthorsProvider.newAuthor();
 
@@ -67,13 +67,15 @@ const AuthorPage = ({ authorId, edit, create }) => {
 
         console.log(' save ' + JSON.stringify(author) + ' ' + JSON.stringify(author2));
 
-        if(create) {
+        if (create) {
             AuthorsProvider.create(author2);
             console.log(' create complete ');
-        } else if(edit) {
+        } else if (edit) {
             AuthorsProvider.update(author);
             console.log(' update complete ');
         }
+
+        closeProc();
     }
 
     return (

@@ -4,7 +4,7 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import BooksProvider from '../../model/BooksProvider.js';
 
-const BookPage = ({ bookId, edit, create }) => {
+const BookPage = ({ bookId, edit, create, closeProc }) => {
 
     var book2 = BooksProvider.newBook();
 
@@ -71,13 +71,15 @@ const BookPage = ({ bookId, edit, create }) => {
 
         console.log(' save ' + JSON.stringify(book) + ' ' + JSON.stringify(book2));
 
-        if(create) {
+        if (create) {
             BooksProvider.create(book2);
             console.log(' create complete ');
-        } else if(edit) {
+        } else if (edit) {
             BooksProvider.update(book);
             console.log(' update complete ');
         }
+
+        closeProc();
     }
 
     return (
