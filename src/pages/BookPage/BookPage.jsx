@@ -4,9 +4,17 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import BooksProvider from '../../model/BooksProvider.js';
 
-const BookPage = ({ book, edit }) => {
+const BookPage = ({ bookId, edit }) => {
 
     var book2 = BooksProvider.newBook();
+
+    function getBook(bookId) {
+        if (("" + bookId).length >= 1 && bookId > 0)
+            return BooksProvider.find(bookId);
+        return BooksProvider.anyFirst();
+    }
+
+    let book = bookId != null ? getBook(bookId) : book2;
 
     const [state, setState] = useState({
         name: book.name,

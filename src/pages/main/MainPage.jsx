@@ -52,28 +52,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         { icon: "anchor", href: "/info", name: "Info" }
     ]
 
-    function getNewBook() {
-        var newBook = BooksProvider.newBook();
-        return newBook;
-    }
-
-    function getBook(bookId) {
-        if (("" + bookId).length >= 1 && bookId > 0)
-            return BooksProvider.find(bookId);
-        return BooksProvider.anyFirst();
-    }
-
-    function getNewAuthor() {
-        var newAuthor = AuthorsProvider.newAuthor();
-        return newAuthor;
-    }
-
-    function getAuthor(authorId) {
-        if (("" + authorId).length >= 1 && authorId > 0)
-            return AuthorsProvider.find(authorId);
-        return AuthorsProvider.anyFirst();
-    }
-
     function getId(ref) {
         if (ref != null) {
             var text = "" + ref
@@ -96,7 +74,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     function getDeleteBookMsg(bookId) {
         if (bookId != null && ("" + bookId).length > 0) {
-            // let first = book2Items.filter(book => bookId == book.id)[0];
             let first = BooksProvider.find(bookId);
             let message = "Are you sure? Delete \"" + first.name + "\" book.";
             return message;
@@ -114,7 +91,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     function getDeleteAllBooksMsg() {
         let message = "Are you sure? Delete all " + BooksProvider.size() + " books items.";
-        // let message = "Are you sure? Delete all " + book2Items.length + " books items.";
         return message;
     }
 
@@ -132,13 +108,13 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             <ContextMenu selectedItem={selectedItem} operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
                 pageRef={pageRef} setPageRef={setPageRef} />
 
-            <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage book={getNewBook()} edit={true} /></span>
-            <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} edit={false} /></span>
-            <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage book={getBook(getId(pageRef))} edit={true} /></span>
+            <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage edit={true} /></span>
+            <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage bookId={getId(pageRef)} edit={false} /></span>
+            <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage bookId={getId(pageRef)} edit={true} /></span>
 
-            <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getNewAuthor()} edit={true} /></span>
-            <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} edit={false} /></span>
-            <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage author={getAuthor(getId(pageRef))} edit={true} /></span>
+            <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage edit={true} /></span>
+            <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage authorId={getId(pageRef)} edit={false} /></span>
+            <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage authorId={getId(pageRef)} edit={true} /></span>
 
             <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage pageRef={pageRef} setPageRef={setPageRef} /></span>
             <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage pageRef={pageRef} setPageRef={setPageRef} /></span>

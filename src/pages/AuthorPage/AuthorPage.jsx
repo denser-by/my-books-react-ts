@@ -4,9 +4,17 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import AuthorsProvider from '../../model/AuthorsProvider.js';
 
-const AuthorPage = ({ author, edit }) => {
+const AuthorPage = ({ authorId, edit }) => {
 
     var author2 = AuthorsProvider.newAuthor();
+
+    function getAuthor(authorId) {
+        if (("" + authorId).length >= 1 && authorId > 0)
+            return AuthorsProvider.find(authorId);
+        return AuthorsProvider.anyFirst();
+    }
+
+    let author = authorId != null ? getAuthor(authorId) : author2;
 
     const [state, setState] = useState({
         name: author.name,
