@@ -16,6 +16,11 @@ const BookPage = ({ bookId, edit, create }) => {
 
     let book = (bookId != null && ("" + bookId).length > 0) ? getBook(bookId) : book2;
 
+    const [stateName, setStateName] = useState('');
+    const [stateYear, setStateYear] = useState('');
+    const [stateAuthors, setStateAuthors] = useState('');
+    const [stateInfo, setStateInfo] = useState('');
+
     const [state, setState] = useState({
         name: book.name,
         year: book.year,
@@ -24,27 +29,55 @@ const BookPage = ({ bookId, edit, create }) => {
     })
 
     function handleNameChange(event) {
+        // book2.name = event.target.value;
+        setStateName(event.target.value);
         setState({ name: event.target.value });
     }
 
     function handleYearChange(event) {
+        // book2.year = event.target.value;
+        setStateYear(event.target.value);
         setState({ year: event.target.value });
     }
 
     function handleAuthorsChange(event) {
+        // book2.authors = event.target.value;
+        setStateAuthors(event.target.value);
         setState({ authors: event.target.value });
     }
 
     function handleInfoChange(event) {
+        // book2.info = event.target.value;
+        setStateInfo(event.target.value);
         setState({ info: event.target.value });
     }
 
     function handleSubmit(event) {
         event.preventDefault();
-        book.name = state.name;
-        book.year = state.year;
-        book.authors = state.authors;
-        book.info = state.info;
+        // book.name = state.name;
+        // book.year = state.year;
+        // book.authors = state.authors;
+        // book.info = state.info;
+
+        book.name = stateName;
+        book.year = stateYear;
+        book.authors = stateAuthors;
+        book.info = stateInfo;
+
+        book2.name = stateName;
+        book2.year = stateYear;
+        book2.authors = stateAuthors;
+        book2.info = stateInfo;
+
+        console.log(' save ' + JSON.stringify(book) + ' ' + JSON.stringify(book2));
+
+        if(create) {
+            BooksProvider.create(book2);
+            console.log(' create complete ');
+        } else if(edit) {
+            BooksProvider.update(book);
+            console.log(' update complete ');
+        }
     }
 
     return (

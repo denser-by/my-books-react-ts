@@ -16,6 +16,11 @@ const AuthorPage = ({ authorId, edit, create }) => {
 
     let author = (authorId != null && ("" + authorId).length > 0) ? getAuthor(authorId) : author2;
 
+    const [stateName, setStateName] = useState('');
+    const [stateAge, setStateAge] = useState('');
+    const [stateBooks, setStateBooks] = useState('');
+    const [stateInfo, setStateInfo] = useState('');
+
     const [state, setState] = useState({
         name: author.name,
         age: author.age,
@@ -24,27 +29,51 @@ const AuthorPage = ({ authorId, edit, create }) => {
     })
 
     function handleNameChange(event) {
+        setStateName(event.target.value);
         setState({ name: event.target.value });
     }
 
     function handleAgeChange(event) {
+        setStateAge(event.target.value);
         setState({ age: event.target.value });
     }
 
     function handleBooksChange(event) {
+        setStateBooks(event.target.value);
         setState({ books: event.target.value });
     }
 
     function handleInfoChange(event) {
+        setStateInfo(event.target.value);
         setState({ info: event.target.value });
     }
 
     function handleSubmit(event) {
         event.preventDefault();
-        author.name = state.name;
-        author.age = state.age;
-        author.books = state.books;
-        author.info = state.info;
+        // author.name = state.name;
+        // author.age = state.age;
+        // author.books = state.books;
+        // author.info = state.info;
+
+        author.name = stateName;
+        author.age = stateAge;
+        author.books = stateBooks;
+        author.info = stateInfo;
+
+        author2.name = stateName;
+        author2.age = stateAge;
+        author2.books = stateBooks;
+        author2.info = stateInfo;
+
+        console.log(' save ' + JSON.stringify(author) + ' ' + JSON.stringify(author2));
+
+        if(create) {
+            AuthorsProvider.create(author2);
+            console.log(' create complete ');
+        } else if(edit) {
+            AuthorsProvider.update(author);
+            console.log(' update complete ');
+        }
     }
 
     return (
