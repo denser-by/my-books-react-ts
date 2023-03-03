@@ -2,7 +2,7 @@ import AuthorImage1 from './../images/author1.gif';
 import AuthorImage2 from './../images/author2.gif';
 import AuthorImage3 from './../images/author3.gif';
 
-const authorItems = [
+let authorItems = [
     { id: 1, name: "Author1", books: [1, 3], info: "Author Description 1", age: 1999, photo: AuthorImage1 },
     { id: 2, name: "Author2", books: [2, 4], info: "Author Description 2", age: 2000, photo: AuthorImage2 },
     { id: 3, name: "Author3", books: [1, 3], info: "Author Description 3", age: 2001, photo: AuthorImage3 },
@@ -57,8 +57,9 @@ class AuthorsProvider {
     }
 
     static delete(id) {
-        var book = find(id);
-        authorItems.delete(book);
+        var author = find(id);
+        const authorIdx = authorItems.indexOf(author);
+        authorItems.splice(authorIdx, 1);
     }
 
     static newAuthor() {

@@ -11,7 +11,7 @@ import BookImage10 from './../images/10.jpg';
 import BookImage11 from './../images/11.jpg';
 import BookImage12 from './../images/12.jpg';
 
-const bookItems = [
+let bookItems = [
     { id: 1, name: "Book1", authors: [1, 5], info: "Book Description 1", year: 1999, cover_img: BookImage1 },
     { id: 2, name: "Book2", authors: [3, 5], info: "Book Description 2", year: 1995, cover_img: BookImage2 },
     { id: 3, name: "Book3", authors: [1, 3], info: "Book Description 3", year: 2001, cover_img: BookImage3 },
@@ -70,7 +70,8 @@ class BooksProvider {
 
     static delete(id) {
         var book = find(id);
-        bookItems.delete(book);
+        const bookIdx = bookItems.indexOf(book);
+        bookItems.splice(bookIdx, 1);
     }
 
     static newBook() {
