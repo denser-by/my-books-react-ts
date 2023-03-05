@@ -89,7 +89,7 @@ class AuthorsProvider {
             name: "",
             books: [],
             info: "",
-            age: 2000,
+            age: "",
             photo: ""
         };
         return newAuthor;

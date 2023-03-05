@@ -1,11 +1,11 @@
 .navBar {
-  background-color: silver;
+  background-color: goldenrod;
   height: 70px;
 }
 
 .navBarWrap {
   background-color: goldenrod;
-  border: 3px silver solid;
+  border: 3px goldenrod solid;
   width: 100%;
   height: 100%;
   margin: 3px;
@@ -13,7 +13,6 @@
   align-items: left;
   justify-content: left;
   padding-right: 50%;
-
 }
 
 .App {
@@ -100,8 +99,4 @@ p {
   width: 30px;
   background-color: black;
   height: 2px;
-}
-
-.open-btn {
-  background-color: brown;
 }

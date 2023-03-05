@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './authorpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
@@ -83,26 +83,26 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
             <span className="authorShape">
                 <span className='authorShapeHeader'>
                     <span className="picture">
-                        <img src={author.photo} />
+                        <img className="pictureSrc" src={author.photo} />
                     </span>
                     <span className="icons-right">
                         <span className="author-info">
-                            <span className="author-info-label">Author name:</span>
+                            <span className="author-info-label">Name</span>
                             <Input type="textarea" id="authorName" name="authorName" readOnly={!edit} placeholder="Author name"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={state.name} onChange={handleNameChange} />
                             <span className="fieldCurrent">{author.name}</span>
                         </span>
                         <span className="author-info">
-                            <span className="author-info-label">Born in:</span>
-                            <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="born in"
+                            <span className="author-info-label">Born</span>
+                            <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="Born in"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={state.age} onChange={handleAgeChange} />
                             <span className="fieldCurrent">{author.age}</span>
                         </span>
                         <span className="author-info">
-                            <span className="author-info-label">List of books:</span>
-                            <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="published books list"
+                            <span className="author-info-label">Publications</span>
+                            <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={state.books} onChange={handleBooksChange} />
                             <span className="fieldCurrent">{author.books}</span>
@@ -110,7 +110,7 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
                     </span>
                 </span>
                 <div className="author-info">
-                    <span className="author-info-label">Biography:</span>
+                    <span className="author-info-label">Biography</span>
                     <Input type="textarea" id="authorInfo" name="authorInfo" readOnly={!edit} placeholder="Short books related description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={state.info} onChange={handleInfoChange} />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './mainpage.css'
 import ContextMenu from '../../components/ContextMenu/ContextMenu';
 import BookPage from '../BookPage/BookPage';
@@ -148,8 +148,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     return (
         <div className="mainPage">
             <h4>{displayCurrent(selectedItem)}</h4>
-            <ContextMenu selectedItem={selectedItem} operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
-                pageRef={pageRef} setPageRef={setPageRef} />
+            <ContextMenu operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
+                setPageRef={setPageRef} />
 
             <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage create={true} edit={true} closeProc={bookEditorClose} /></span>
             <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage bookId={getId(pageRef)} edit={false} closeProc={bookEditorClose} /></span>
@@ -168,8 +168,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerate20BooksMsg()} answerYesProc={generate20BooksOk} answerNoProc={generate20BooksCancel} btnLabels={['Yes', 'No']} /></span>
 
             <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerate20AuthorsMsg()} answerYesProc={generate20AuthorsOk} answerNoProc={generate20AuthorsCancel} btnLabels={['Yes', 'No']} /></span>
-
-
 
             <span className={pageRef == "/search" ? "pageVisible" : "pageHidden"}><SearchPage /></span>
 

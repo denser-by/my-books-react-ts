@@ -98,7 +98,7 @@ class BooksProvider {
             name: "",
             authors: [],
             info: "",
-            year: 2000,
+            year: "",
             cover_img: ""
         };
         return newBook;

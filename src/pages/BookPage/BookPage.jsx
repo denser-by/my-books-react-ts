@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './bookpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
@@ -87,19 +87,19 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
             <span className="bookShape">
                 <span className='bookShapeHeader'>
                     <span className="picture">
-                        <img src={book.cover_img} />
+                        <img className="pictureSrc" src={book.cover_img} />
                     </span>
                     <span className="icons-right">
                         <span className="book-info">
-                            <span className="book-info-label">Book title:</span>
-                            <Input type="textarea" id="bookName" name="bookName" readOnly={!edit} placeholder="Book name with short description"
+                            <span className="book-info-label">Title</span>
+                            <Input type="textarea" id="bookName" name="bookName" readOnly={!edit} placeholder="Name of this fine book"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={state.name} onChange={handleNameChange}
                             />
                             <span className="fieldCurrent">{book.name}</span>
                         </span>
                         <span className="book-info">
-                            <span className="book-info-label">Year of publication:</span>
+                            <span className="book-info-label">Year</span>
                             <Input type="textarea" id="bookYear" name="bookYear" readOnly={!edit} placeholder="Year of publication"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={state.year} onChange={handleYearChange}
@@ -107,8 +107,8 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                             <span className="fieldCurrent">{book.year}</span>
                         </span>
                         <span className="book-info">
-                            <span className="book-info-label">Authors:</span>
-                            <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authorship entry"
+                            <span className="book-info-label">Authors</span>
+                            <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={state.authors} onChange={handleAuthorsChange} />
                             <span className="fieldCurrent">{book.authors}</span>
@@ -116,8 +116,8 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                     </span>
                 </span>
                 <div className="book-info">
-                    <span className="book-info-label">Book description:</span>
-                    <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Remarkable book notes"
+                    <span className="book-info-label">Description</span>
+                    <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Short content description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={state.info} onChange={handleInfoChange} />
                     <div className="fieldCurrent">{book.info}</div>

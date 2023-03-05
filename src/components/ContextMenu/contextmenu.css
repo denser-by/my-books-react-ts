@@ -1,30 +1,30 @@
 .leftPanel {
-    background-color: silver;
+    background-color: #ffdf8c;
     position: absolute;
     left: 0;
-    width: 15vw;
-    height: 100vh;
+    width: 15%;
+    height: 100%;
     margin-top: 0;
     animation-duration: 0.5s;
-
 }
 
 .contextOp {
     font-weight: 800;
     cursor: pointer;
-    border: 2px solid chartreuse;
+    border: 3px solid #2788d2;
     border-radius: 15px;
     margin: 3px;
+    color: #103755;
 }
 
 .contextOp.above {
-    background-color: aquamarine;
-    color: darkblue;
-    border: 2px solid darkblue;
+    background-color: #fefaef;
+    color: #4e3f30;
+    border: 3px solid #4e3f30;
 }
 
 .contextOp.selected {
-    background-color: brown;
-    color: darkblue;
-    border: 2px solid darkblue;
+    background-color: #4e3f30;
+    color: #ffdf8c;
+    border: 3px solid #fefaef;
 }

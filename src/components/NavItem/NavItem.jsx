@@ -1,4 +1,3 @@
-import React from "react";
 import './navitem.css'
 
 const NavItem = ({ icon, text, selectedItem, setSelectedItem }) => {

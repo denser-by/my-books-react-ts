@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './contextmenu.css'
 
-const ContextMenu = ({ selectedItem, operations, pageRef, setPageRef }) => {
-
+const ContextMenu = ({ operations, setPageRef }) => {
     const [aboutSelect, setAboutSelect] = useState("")
     const [curSelect, setCurSelect] = useState("")
 
@@ -24,8 +23,10 @@ const ContextMenu = ({ selectedItem, operations, pageRef, setPageRef }) => {
             <ul>
                 {operations.map(op =>
                     <li id={op.href}
-                        className={curSelect.id == op.href ? "contextOp selected" : (aboutSelect.id == op.name ? "contextOp above" : "contextOp")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>{op.name}</li>
+                        // className={aboutSelect.id == op.href && curSelect.id == op.href ? "contextOp selected" : (aboutSelect.id == op.href ? "contextOp above" : (curSelect.id == op.href ? "contextOp selected" : "contextOp"))}
+                        className={aboutSelect.id == op.href ? "contextOp above" : (curSelect.id == op.href ? "contextOp selected" : "contextOp")}
+                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>{op.name}
+                    </li>
                 )}
             </ul>
         </span>

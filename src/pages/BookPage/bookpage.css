@@ -1,9 +1,10 @@
 .bookShape {
-    border: solid 5px blue;
+    border: solid 5px #1c6196;
     border-radius: 15px;
     padding: 20px;
     display: inline-flex;
     flex-direction: column;
+    background-color: #f8f4e4;
 }
 
 .bookShapeHeader {
@@ -27,8 +28,8 @@ input {
 }
 
 .book-info {
-    background-color: blue;
-    border: 4px blue solid;
+    background-color: #1c6196;
+    border: 4px #1c6196 solid;
     border-radius: 10px;
     margin: 2px;
     display: inline-flex;
