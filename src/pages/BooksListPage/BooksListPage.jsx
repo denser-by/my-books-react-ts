@@ -4,16 +4,16 @@ import './../../components/ContextMenu/contextmenu.css';
 import axios from 'axios';
 import BooksProvider from '../../model/BooksProvider';
 
-const BooksListPage = ({ pageRef, setPageRef }) => {
-    const [aboutSelect, setAboutSelect] = useState("")
+const BooksListPage = ({ setPageRef }) => {
+    const [above, setAbove] = useState("")
     const [curSelect, setCurSelect] = useState("")
 
     function mouseOver(e) {
-        setAboutSelect(e.target)
+        setAbove(e.target)
     }
 
     function mouseOut() {
-        setAboutSelect("")
+        setAbove("")
     }
 
     function mouseClick(e) {
@@ -38,27 +38,56 @@ const BooksListPage = ({ pageRef, setPageRef }) => {
 
     return (
         <span className='booksList'>
-            {bookItems.map(book =>
-                <div className='booksListItem'>
-                    <span className='booksInfoItem'>Name: {book.name}</span>
-                    {/* <span className='booksInfoSpace'>A{allRepos}A</span> */}
-                    <span className='booksInfoSpace'>&nbsp;</span>
-                    {/* <span className='booksInfoSpace'>B{allData}B</span> */}
-                    <span className='booksInfoItem'>Published: {book.year}</span>
-
-                    <span id={"/viewBook?id=" + book.id}
-                        className={curSelect.id == "/viewBook?id=" + book.id ? "contextOp selected" : (aboutSelect.id == "/viewBook?id=" + book.id ? "contextOp above" : "contextOp")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>View</span>
-
-                    <span id={"/editBook?id=" + book.id}
-                        className={curSelect.id == "/editBook?id=" + book.id ? "contextOp selected" : (aboutSelect.id == "/editBook?id=" + book.id ? "contextOp above" : "contextOp")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>Edit</span>
-
-                    <span id={"/deleteBook?id=" + book.id}
-                        className={curSelect.id == "/deleteBook?id=" + book.id ? "contextOp selected" : (aboutSelect.id == "/deleteBook?id=" + book.id ? "contextOp above" : "contextOp")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>Delete</span>
-                </div>
-            )}
+            <table>
+                <thead>
+                    <tr>
+                        <th className='booksInfoHeader'>
+                            <span>Name</span>
+                        </th>
+                        <th className='booksInfoHeader'>
+                            <span>Published</span>
+                        </th>
+                        <th className='booksInfoHeader'>
+                            <span>View</span>
+                        </th>
+                        <th className='booksInfoHeader'>
+                            <span>Edit</span>
+                        </th>
+                        <th className='booksInfoHeader'>
+                            <span>Delete</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {bookItems.map(book =>
+                        <tr className='booksListItem' key={book.id}>
+                            <th className='booksInfoItem'>{book.name}</th>
+                            <th className='booksInfoItem'>{book.year}</th>
+                            <th>
+                                <span id={"/viewBook?id=" + book.id}
+                                    className={curSelect.id == "/viewBook?id=" + book.id ? "contextOp selected" : (above.id == "/viewBook?id=" + book.id ? "contextOp above" : "contextOp")}
+                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+                                    View
+                                </span>
+                            </th>
+                            <th>
+                                <span id={"/editBook?id=" + book.id}
+                                    className={curSelect.id == "/editBook?id=" + book.id ? "contextOp selected" : (above.id == "/editBook?id=" + book.id ? "contextOp above" : "contextOp")}
+                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+                                    Edit
+                                </span>
+                            </th>
+                            <th>
+                                <span id={"/deleteBook?id=" + book.id}
+                                    className={curSelect.id == "/deleteBook?id=" + book.id ? "contextOp selected" : (above.id == "/deleteBook?id=" + book.id ? "contextOp above" : "contextOp")}
+                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+                                    Delete
+                                </span>
+                            </th>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
         </span>
     );
 };

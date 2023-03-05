@@ -1,13 +1,28 @@
 .authorsList {
     display: inline-flex;
     flex-direction: column;
+    border: 2px solid #bc4404;
+    border-radius: 4px;
+    margin: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .authorsListItem {
-    background-color: lightblue;
+    background-color: #fefaef;
     border-radius: 3px;
     margin: 2px;
     color: black;
+    border-bottom: 1px solid #eeee0b;
+}
+
+.authorsInfoHeader {
+    background-color: #bc4404;
+    border: solid 3px #fefaef;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    color: white;
 }
 
 .authorsInfoItem {

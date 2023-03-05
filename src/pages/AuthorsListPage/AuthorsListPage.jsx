@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './authorslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import AuthorsProvider from '../../model/AuthorsProvider';
 
-const AuthorsListPage = ({ pageRef, setPageRef }) => {
-    const [aboutSelect, setAboutSelect] = useState("")
+const AuthorsListPage = ({ setPageRef }) => {
+    const [above, setAbove] = useState("")
     const [curSelect, setCurSelect] = useState("")
 
     function mouseOver(e) {
-        setAboutSelect(e.target)
+        setAbove(e.target)
     }
 
     function mouseOut() {
-        setAboutSelect("")
+        setAbove("")
     }
 
     function mouseClick(e) {
@@ -24,24 +24,50 @@ const AuthorsListPage = ({ pageRef, setPageRef }) => {
 
     return (
         <span className='authorsList'>
-            {authorItems.map(author =>
-                <div className='authorsListItem'>
-                    <span className='authorsInfoItem'>Name: {author.name}</span>
-                    <span className='authorsInfoSpace'>&nbsp;</span>
-                    <span className='authorsInfoItem'>Since: {author.age}</span>
-                    <span className='authorsInfoSpace'>&nbsp;</span>
-                    <span className='authorsInfoItem'>Amount of books: {author.numOfBooks}</span>
-
-                    <span id={"/viewAuthor?id=" + author.id}
-                        className={curSelect.id == "/viewAuthor?id=" + author.id ? "contextOp selected" : (aboutSelect.id == "/viewAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>View</span>
-
-                    <span id={"/editAuthor?id=" + author.id}
-                        className={curSelect.id == "/editAuthor?id=" + author.id ? "contextOp selected" : (aboutSelect.id == "/editAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>Edit</span>
-
-                </div>
-            )}
+            <table>
+                <thead>
+                    <tr>
+                        <th className='authorsInfoHeader'>
+                            <span>Name</span>
+                        </th>
+                        <th className='authorsInfoHeader'>
+                            <span>Since</span>
+                        </th>
+                        <th className='authorsInfoHeader'>
+                            <span>Amount</span>
+                        </th>
+                        <th className='authorsInfoHeader'>
+                            <span>View</span>
+                        </th>
+                        <th className='authorsInfoHeader'>
+                            <span>Edit</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {authorItems.map(author =>
+                        <tr className='authorsListItem' key={author.id}>
+                            <th className='authorsListItem'>{author.name}</th>
+                            <th className='authorsListItem'>{author.age}</th>
+                            <th className='authorsListItem'>{author.numOfBooks}</th>
+                            <th>
+                                <span id={"/viewAuthor?id=" + author.id}
+                                    className={curSelect.id == "/viewAuthor?id=" + author.id ? "contextOp selected" : (above.id == "/viewAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
+                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+                                    View
+                                </span>
+                            </th>
+                            <th>
+                                <span id={"/editAuthor?id=" + author.id}
+                                    className={curSelect.id == "/editAuthor?id=" + author.id ? "contextOp selected" : (above.id == "/editAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
+                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+                                    Edit
+                                </span>
+                            </th>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
         </span>
     );
 };
