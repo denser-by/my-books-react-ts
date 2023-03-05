@@ -1,13 +1,14 @@
 .confirmShape {
     color: black;
+    font-weight: 700;
     text-align: left;
     font-size: xx-large;
-    border: solid 5px red;
+    border: solid 5px #4e3f30;
     border-radius: 15px;
     padding: 20px;
     display: inline-flex;
     flex-direction: column;
-    background-color: darkgray;
+    background-color: #0ca5b0;
 }
 
 .confirmMessage {
@@ -24,7 +25,7 @@
 .contextOpYes {
     font-weight: 800;
     cursor: pointer;
-    border: solid 2px red;
+    border: solid 4px red;
     border-radius: 15px;
     margin: 3px;
     width: 120px;
@@ -33,20 +34,14 @@
 
 .contextOpYes.above {
     background-color: aquamarine;
-    color: darkblue;
+    color: red;
     border: 4px solid red;
     width: 190px;
 }
 
-.contextOpYes.selected {
-    background-color: brown;
-    color: darkblue;
-    border: 2px solid darkblue;
-}
-
 .contextOpNo {
     cursor: pointer;
-    border: solid 2px gray;
+    border: solid 4px gray;
     border-radius: 15px;
     margin: 3px;
     width: 120px;
@@ -58,10 +53,4 @@
     color: darkblue;
     border: 4px solid darkblue;
     width: 190px;
-}
-
-.contextOpNo.selected {
-    background-color: brown;
-    color: darkblue;
-    border: 2px solid darkblue;
 }

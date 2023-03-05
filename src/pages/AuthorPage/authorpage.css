@@ -1,5 +1,5 @@
 .authorShape {
-    border: solid 5px brown;
+    border: solid 5px #bc4404;
     border-radius: 15px;
     padding: 20px;
     display: inline-flex;
@@ -27,8 +27,8 @@ input {
 }
 
 .author-info {
-    background-color: brown;
-    border: 4px brown solid;
+    background-color: #bc4404;
+    border: 4px #bc4404 solid;
     border-radius: 10px;
     margin: 2px;
     display: inline-flex;

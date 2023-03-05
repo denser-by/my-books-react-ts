@@ -1,5 +1,5 @@
 .bookShape {
-    border: solid 5px #1c6196;
+    border: solid 5px #027077;
     border-radius: 15px;
     padding: 20px;
     display: inline-flex;
@@ -28,8 +28,8 @@ input {
 }
 
 .book-info {
-    background-color: #1c6196;
-    border: 4px #1c6196 solid;
+    background-color: #027077;
+    border: 4px #027077 solid;
     border-radius: 10px;
     margin: 2px;
     display: inline-flex;

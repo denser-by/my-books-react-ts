@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './confirmationpage.css';
 
 const ConfirmationPage = ({ question, answerYesProc, answerNoProc, param, btnLabels }) => {
-    const [aboutSelect, setAboutSelect] = useState("")
-    const [curSelect, setCurSelect] = useState("")
+    const [above, setAbove] = useState("");
 
     function mouseOver(e) {
-        setAboutSelect(e.target)
+        setAbove(e.target);
     }
 
     function mouseOut() {
-        setAboutSelect("")
+        setAbove("");
     }
 
     function mouseClickYes(e) {
-        answerYesProc(param)
+        answerYesProc(param);
     }
 
     function mouseClickNo() {
-        answerNoProc()
+        answerNoProc();
     }
 
     return (
@@ -28,14 +27,16 @@ const ConfirmationPage = ({ question, answerYesProc, answerNoProc, param, btnLab
             </div>
             <div>
                 <span className="confirmActions">
-                    <span
-                        id={"yesButton"}
-                        className={curSelect.id == "yesButton" ? "contextOpYes selected" : (aboutSelect.id == "yesButton" ? "contextOpYes above" : "contextOpYes")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClickYes}>{btnLabels[0]}</span>
-                    <span
-                        id={"noButton"}
-                        className={curSelect.id == "noButton" ? "contextOpNo selected" : (aboutSelect.id == "noButton" ? "contextOpNo above" : "contextOpNo")}
-                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClickNo}>{btnLabels[1]}</span>
+                    <span id={"yesButton"}
+                        className={above.id == "yesButton" ? "contextOpYes above" : "contextOpYes"}
+                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClickYes}>
+                        {btnLabels[0]}
+                    </span>
+                    <span id={"noButton"}
+                        className={above.id == "noButton" ? "contextOpNo above" : "contextOpNo"}
+                        onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClickNo}>
+                        {btnLabels[1]}
+                    </span>
                 </span>
             </div>
         </span>
