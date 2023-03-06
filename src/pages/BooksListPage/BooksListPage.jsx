@@ -4,6 +4,12 @@ import './../../components/ContextMenu/contextmenu.css';
 import axios from 'axios';
 import BooksProvider from '../../model/BooksProvider';
 
+import { TablePagination } from 'react-pagination-table';
+
+import { CompactTable } from '@table-library/react-table-library/compact';
+import { useTheme } from '@table-library/react-table-library/theme';
+import { getTheme } from '@table-library/react-table-library/baseline';
+
 const BooksListPage = ({ setPageRef }) => {
     const [above, setAbove] = useState("")
     const [curSelect, setCurSelect] = useState("")
@@ -36,8 +42,67 @@ const BooksListPage = ({ setPageRef }) => {
 
     let bookItems = BooksProvider.all();
 
+
+    // bookItems.map(book => {
+    //     book.view = "<span id={'/viewBook?id=' + book.id} className={curSelect.id == '/viewBook?id=' + book.id ? 'contextOp selected' : (above.id == '/viewBook?id=' + book.id ? 'contextOp above' : 'contextOp')} onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>View</span>";
+    // });
+
+    // const theme = useTheme(getTheme());
+
+    // const COLUMNS = [
+    //     { label: 'Name', renderCell: (book) => book.name },
+    //     { label: 'Published', renderCell: (book) => book.year },
+    //     {
+    //         label: 'View',
+    //         renderCell: (book) => {
+    //             <span id={"/viewBook?id=" + book.id}
+    //                 className={curSelect.id == "/viewBook?id=" + book.id ? "contextOp selected" : (above.id == "/viewBook?id=" + book.id ? "contextOp above" : "contextOp")}
+    //                 onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+    //                 View
+    //             </span>
+    //         }
+    //     },
+    //     {
+    //         label: 'Edit',
+    //         renderCell: (book) => {
+    //             <span id={"/editBook?id=" + book.id}
+    //                 className={curSelect.id == "/editBook?id=" + book.id ? "contextOp selected" : (above.id == "/editBook?id=" + book.id ? "contextOp above" : "contextOp")}
+    //                 onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+    //                 Edit
+    //             </span>
+    //         }
+    //     },
+    //     {
+    //         label: 'Delete',
+    //         renderCell: (book) => {
+    //             <span id={"/deleteBook?id=" + book.id}
+    //                 className={curSelect.id == "/deleteBook?id=" + book.id ? "contextOp selected" : (above.id == "/deleteBook?id=" + book.id ? "contextOp above" : "contextOp")}
+    //                 onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+    //                 Delete
+    //             </span>
+    //         }
+    //     },
+    // ];
+
     return (
         <span className='booksList'>
+
+
+            {/* <CompactTable columns={COLUMNS} data={bookItems} theme={theme} /> */}
+
+
+            {/* <TablePagination 
+    // title="Table with pagination"
+    // subTitle="Books table"
+    headers={["Name", "Published", "View", "Edit", "Delete"]}
+    data={ bookItems }
+    columns="name.year.view.edit.delete"
+    perPageItemCount={5}
+    totalCount= {bookItems.length}
+    arrayOption={ [["size", 'all', ' ']]} /> */}
+
+
+
             <table>
                 <thead>
                     <tr>

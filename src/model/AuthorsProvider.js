@@ -101,7 +101,7 @@ class AuthorsProvider {
             1, 1, 1, 1, 1,
             1, 1, 1, 1, 1].map(time => {
                 let author = this.newAuthor();
-                author.name = "Book_" + author.id;
+                author.name = "Authors_" + author.id;
                 author.books = author.id % 2 == 0 ? [1, 2, 3] : [4, 5, 6];
                 author.info = "Description_" + author.id;
                 author.age = author.id % 2 == 0 ? 2002 : 2004;
