@@ -16,6 +16,12 @@
     border-bottom: 1px solid #eeee0b;
 }
 
+.booksListHeader {
+    text-align: center;
+    align-items: center;
+    color: white;
+}
+
 .booksInfoHeader {
     background-color: #027077;
     border: solid 3px #fefaef;

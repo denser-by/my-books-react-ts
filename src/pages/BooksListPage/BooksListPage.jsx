@@ -74,7 +74,7 @@ const BooksListPage = ({ setPageRef }) => {
                 Header: 'Edit',
                 accessor: 'edit',
                 Cell: (row: CellProps<any>) => {
-                    const obj = row.cell.value;
+                    const obj = "" + row.cell.value;
                     return <span id={obj}
                         className={aboveBook === obj ? "contextOp above" : "contextOp"}
                         onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
@@ -85,7 +85,7 @@ const BooksListPage = ({ setPageRef }) => {
                 Header: 'Delete',
                 accessor: 'delete',
                 Cell: (row: CellProps<any>) => {
-                    const obj = row.cell.value;
+                    const obj = "" + row.cell.value;
                     return <span id={obj}
                         className={aboveBook === obj ? "contextOp above" : "contextOp"}
                         onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
@@ -98,7 +98,8 @@ const BooksListPage = ({ setPageRef }) => {
 
     return (
         <div className='booksList'>
-            <TableCompon columnItems={columnItems} dataItems={bookItems} defPage={15} />
+            <TableCompon columnItems={columnItems} dataItems={bookItems} defPage={15}
+                cssRowH={'booksListHeader'} cssCellH={'booksInfoHeader'} cssRow={'booksListItem'} cssCell={'booksInfoItem'} />
         </div>
     );
 };

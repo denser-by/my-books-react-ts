@@ -1,4 +1,3 @@
-import React from "react";
 import { useTable, usePagination } from 'react-table';
 import './tablecompon.css';
 
@@ -49,14 +48,14 @@ function TablePages({ pageSizeCurrent, setPageSizeCurrent }) {
     );
 }
 
-function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepareRow }) {
+function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepareRow, cssRowH, cssCellH, cssRow, cssCell }) {
     return (
         <table {...getTableProps()}>
             <thead>
                 {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                    <tr {...headerGroup.getHeaderGroupProps()} className={cssRowH}>
                         {headerGroup.headers.map(column => (
-                            <th className='booksInfoHeader' {...column.getHeaderProps()}>
+                            <th {...column.getHeaderProps()} className={cssCellH}>
                                 {column.render('Header')}
                             </th>
                         ))}
@@ -67,9 +66,9 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
                 {page.map((row, i) => {
                     prepareRow(row)
                     return (
-                        <tr {...row.getRowProps()} className='booksListItem'>
+                        <tr {...row.getRowProps()} className={cssRow}>
                             {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()} className='booksInfoItem'
+                                return <td {...cell.getCellProps()} className={cssCell}
                                     style={{
                                         padding: '1px',
                                         margin: '1px',
@@ -84,8 +83,7 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
     );
 }
 
-function TableCompon({ columnItems, dataItems, defPage }) {
-    // Use the state and functions returned from useTable to build your UI
+function TableCompon({ columnItems, dataItems, defPage, cssRowH, cssCellH, cssRow, cssCell }) {
     let columns = columnItems;
     let data = dataItems;
     const {
@@ -116,7 +114,7 @@ function TableCompon({ columnItems, dataItems, defPage }) {
         <span className="entireTable">
             <span className="tableHeaderBody">
                 <TableItem getTableProps={getTableProps} headerGroups={headerGroups} getTableBodyProps={getTableBodyProps}
-                    page={page} prepareRow={prepareRow} />
+                    page={page} prepareRow={prepareRow} cssRowH={cssRowH} cssCellH={cssCellH} cssRow={cssRow} cssCell={cssCell} />
             </span>
             <span className="tableFooter">
                 <TablePageSeqence canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageCount={pageCount} pageIndex={pageIndex}
