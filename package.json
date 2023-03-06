@@ -23,7 +23,9 @@
     "react-dom": "^18.2.0",
     "react-pagination-table": "^2.0.2",
     "react-redux": "^8.0.5",
+    "react-router": "^6.8.2",
     "react-scripts": "5.0.1",
+    "react-table": "^7.8.0",
     "reactstrap": "^9.1.6",
     "redux-devtools-extension": "^2.13.9",
     "sequelize": "^6.29.0",
@@ -50,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-table": "^7.7.14"
   }
 }

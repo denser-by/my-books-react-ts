@@ -41,9 +41,15 @@ let bookItems = [
     { id: 27, name: "Book27", authors: [1, 5], info: "Book Description 27", year: 2010, cover_img: BookImage3 },
     { id: 28, name: "Book28", authors: [3, 5], info: "Book Description 28", year: 1992, cover_img: BookImage4 },
     { id: 29, name: "Book29", authors: [1, 3], info: "Book Description 29", year: 1995, cover_img: BookImage5 },
-    { id: 30, name: "Book30", authors: [1, 3, 5], info: "Book Description 30", year: 2011, cover_img: BookImage6 }
+    { id: 30, name: "Book30", authors: [1, 3, 5], info: "Book Description 30", year: 2011, cover_img: BookImage6 },
+    { id: 31, name: "Book31", authors: [4], info: "Book Description 31", year: 2003, cover_img: BookImage12 },
+    { id: 32, name: "Book32", authors: [4, 5], info: "Book Description 32", year: 2004, cover_img: BookImage1 },
+    { id: 33, name: "Book33", authors: [4, 6, 7], info: "Book Description 33", year: 2001, cover_img: BookImage2 },
+    { id: 34, name: "Book34", authors: [4, 5], info: "Book Description 34", year: 2010, cover_img: BookImage3 },
+    { id: 35, name: "Book35", authors: [4, 6], info: "Book Description 35", year: 1992, cover_img: BookImage4 },
+    { id: 36, name: "Book36", authors: [4, 3], info: "Book Description 36", year: 2004, cover_img: BookImage5 },
+    { id: 37, name: "Book37", authors: [4, 6, 7], info: "Book Description 37", year: 2011, cover_img: BookImage6 }
 ];
-
 
 class BooksProvider {
 

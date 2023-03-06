@@ -4,19 +4,19 @@ import './../../components/ContextMenu/contextmenu.css';
 import AuthorsProvider from '../../model/AuthorsProvider';
 
 const AuthorsListPage = ({ setPageRef }) => {
-    const [above, setAbove] = useState("")
-    const [curSelect, setCurSelect] = useState("")
+    const [aboveAuthor, setAboveAuthor] = useState("")
+    const [curSelectAuthor, setCurSelectAuthor] = useState("")
 
-    function mouseOver(e) {
-        setAbove(e.target)
+    function mouseOverAuthor(e) {
+        setAboveAuthor(e.target)
     }
 
-    function mouseOut() {
-        setAbove("")
+    function mouseOutAuthor() {
+        setAboveAuthor("")
     }
 
-    function mouseClick(e) {
-        setCurSelect(e.target)
+    function mouseClickAuthor(e) {
+        setCurSelectAuthor(e.target)
         setPageRef(e.target.id)
     }
 
@@ -52,15 +52,15 @@ const AuthorsListPage = ({ setPageRef }) => {
                             <td className='authorsListItem'>{author.numOfBooks}</td>
                             <td>
                                 <span id={"/viewAuthor?id=" + author.id}
-                                    className={curSelect.id == "/viewAuthor?id=" + author.id ? "contextOp selected" : (above.id == "/viewAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
-                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+                                    className={curSelectAuthor.id == "/viewAuthor?id=" + author.id ? "contextOp selected" : (aboveAuthor.id == "/viewAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
+                                    onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}>
                                     View
                                 </span>
                             </td>
                             <td>
                                 <span id={"/editAuthor?id=" + author.id}
-                                    className={curSelect.id == "/editAuthor?id=" + author.id ? "contextOp selected" : (above.id == "/editAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
-                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
+                                    className={curSelectAuthor.id == "/editAuthor?id=" + author.id ? "contextOp selected" : (aboveAuthor.id == "/editAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
+                                    onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}>
                                     Edit
                                 </span>
                             </td>

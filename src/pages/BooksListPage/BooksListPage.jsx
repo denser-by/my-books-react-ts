@@ -1,29 +1,30 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './bookslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import axios from 'axios';
 import BooksProvider from '../../model/BooksProvider';
-
-import { TablePagination } from 'react-pagination-table';
-
-import { CompactTable } from '@table-library/react-table-library/compact';
-import { useTheme } from '@table-library/react-table-library/theme';
-import { getTheme } from '@table-library/react-table-library/baseline';
+import TableCompon from '../../components/TableCompon.js';
 
 const BooksListPage = ({ setPageRef }) => {
-    const [above, setAbove] = useState("")
-    const [curSelect, setCurSelect] = useState("")
+    const [aboveBook2, setAboveBook2] = useState("")
+    const [curSelectBook, setCurSelectBook] = useState("")
 
-    function mouseOver(e) {
-        setAbove(e.target)
+    let aboveBook = '';
+    function setAboveBook(param) {
+        aboveBook = param;
+        setAboveBook2(param)
     }
 
-    function mouseOut() {
-        setAbove("")
+    function mouseOverBook(e) {
+        setAboveBook(e.target.id)
     }
 
-    function mouseClick(e) {
-        setCurSelect(e.target)
+    function mouseOutBook() {
+        setAboveBook("")
+    }
+
+    function mouseClickBook(e) {
+        setCurSelectBook(e.target)
         setPageRef(e.target.id)
     }
 
@@ -42,118 +43,63 @@ const BooksListPage = ({ setPageRef }) => {
 
     let bookItems = BooksProvider.all();
 
+    bookItems.map(book => {
+        book.view = "/viewBook?id=" + book.id;
+        book.edit = "/editBook?id=" + book.id;
+        book.delete = "/deleteBook?id=" + book.id;
+    });
 
-    // bookItems.map(book => {
-    //     book.view = "<span id={'/viewBook?id=' + book.id} className={curSelect.id == '/viewBook?id=' + book.id ? 'contextOp selected' : (above.id == '/viewBook?id=' + book.id ? 'contextOp above' : 'contextOp')} onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>View</span>";
-    // });
-
-    // const theme = useTheme(getTheme());
-
-    // const COLUMNS = [
-    //     { label: 'Name', renderCell: (book) => book.name },
-    //     { label: 'Published', renderCell: (book) => book.year },
-    //     {
-    //         label: 'View',
-    //         renderCell: (book) => {
-    //             <span id={"/viewBook?id=" + book.id}
-    //                 className={curSelect.id == "/viewBook?id=" + book.id ? "contextOp selected" : (above.id == "/viewBook?id=" + book.id ? "contextOp above" : "contextOp")}
-    //                 onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
-    //                 View
-    //             </span>
-    //         }
-    //     },
-    //     {
-    //         label: 'Edit',
-    //         renderCell: (book) => {
-    //             <span id={"/editBook?id=" + book.id}
-    //                 className={curSelect.id == "/editBook?id=" + book.id ? "contextOp selected" : (above.id == "/editBook?id=" + book.id ? "contextOp above" : "contextOp")}
-    //                 onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
-    //                 Edit
-    //             </span>
-    //         }
-    //     },
-    //     {
-    //         label: 'Delete',
-    //         renderCell: (book) => {
-    //             <span id={"/deleteBook?id=" + book.id}
-    //                 className={curSelect.id == "/deleteBook?id=" + book.id ? "contextOp selected" : (above.id == "/deleteBook?id=" + book.id ? "contextOp above" : "contextOp")}
-    //                 onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
-    //                 Delete
-    //             </span>
-    //         }
-    //     },
-    // ];
+    const columnItems = React.useMemo(
+        () => [
+            {
+                Header: 'Name',
+                accessor: 'name',
+            },
+            {
+                Header: 'Published',
+                accessor: 'year',
+            },
+            {
+                Header: 'View',
+                accessor: 'view',
+                Cell: (row: CellProps<any>) => {
+                    const obj = "" + row.cell.value;
+                    return <span id={obj}
+                        className={aboveBook === obj ? "contextOp above" : "contextOp"}
+                        onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
+                    >View</span>;
+                },
+            },
+            {
+                Header: 'Edit',
+                accessor: 'edit',
+                Cell: (row: CellProps<any>) => {
+                    const obj = row.cell.value;
+                    return <span id={obj}
+                        className={aboveBook === obj ? "contextOp above" : "contextOp"}
+                        onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
+                    >Edit</span>;
+                },
+            },
+            {
+                Header: 'Delete',
+                accessor: 'delete',
+                Cell: (row: CellProps<any>) => {
+                    const obj = row.cell.value;
+                    return <span id={obj}
+                        className={aboveBook === obj ? "contextOp above" : "contextOp"}
+                        onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
+                    >Delete</span>;
+                },
+            },
+        ],
+        []
+    )
 
     return (
-        <span className='booksList'>
-
-
-            {/* <CompactTable columns={COLUMNS} data={bookItems} theme={theme} /> */}
-
-
-            {/* <TablePagination 
-    // title="Table with pagination"
-    // subTitle="Books table"
-    headers={["Name", "Published", "View", "Edit", "Delete"]}
-    data={ bookItems }
-    columns="name.year.view.edit.delete"
-    perPageItemCount={5}
-    totalCount= {bookItems.length}
-    arrayOption={ [["size", 'all', ' ']]} /> */}
-
-
-
-            <table>
-                <thead>
-                    <tr>
-                        <th className='booksInfoHeader'>
-                            <span>Name</span>
-                        </th>
-                        <th className='booksInfoHeader'>
-                            <span>Published</span>
-                        </th>
-                        <th className='booksInfoHeader'>
-                            <span>View</span>
-                        </th>
-                        <th className='booksInfoHeader'>
-                            <span>Edit</span>
-                        </th>
-                        <th className='booksInfoHeader'>
-                            <span>Delete</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {bookItems.map(book =>
-                        <tr className='booksListItem' key={book.id}>
-                            <td className='booksInfoItem'>{book.name}</td>
-                            <td className='booksInfoItem'>{book.year}</td>
-                            <td>
-                                <span id={"/viewBook?id=" + book.id}
-                                    className={curSelect.id == "/viewBook?id=" + book.id ? "contextOp selected" : (above.id == "/viewBook?id=" + book.id ? "contextOp above" : "contextOp")}
-                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
-                                    View
-                                </span>
-                            </td>
-                            <td>
-                                <span id={"/editBook?id=" + book.id}
-                                    className={curSelect.id == "/editBook?id=" + book.id ? "contextOp selected" : (above.id == "/editBook?id=" + book.id ? "contextOp above" : "contextOp")}
-                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
-                                    Edit
-                                </span>
-                            </td>
-                            <td>
-                                <span id={"/deleteBook?id=" + book.id}
-                                    className={curSelect.id == "/deleteBook?id=" + book.id ? "contextOp selected" : (above.id == "/deleteBook?id=" + book.id ? "contextOp above" : "contextOp")}
-                                    onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
-                                    Delete
-                                </span>
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        </span>
+        <div className='booksList'>
+            <TableCompon columnItems={columnItems} dataItems={bookItems} defPage={15} />
+        </div>
     );
 };
 
