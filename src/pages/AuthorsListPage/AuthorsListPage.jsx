@@ -47,23 +47,23 @@ const AuthorsListPage = ({ setPageRef }) => {
                 <tbody>
                     {authorItems.map(author =>
                         <tr className='authorsListItem' key={author.id}>
-                            <th className='authorsListItem'>{author.name}</th>
-                            <th className='authorsListItem'>{author.age}</th>
-                            <th className='authorsListItem'>{author.numOfBooks}</th>
-                            <th>
+                            <td className='authorsListItem'>{author.name}</td>
+                            <td className='authorsListItem'>{author.age}</td>
+                            <td className='authorsListItem'>{author.numOfBooks}</td>
+                            <td>
                                 <span id={"/viewAuthor?id=" + author.id}
                                     className={curSelect.id == "/viewAuthor?id=" + author.id ? "contextOp selected" : (above.id == "/viewAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
                                     onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
                                     View
                                 </span>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <span id={"/editAuthor?id=" + author.id}
                                     className={curSelect.id == "/editAuthor?id=" + author.id ? "contextOp selected" : (above.id == "/editAuthor?id=" + author.id ? "contextOp above" : "contextOp")}
                                     onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
                                     Edit
                                 </span>
-                            </th>
+                            </td>
                         </tr>
                     )}
                 </tbody>

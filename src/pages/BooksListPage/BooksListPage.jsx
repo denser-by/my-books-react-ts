@@ -126,29 +126,29 @@ const BooksListPage = ({ setPageRef }) => {
                 <tbody>
                     {bookItems.map(book =>
                         <tr className='booksListItem' key={book.id}>
-                            <th className='booksInfoItem'>{book.name}</th>
-                            <th className='booksInfoItem'>{book.year}</th>
-                            <th>
+                            <td className='booksInfoItem'>{book.name}</td>
+                            <td className='booksInfoItem'>{book.year}</td>
+                            <td>
                                 <span id={"/viewBook?id=" + book.id}
                                     className={curSelect.id == "/viewBook?id=" + book.id ? "contextOp selected" : (above.id == "/viewBook?id=" + book.id ? "contextOp above" : "contextOp")}
                                     onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
                                     View
                                 </span>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <span id={"/editBook?id=" + book.id}
                                     className={curSelect.id == "/editBook?id=" + book.id ? "contextOp selected" : (above.id == "/editBook?id=" + book.id ? "contextOp above" : "contextOp")}
                                     onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
                                     Edit
                                 </span>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <span id={"/deleteBook?id=" + book.id}
                                     className={curSelect.id == "/deleteBook?id=" + book.id ? "contextOp selected" : (above.id == "/deleteBook?id=" + book.id ? "contextOp above" : "contextOp")}
                                     onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>
                                     Delete
                                 </span>
-                            </th>
+                            </td>
                         </tr>
                     )}
                 </tbody>
