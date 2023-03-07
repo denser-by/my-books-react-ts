@@ -49,6 +49,10 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
         setState({ info: event.target.value });
     }
 
+    function onImageUploadViewMode() {
+        console.log('no editing');
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
         // author.name = state.name;
@@ -81,11 +85,13 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
 
     const [images, setImages] = React.useState([]);
     const [myImage, setMyImage] = React.useState("");
+    const [imageUpdated, setImageUpdated] = React.useState(false);
 
     const onChange = (imageList, addUpdateIndex) => {
         // console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
+            setImageUpdated(true);
             console.log('keep posted <' + addUpdateIndex + '>');
         });
     };
@@ -112,9 +118,9 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
                                 dragProps,
                             }) => (
                                 <img className="pictureSrc"
-                                    onClick={onImageUpload}
+                                    onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for author's photo..."
-                                    src={author.photo != null && author.photo.length > 0 ? author.photo : myImage} />
+                                    src={imageUpdated ? myImage : (author.photo != null && author.photo.length > 0 ? author.photo : myImage)} />
                             )}
                         </ImageUploading>
                     </span>

@@ -53,6 +53,10 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
         setState({ info: event.target.value });
     }
 
+    function onImageUploadViewMode() {
+        console.log('no editing');
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
         // book.name = state.name;
@@ -85,11 +89,13 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
 
     const [images, setImages] = React.useState([]);
     const [myImage, setMyImage] = React.useState("");
+    const [imageUpdated, setImageUpdated] = React.useState(false);
 
     const onChange = (imageList, addUpdateIndex) => {
         console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
+            setImageUpdated(true);
             console.log('keep posted <' + addUpdateIndex + '>');
         });
     };
@@ -116,9 +122,9 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                                 dragProps,
                             }) => (
                                 <img className="pictureSrc"
-                                    onClick={onImageUpload}
+                                    onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for book's cover image..."
-                                    src={book.cover_img != null && book.cover_img.length > 0 ? book.cover_img : myImage} />
+                                    src={imageUpdated ? myImage : (book.cover_img != null && book.cover_img.length > 0 ? book.cover_img : myImage)} />
                             )}
                         </ImageUploading>
                     </span>
