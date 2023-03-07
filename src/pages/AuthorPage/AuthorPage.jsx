@@ -113,7 +113,7 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
                             }) => (
                                 <img className="pictureSrc"
                                     onClick={onImageUpload}
-                                    alt='Place for author photo...'
+                                    alt="Place for author's photo..."
                                     src={myImage} />
                             )}
                         </ImageUploading>
