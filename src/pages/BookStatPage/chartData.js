@@ -1,5 +1,6 @@
 import React from 'react';
 import BooksProvider from "../../model/BooksProvider";
+import AuthorsProvider from '../../model/AuthorsProvider';
 
 export const data = [
   ["Task", "Hours per Day"],
@@ -19,6 +20,9 @@ export const optionsBookYear = {
   title: "Distribution: book-year",
 };
 
+export const optionsAuthorAge = {
+  title: "Distribution: author-age",
+};
 
 // [
 //   ["Task","Hours per Day"],
@@ -55,6 +59,31 @@ function getBookYearData() {
   return data;
 }
 
+function getAuthorAgeData() {
+  let authorItems = AuthorsProvider.all();
+  let ages = [];
+  let amount = [];
+  authorItems.map(author => {
+    const age = author.age;
+    let findAge = ages.filter(aa => aa == age)[0];
+    if (findAge) {
+      const findAgeIdx = ages.indexOf(age);
+      amount[findAgeIdx] += 1;
+    } else {
+      ages.push(age);
+      amount.push(1);
+    }
+  });
+  let data = [
+    ["Task", "Hours per Day"],
+  ];
+  for (let i = 0; i < ages.length; i++) {
+    const entry = ["" + ages[i], amount[i]];
+    data.push(entry);
+  }
+  return data;
+}
+
 function getBooksData(kind) {
   if (kind && kind === "book-year") {
     return getBookYearData();
@@ -68,5 +97,18 @@ function getBooksCaption(kind) {
   return options;
 }
 
-export { getBooksCaption, getBooksData };
+function getAuthorsData(kind) {
+  if (kind && kind === "author-age") {
+    return getAuthorAgeData();
+  }
+  return data;
+}
+
+function getAuthorsCaption(kind) {
+  if (kind && kind === "author-age")
+    return optionsAuthorAge;
+  return options;
+}
+
+export { getBooksCaption, getBooksData, getAuthorsCaption, getAuthorsData };
 // export default getBooksData;

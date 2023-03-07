@@ -1,0 +1,14 @@
+.authorsStatShape {
+    /* padding: 20px; */
+    display: inline-flex;
+    flex-direction: column;
+    background-color: #f8f4e4;
+}
+
+.pcAuthors {
+    background-color: #33ff99;padding: 2px;
+    /* color: red; margin: 2px; */
+    font-weight: 700;
+    
+
+}

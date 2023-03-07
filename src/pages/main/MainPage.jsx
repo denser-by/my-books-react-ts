@@ -16,6 +16,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import React, { useState } from "react";
 import { Chart } from "react-google-charts";
 import BookStatPage from '../BookStatPage/BookStatPage';
+import AuthorStatPage from '../AuthorStatPage/AuthorStatPage';
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const [pageRef, setPageRef] = useState("")
@@ -38,13 +39,14 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         { icon: "anchor", href: "/createBook?", name: "Create Book" },
         { icon: "anchor", href: "/eraseAllBooks", name: "Erase All" },
         { icon: "anchor", href: "/generate20Books", name: "Generate 20" },
-        { icon: "anchor", href: "/bookStat", name: "Statistics" }
+        { icon: "anchor", href: "/bookStat", name: "Analytics" }
     ]
 
     const contextOpsAuthors = [
         { icon: "anchor", href: "/viewAuthorsAll", name: "All Authors" },
         { icon: "anchor", href: "/createAuthor?", name: "Create Author" },
-        { icon: "anchor", href: "/generate20Authors", name: "Generate 20" }
+        { icon: "anchor", href: "/generate20Authors", name: "Generate 20" },
+        { icon: "anchor", href: "/authorStat", name: "Analytics" }
     ]
 
     const contextOpsSearch = [
@@ -200,6 +202,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <span className={pageRef == "/info" ? "pageVisible" : "pageHidden"}><InfoPage /></span>
 
                 <span className={pageRef == "/bookStat" ? "pageVisible" : "pageHidden"}><BookStatPage /></span>
+                <span className={pageRef == "/authorStat" ? "pageVisible" : "pageHidden"}><AuthorStatPage /></span>
             </div>
         </div>
     );
