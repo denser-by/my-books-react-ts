@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import './mainpage.css'
 import ContextMenu from '../../components/ContextMenu/ContextMenu';
 import BookPage from '../BookPage/BookPage';
@@ -12,6 +12,10 @@ import InfoPage from '../InfoPage/InfoPage';
 import SearchPage from '../SearchPage/SearchPage';
 import BooksProvider from '../../model/BooksProvider';
 import AuthorsProvider from '../../model/AuthorsProvider';
+import { PieChart } from 'react-minimal-pie-chart';
+import React, { useState } from "react";
+import { Chart } from "react-google-charts";
+import BookStatPage from '../BookStatPage/BookStatPage';
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const [pageRef, setPageRef] = useState("")
@@ -33,7 +37,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         { icon: "anchor", href: "/viewBooksAll", name: "All Books" },
         { icon: "anchor", href: "/createBook?", name: "Create Book" },
         { icon: "anchor", href: "/eraseAllBooks", name: "Erase All" },
-        { icon: "anchor", href: "/generate20Books", name: "Generate 20" }
+        { icon: "anchor", href: "/generate20Books", name: "Generate 20" },
+        { icon: "anchor", href: "/bookStat", name: "Statistics" }
     ]
 
     const contextOpsAuthors = [
@@ -147,6 +152,24 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     return (
         <div className="mainPage">
+
+{/* <Chart
+      chartType="PieChart"
+      data={data}
+      options={options}
+      width={"100%"}
+      height={"400px"}
+    /> */}
+
+{/* <PieChart radius={12}
+  data={[
+    { title: 'One', value: 110, color: '#aabbcc' },
+    { title: 'Two', value: 15, color: '#031749' },
+    { title: 'Three', value: 20, color: '#55ae16' },
+  ]}
+/>; */}
+
+
             <h4>{displayCurrent(selectedItem)}</h4>
             <div className='commonLayout'>
                 <ContextMenu operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
@@ -175,6 +198,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
                 <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>
                 <span className={pageRef == "/info" ? "pageVisible" : "pageHidden"}><InfoPage /></span>
+
+                <span className={pageRef == "/bookStat" ? "pageVisible" : "pageHidden"}><BookStatPage /></span>
             </div>
         </div>
     );
