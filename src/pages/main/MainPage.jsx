@@ -17,6 +17,7 @@ import React, { useState } from "react";
 import { Chart } from "react-google-charts";
 import BookStatPage from '../BookStatPage/BookStatPage';
 import AuthorStatPage from '../AuthorStatPage/AuthorStatPage';
+import LocationPage from '../LocationPage/LocationPage';
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const [pageRef, setPageRef] = useState("")
@@ -35,28 +36,30 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     const contextOpsBooks = [
-        { icon: "anchor", href: "/viewBooksAll", name: "All Books" },
-        { icon: "anchor", href: "/createBook?", name: "Create Book" },
-        { icon: "anchor", href: "/eraseAllBooks", name: "Erase All" },
-        { icon: "anchor", href: "/generate20Books", name: "Generate 20" },
-        { icon: "anchor", href: "/bookStat", name: "Analytics" }
+        { icon: "anchor", key: "k41", href: "/viewBooksAll", name: "All Books" },
+        { icon: "anchor", key: "k42", href: "/createBook?", name: "Create Book" },
+        { icon: "anchor", key: "k43", href: "/eraseAllBooks", name: "Erase All" },
+        { icon: "anchor", key: "k44", href: "/generate20Books", name: "Generate 20" },
+        { icon: "anchor", key: "k45", href: "/bookStat", name: "Analytics" }
     ]
 
     const contextOpsAuthors = [
-        { icon: "anchor", href: "/viewAuthorsAll", name: "All Authors" },
-        { icon: "anchor", href: "/createAuthor?", name: "Create Author" },
-        { icon: "anchor", href: "/generate20Authors", name: "Generate 20" },
-        { icon: "anchor", href: "/authorStat", name: "Analytics" }
+        { icon: "anchor", key: "k11", href: "/viewAuthorsAll", name: "All Authors" },
+        { icon: "anchor", key: "k12", href: "/createAuthor?", name: "Create Author" },
+        { icon: "anchor", key: "k13", href: "/generate20Authors", name: "Generate 20" },
+        { icon: "anchor", key: "k14", href: "/authorStat", name: "Analytics" }
     ]
 
     const contextOpsSearch = [
-        { icon: "anchor", href: "/search", name: "Search" },
+        { icon: "anchor", key: "k21", href: "/search", name: "Filter" },
+        { icon: "anchor", key: "k22", href: "/searchWall", name: "Wall" },
+        { icon: "anchor", key: "k23", href: "/maps", name: "Location" }
     ]
 
     const contextOpsAbout = [
-        { icon: "anchor", href: "/contacts", name: "Contacts" },
-        { icon: "anchor", href: "/order", name: "Order" },
-        { icon: "anchor", href: "/info", name: "Info" }
+        { icon: "anchor", key: "k31", href: "/contacts", name: "Contacts" },
+        { icon: "anchor", key: "k32", href: "/order", name: "Order" },
+        { icon: "anchor", key: "k33", href: "/info", name: "Info" }
     ]
 
     function getId(ref) {
@@ -196,6 +199,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerate20AuthorsMsg()} answerYesProc={generate20AuthorsOk} answerNoProc={generate20AuthorsCancel} btnLabels={['Yes', 'No']} /></span>
 
                 <span className={pageRef == "/search" ? "pageVisible" : "pageHidden"}><SearchPage /></span>
+                <span className={pageRef == "/maps" ? "pageVisible" : "pageHidden"}><LocationPage /></span>
 
                 <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
                 <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>

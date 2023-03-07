@@ -114,7 +114,7 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={onImageUpload}
                                     alt="Place for author's photo..."
-                                    src={myImage} />
+                                    src={author.photo != null && author.photo.length > 0 ? author.photo : myImage} />
                             )}
                         </ImageUploading>
                     </span>

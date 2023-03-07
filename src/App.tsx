@@ -7,10 +7,10 @@ import { LoginForm } from './pages/LoginForm';
 function App() {
 
   const navBarItems = [
-    { icon: "apps", href: "/books", text: "Books" },
-    { icon: "assignment_ind", href: "/authors", text: "Authors" },
-    { icon: "android", href: "/search", text: "Search" },
-    { icon: "archive", href: "/about", text: "About" },
+    { icon: "apps", href: "/books", key: "nbi1", text: "Books" },
+    { icon: "assignment_ind", href: "/authors", key: "nbi2", text: "Authors" },
+    { icon: "android", href: "/search", key: "nbi3", text: "Search" },
+    { icon: "archive", href: "/about", key: "nbi4", text: "About" },
   ]
 
   const [navItemSelected, setNavItemSelected] = useState("apps")
@@ -43,7 +43,8 @@ function App() {
       <nav className='navBar'>
         <span className='navBarWrap'>
           {navBarItems.map(item =>
-            <NavItem selectedItem={navItemSelected} setSelectedItem={setNavItemSelected} icon={item.icon} text={item.text} />
+            <NavItem key={item.key} 
+              selectedItem={navItemSelected} setSelectedItem={setNavItemSelected} icon={item.icon} text={item.text} />
           )}
         </span>
       </nav>

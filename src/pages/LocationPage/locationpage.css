@@ -1,0 +1,5 @@
+.locationShape {
+    display: inline-flex;
+    flex-direction: column;
+    background-color: #f8f4e4;
+}

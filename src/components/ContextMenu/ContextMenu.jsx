@@ -1,30 +1,29 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './contextmenu.css'
 
 const ContextMenu = ({ operations, setPageRef }) => {
-    const [aboutSelect, setAboutSelect] = useState("")
-    const [curSelect, setCurSelect] = useState("")
+    const [above, setAbove] = useState("");
+    const [curSelect, setCurSelect] = useState("");
 
     function mouseOver(e) {
-        setAboutSelect(e.target)
+        setAbove(e.target);
     }
 
     function mouseOut() {
-        setAboutSelect("")
+        setAbove("");
     }
 
     function mouseClick(e) {
-        setCurSelect(e.target)
-        setPageRef(e.target.id)
+        setCurSelect(e.target);
+        setPageRef(e.target.id);
     }
 
     return (
         <span className="leftPanel">
             <ul>
                 {operations.map(op =>
-                    <li id={op.href}
-                        // className={aboutSelect.id == op.href && curSelect.id == op.href ? "contextOp selected" : (aboutSelect.id == op.href ? "contextOp above" : (curSelect.id == op.href ? "contextOp selected" : "contextOp"))}
-                        className={aboutSelect.id == op.href ? "contextOp above" : (curSelect.id == op.href ? "contextOp selected" : "contextOp")}
+                    <li key={op.key} id={op.href}
+                        className={above.id == op.href ? "contextOp above" : (curSelect.id == op.href ? "contextOp selected" : "contextOp")}
                         onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={mouseClick}>{op.name}
                     </li>
                 )}

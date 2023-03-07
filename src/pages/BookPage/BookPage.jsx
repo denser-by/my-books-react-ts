@@ -118,7 +118,7 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={onImageUpload}
                                     alt="Place for book's cover image..."
-                                    src={myImage} />
+                                    src={book.cover_img != null && book.cover_img.length > 0 ? book.cover_img : myImage} />
                             )}
                         </ImageUploading>
                     </span>
