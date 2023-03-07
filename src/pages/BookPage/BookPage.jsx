@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './bookpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import BooksProvider from '../../model/BooksProvider.js';
+import ImageUploading from 'react-images-uploading';
 
 const BookPage = ({ bookId, edit, create, closeProc }) => {
 
@@ -82,12 +83,44 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
         closeProc();
     }
 
+    const [images, setImages] = React.useState([]);
+    const [myImage, setMyImage] = React.useState("");
+
+    const onChange = (imageList, addUpdateIndex) => {
+        console.log('start <' + images.length + '>');
+        imageList.map(ii => {
+            setMyImage(ii.data_url);
+            console.log('keep posted <' + addUpdateIndex + '>');
+        });
+    };
+
     return (
         <Form onSubmit={handleSubmit}>
             <span className="bookShape">
                 <span className='bookShapeHeader'>
                     <span className="picture">
-                        <img className="pictureSrc" src={book.cover_img} />
+                        <ImageUploading
+                            multiple
+                            value={images}
+                            onChange={onChange}
+                            maxNumber={1}
+                            dataURLKey="data_url"
+                        >
+                            {({
+                                imageList,
+                                onImageUpload,
+                                onImageRemoveAll,
+                                onImageUpdate,
+                                onImageRemove,
+                                isDragging,
+                                dragProps,
+                            }) => (
+                                <img className="pictureSrc"
+                                    onClick={onImageUpload}
+                                    alt='Place for book cover image...'
+                                    src={myImage} />
+                            )}
+                        </ImageUploading>
                     </span>
                     <span className="icons-right">
                         <span className="book-info">

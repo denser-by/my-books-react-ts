@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './authorpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import AuthorsProvider from '../../model/AuthorsProvider.js';
+import ImageUploading from 'react-images-uploading';
 
 const AuthorPage = ({ authorId, edit, create, closeProc }) => {
 
@@ -78,12 +79,44 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
         closeProc();
     }
 
+    const [images, setImages] = React.useState([]);
+    const [myImage, setMyImage] = React.useState("");
+
+    const onChange = (imageList, addUpdateIndex) => {
+        // console.log('start <' + images.length + '>');
+        imageList.map(ii => {
+            setMyImage(ii.data_url);
+            console.log('keep posted <' + addUpdateIndex + '>');
+        });
+    };
+
     return (
         <Form onSubmit={handleSubmit}>
             <span className="authorShape">
                 <span className='authorShapeHeader'>
                     <span className="picture">
-                        <img className="pictureSrc" src={author.photo} />
+                        <ImageUploading
+                            multiple
+                            value={images}
+                            onChange={onChange}
+                            maxNumber={1}
+                            dataURLKey="data_url"
+                        >
+                            {({
+                                imageList,
+                                onImageUpload,
+                                onImageRemoveAll,
+                                onImageUpdate,
+                                onImageRemove,
+                                isDragging,
+                                dragProps,
+                            }) => (
+                                <img className="pictureSrc"
+                                    onClick={onImageUpload}
+                                    alt='Place for author photo...'
+                                    src={myImage} />
+                            )}
+                        </ImageUploading>
                     </span>
                     <span className="icons-right">
                         <span className="author-info">
