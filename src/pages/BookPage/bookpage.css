@@ -35,6 +35,7 @@ input {
     display: inline-flex;
     flex-direction: column;
     color: white;
+    min-width: 400px;
 }
 
 .book-info-label {

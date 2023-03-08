@@ -34,6 +34,7 @@ input {
     display: inline-flex;
     flex-direction: column;
     color: white;
+    min-width: 400px;
 }
 
 .author-info-label {
