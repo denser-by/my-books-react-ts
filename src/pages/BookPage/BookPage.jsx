@@ -89,16 +89,20 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
 
     const [images, setImages] = React.useState([]);
     const [myImage, setMyImage] = React.useState("");
-    const [imageUpdated, setImageUpdated] = React.useState(false);
+    const [imageUploaded, setImageUploaded] = React.useState(false);
 
     const onChange = (imageList, addUpdateIndex) => {
         console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
-            setImageUpdated(true);
+            setImageUploaded(true);
             console.log('keep posted <' + addUpdateIndex + '>');
         });
     };
+
+    function isCoverImageDefined() {
+        return book.cover_img != null && book.cover_img.length > 0;
+    }
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -124,7 +128,7 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for book's cover image..."
-                                    src={imageUpdated ? myImage : (book.cover_img != null && book.cover_img.length > 0 ? book.cover_img : myImage)} />
+                                    src={imageUploaded ? myImage : (isCoverImageDefined() ? book.cover_img : myImage)} />
                             )}
                         </ImageUploading>
                     </span>

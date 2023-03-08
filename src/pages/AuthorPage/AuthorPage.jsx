@@ -85,16 +85,20 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
 
     const [images, setImages] = React.useState([]);
     const [myImage, setMyImage] = React.useState("");
-    const [imageUpdated, setImageUpdated] = React.useState(false);
+    const [imageUploaded, setImageUploaded] = React.useState(false);
 
     const onChange = (imageList, addUpdateIndex) => {
         // console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
-            setImageUpdated(true);
+            setImageUploaded(true);
             console.log('keep posted <' + addUpdateIndex + '>');
         });
     };
+
+    function isPhotoDefined() {
+        return author.photo != null && author.photo.length > 0;
+    }
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -120,7 +124,7 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for author's photo..."
-                                    src={imageUpdated ? myImage : (author.photo != null && author.photo.length > 0 ? author.photo : myImage)} />
+                                    src={imageUploaded ? myImage : (isPhotoDefined() ? author.photo : myImage)} />
                             )}
                         </ImageUploading>
                     </span>
