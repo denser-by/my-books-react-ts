@@ -87,6 +87,22 @@ INSERT INTO images (id, path, image_type)
     VALUES (1014, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\author2.gif', 2);
 INSERT INTO images (id, path, image_type)
     VALUES (1015, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\author3.gif', 2);
+INSERT INTO images (id, path, image_type)
+    VALUES (1016, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\13.jpg', 1);
+INSERT INTO images (id, path, image_type)
+    VALUES (1017, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\14.jpg', 1);
+INSERT INTO images (id, path, image_type)
+    VALUES (1018, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\15.jpg', 1);
+INSERT INTO images (id, path, image_type)
+    VALUES (1019, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\16.jpg', 1);
+INSERT INTO images (id, path, image_type)
+    VALUES (1020, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\17.jpg', 1);
+INSERT INTO images (id, path, image_type)
+    VALUES (1021, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\18.jpg', 1);
+INSERT INTO images (id, path, image_type)
+    VALUES (1022, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\19.jpg', 1);
+INSERT INTO images (id, path, image_type)
+    VALUES (1023, 'C:\Users\dzianis\ReactNative\my-books-react-ts\src\images\20.jpg', 1);
 select * from images;
 
 
@@ -115,55 +131,61 @@ INSERT INTO books (id, name, info, year, cover_img)
 INSERT INTO books (id, name, info, year, cover_img)
     VALUES (12, 'Book12', 'Book Description 12', 1995, 1012);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (13, 'Book13', 'Book Description 13', 1998, 1001);
+    VALUES (13, 'Book13', 'Book Description 13', 1998, 1016);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (14, 'Book14', 'Book Description 14', 1992, 1002);
+    VALUES (14, 'Book14', 'Book Description 14', 1992, 1017);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (15, 'Book15', 'Book Description 15', 2003, 1003);
+    VALUES (15, 'Book15', 'Book Description 15', 2003, 1018);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (16, 'Book16', 'Book Description 16', 2001, 1004);
+    VALUES (16, 'Book16', 'Book Description 16', 2001, 1019);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (17, 'Book17', 'Book Description 17', 2005, 1005);
+    VALUES (17, 'Book17', 'Book Description 17', 2005, 1020);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (18, 'Book18', 'Book Description 18', 2002, 1006);
+    VALUES (18, 'Book18', 'Book Description 18', 2002, 1021);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (19, 'Book19', 'Book Description 19', 2007, 1007);
+    VALUES (19, 'Book19', 'Book Description 19', 2007, 1022);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (20, 'Book20', 'Book Description 20', 1998, 1008);
+    VALUES (20, 'Book20', 'Book Description 20', 1998, 1023);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (21, 'Book21', 'Book Description 21', 1993, 1009);
+    VALUES (21, 'Book21', 'Book Description 21', 1993, 1001);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (22, 'Book22', 'Book Description 22', 2013, 1010);
+    VALUES (22, 'Book22', 'Book Description 22', 2013, 1002);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (23, 'Book23', 'Book Description 23', 1992, 1011);
+    VALUES (23, 'Book23', 'Book Description 23', 1992, 1003);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (24, 'Book24', 'Book Description 24', 1996, 1012);
+    VALUES (24, 'Book24', 'Book Description 24', 1996, 1004);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (25, 'Book25', 'Book Description 25', 1998, 1004);
+    VALUES (25, 'Book25', 'Book Description 25', 1998, 1005);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (26, 'Book26', 'Book Description 26', 1992, 1007);
+    VALUES (26, 'Book26', 'Book Description 26', 1992, 1006);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (27, 'Book27', 'Book Description 27', 2003, 1001);
+    VALUES (27, 'Book27', 'Book Description 27', 2003, 1007);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (28, 'Book28', 'Book Description 28', 2001, 1002);
+    VALUES (28, 'Book28', 'Book Description 28', 2001, 1008);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (29, 'Book29', 'Book Description 29', 2005, 1008);
+    VALUES (29, 'Book29', 'Book Description 29', 2005, 1009);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (30, 'Book30', 'Book Description 30', 2002, 1001);
+    VALUES (30, 'Book30', 'Book Description 30', 2002, 1010);
 INSERT INTO books (id, name, info, year, cover_img)
     VALUES (31, 'Book31', 'Book Description 31', 2007, 1011);
 INSERT INTO books (id, name, info, year, cover_img)
     VALUES (32, 'Book32', 'Book Description 32', 1998, 1012);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (33, 'Book33', 'Book Description 33', 1993, 1007);
+    VALUES (33, 'Book33', 'Book Description 33', 1993, 1016);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (34, 'Book34', 'Book Description 34', 2013, 1003);
+    VALUES (34, 'Book34', 'Book Description 34', 2013, 1017);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (35, 'Book35', 'Book Description 35', 1992, 1009);
+    VALUES (35, 'Book35', 'Book Description 35', 1992, 1018);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (36, 'Book36', 'Book Description 36', 1996, 1006);
+    VALUES (36, 'Book36', 'Book Description 36', 1996, 1019);
 INSERT INTO books (id, name, info, year, cover_img)
-    VALUES (37, 'Book37', 'Book Description 37', 1996, 1001);
+    VALUES (37, 'Book37', 'Book Description 37', 1996, 1020);
+INSERT INTO books (id, name, info, year, cover_img)
+    VALUES (38, 'Book38', 'Book Description 38', 1997, 1021);
+INSERT INTO books (id, name, info, year, cover_img)
+    VALUES (39, 'Book39', 'Book Description 39', 2003, 1022);
+INSERT INTO books (id, name, info, year, cover_img)
+    VALUES (40, 'Book40', 'Book Description 40', 2001, 1023);
 select * from books;
 
 
@@ -322,4 +344,19 @@ INSERT INTO author_book (id, book, author) VALUES (90, 36, 13);
 INSERT INTO author_book (id, book, author) VALUES (91, 37, 14);
 INSERT INTO author_book (id, book, author) VALUES (92, 37, 15);
 INSERT INTO author_book (id, book, author) VALUES (93, 37, 16);
+INSERT INTO author_book (id, book, author) VALUES (94, 38, 29);
+INSERT INTO author_book (id, book, author) VALUES (95, 38, 27);
+INSERT INTO author_book (id, book, author) VALUES (96, 38, 26);
+INSERT INTO author_book (id, book, author) VALUES (97, 39, 25);
+INSERT INTO author_book (id, book, author) VALUES (98, 39, 23);
+INSERT INTO author_book (id, book, author) VALUES (99, 40, 24);
+INSERT INTO author_book (id, book, author) VALUES (100, 40, 30);
+INSERT INTO author_book (id, book, author) VALUES (101, 40, 29);
 select * from author_book;
+
+
+select * from authors AS a, books AS b, author_book ab 
+  where a.id = ab.author AND b.id = ab.book;
+
+select a.name, b.name from authors AS a, books AS b, author_book ab 
+  where a.id = ab.author AND b.id = ab.book;
