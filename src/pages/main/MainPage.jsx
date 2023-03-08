@@ -109,7 +109,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     function getGenerateMsg(req) {
         var message;
-        if(req === "20Authors")
+        if (req === "20Authors")
             message = "Are you sure? Generate 20 additional authors.";
         else
             message = "Are you sure? Generate 20 additional books.";

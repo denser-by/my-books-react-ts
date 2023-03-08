@@ -85,15 +85,15 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         author.age = stateAge;
         author.books = stateBooks;
         author.info = stateInfo;
-        author.photo = myImage;
+        if (imageUploaded)
+            author.photo = myImage;
 
         author2.name = stateName;
         author2.age = stateAge;
         author2.books = stateBooks;
         author2.info = stateInfo;
-        author2.photo = myImage;
-
-        console.log(' save ' + JSON.stringify(author) + ' ' + JSON.stringify(author2));
+        if (imageUploaded)
+            author2.photo = myImage;
 
         if (create) {
             AuthorsProvider.create(author2);
@@ -111,6 +111,8 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         setState({ books: '' });
         setStateInfo('');
         setState({ info: '' });
+        setImageUploaded(false);
+        setMyImage('');
 
         closeProc();
     }
@@ -119,7 +121,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     const [myImage, setMyImage] = React.useState("");
     const [imageUploaded, setImageUploaded] = React.useState(false);
 
-    const onChange = (imageList, addUpdateIndex) => {
+    const onAuthorsPhotoChange = (imageList, addUpdateIndex) => {
         // console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
@@ -139,8 +141,8 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     <span className="picture">
                         <ImageUploading
                             multiple
+                            onChange={onAuthorsPhotoChange}
                             value={images}
-                            onChange={onChange}
                             maxNumber={1}
                             dataURLKey="data_url"
                         >

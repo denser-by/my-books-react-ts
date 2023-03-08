@@ -98,15 +98,15 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         book.year = stateYear;
         book.authors = stateAuthors;
         book.info = stateInfo;
-        book.cover_img = myImage;
+        if (imageUploaded)
+            book.cover_img = myImage;
 
         book2.name = stateName;
         book2.year = stateYear;
         book2.authors = stateAuthors;
         book2.info = stateInfo;
-        book2.cover_img = myImage;
-
-        console.log(' save ' + JSON.stringify(book) + ' ' + JSON.stringify(book2));
+        if (imageUploaded)
+            book2.cover_img = myImage;
 
         if (create) {
             BooksProvider.create(book2);
@@ -124,6 +124,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setState({ authors: '' });
         setStateInfo('');
         setState({ info: '' });
+        setImageUploaded(false);
+        setMyImage('');
 
         closeProc();
     }
@@ -132,7 +134,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     const [myImage, setMyImage] = React.useState("");
     const [imageUploaded, setImageUploaded] = React.useState(false);
 
-    const onChange = (imageList, addUpdateIndex) => {
+    const onBooksImageChange = (imageList, addUpdateIndex) => {
         console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
@@ -152,8 +154,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <span className="picture">
                         <ImageUploading
                             multiple
+                            onChange={onBooksImageChange}
                             value={images}
-                            onChange={onChange}
                             maxNumber={1}
                             dataURLKey="data_url"
                         >
