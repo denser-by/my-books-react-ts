@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "db_my_books2",
+            "database": "my_books2",
+            "username": "my_books_admin",
+            "password": "root"
+        }
+    ]
+}
