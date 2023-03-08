@@ -23,10 +23,10 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
     const [stateInfo, setStateInfo] = useState('');
 
     const [state, setState] = useState({
-        name: book.name,
-        year: book.year,
-        authors: book.authors,
-        info: book.info
+        name: '',
+        year: '',
+        authors: '',
+        info: ''
     })
 
     function handleNameChange(event) {
@@ -84,6 +84,15 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
             console.log(' update complete ');
         }
 
+        setStateName('');
+        setState({ name: '' });
+        setStateYear('');
+        setState({ year: '' });
+        setStateAuthors('');
+        setState({ authors: '' });
+        setStateInfo('');
+        setState({ info: '' });
+
         closeProc();
     }
 
@@ -137,7 +146,7 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                             <span className="book-info-label">Title</span>
                             <Input type="textarea" id="bookName" name="bookName" readOnly={!edit} placeholder="Name of this fine book"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={state.name} onChange={handleNameChange}
+                                value={stateName} onChange={handleNameChange}
                             />
                             <span className="fieldCurrent">{book.name}</span>
                         </span>
@@ -145,7 +154,7 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                             <span className="book-info-label">Year</span>
                             <Input type="textarea" id="bookYear" name="bookYear" readOnly={!edit} placeholder="Year of publication"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={state.year} onChange={handleYearChange}
+                                value={stateYear} onChange={handleYearChange}
                             />
                             <span className="fieldCurrent">{book.year}</span>
                         </span>
@@ -153,7 +162,7 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                             <span className="book-info-label">Authors</span>
                             <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={state.authors} onChange={handleAuthorsChange} />
+                                value={stateAuthors} onChange={handleAuthorsChange} />
                             <span className="fieldCurrent">{book.authors}</span>
                         </span>
                     </span>
@@ -162,7 +171,7 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
                     <span className="book-info-label">Description</span>
                     <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Short content description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                        value={state.info} onChange={handleInfoChange} />
+                        value={stateInfo} onChange={handleInfoChange} />
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
                 <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>

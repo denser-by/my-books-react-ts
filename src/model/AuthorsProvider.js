@@ -64,7 +64,7 @@ class AuthorsProvider {
         const authorIdx = authorItems.indexOf(author);
         authorItems[authorIdx].name = data.name;
         authorItems[authorIdx].age = data.age;
-        authorItems[authorIdx].books = data.authors;
+        authorItems[authorIdx].books = data.books;
         authorItems[authorIdx].info = data.info;
         authorItems[authorIdx].photo = data.photo;
         console.log(' complete ' + authorIdx + '  ' + JSON.stringify(authorItems[authorIdx])

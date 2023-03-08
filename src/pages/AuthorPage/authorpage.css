@@ -33,7 +33,7 @@ input {
     margin: 2px;
     display: inline-flex;
     flex-direction: column;
-    color: white;
+    color: #eeee0b;
     min-width: 400px;
 }
 
