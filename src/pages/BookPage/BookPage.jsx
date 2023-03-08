@@ -55,6 +55,22 @@ const BookPage = ({ pr, bookId, edit, create, closeProc }) => {
         setState({ info: event.target.value });
     }
 
+    function onBookEdit() {
+        alert('edit-book-press');
+    }
+
+    function onBookExport() {
+        alert('export-book-press');
+    }
+
+    function onBookDelete() {
+        alert('delete-book-press');
+    }
+
+    function onBookSearch() {
+        alert('search-book-press');
+    }
+
     function onImageUploadViewMode() {
         console.log('no editing');
     }
@@ -178,9 +194,23 @@ const BookPage = ({ pr, bookId, edit, create, closeProc }) => {
                         value={stateInfo} onChange={handleInfoChange} />
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
-                <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
-                    <Button type="submit">{create ? "Create" : "Save"}</Button>
-                </span>
+                <div className="buttonRow">
+                    <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
+                        <Button type="submit">{create ? "Create" : "Save"}</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onBookEdit}>Edit</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onBookExport}>Export</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onBookDelete}>Delete</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onBookSearch}>Search</Button>
+                    </span>
+                </div>
             </span>
         </Form>
     );

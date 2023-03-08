@@ -25,7 +25,18 @@
 }
 
 .fieldSubmit {
-    display: inline;
     text-align: center;
     padding: 2px;
+}
+
+.buttonRow {
+    flex-direction: row;
+    align-items: center;
+    padding: 3px;
+}
+
+.featureButton {
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
 }

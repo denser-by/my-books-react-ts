@@ -51,6 +51,14 @@ const AuthorPage = ({ pr, authorId, edit, create, closeProc }) => {
         setState({ info: event.target.value });
     }
 
+    function onAuthorEdit() {
+        alert('edit-author-press');
+    }
+
+    function onAuthorExport() {
+        alert('export-author-press');
+    }
+
     function onImageUploadViewMode() {
         console.log('no editing');
     }
@@ -172,9 +180,17 @@ const AuthorPage = ({ pr, authorId, edit, create, closeProc }) => {
                         value={stateInfo} onChange={handleInfoChange} />
                     <div className="fieldCurrent">{author.info}</div>
                 </div>
-                <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
-                    <Button type="submit">{create ? "Create" : "Save"}</Button>
-                </span>
+                <div className="buttonRow">
+                    <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
+                        <Button type="submit">{create ? "Create" : "Save"}</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onAuthorEdit}>Edit</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onAuthorExport}>Export</Button>
+                    </span>
+                </div>
             </span>
         </Form>
     );
