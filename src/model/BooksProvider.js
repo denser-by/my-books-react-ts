@@ -73,7 +73,10 @@ class BooksProvider {
     }
 
     static all() {
-        return bookItems;
+        var result = [];
+        result.push(...bookItems);
+        console.log('all ' + result.length);
+        return result;
     }
 
     static find(id) {
@@ -82,7 +85,18 @@ class BooksProvider {
     }
 
     static create(data) {
-        bookItems.push(data);
+        // console.log('BEFORE create ' + bookItems.length);
+        // bookItems.push(data);
+        const bookIdx = bookItems.length;
+        bookItems.push(this.newBook());
+        bookItems[bookIdx].name = data.name;
+        bookItems[bookIdx].age = data.age;
+        bookItems[bookIdx].books = data.books;
+        bookItems[bookIdx].info = data.info;
+        bookItems[bookIdx].photo = data.photo;
+        console.log(' complete ' + bookIdx + '  ' + JSON.stringify(bookItems[bookIdx])
+            + '  ' + JSON.stringify(data));
+        // console.log('AFTER create ' + bookItems.length);
     }
 
     static update(data) {

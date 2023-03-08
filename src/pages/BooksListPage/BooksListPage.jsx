@@ -6,26 +6,26 @@ import BooksProvider from '../../model/BooksProvider';
 import TableCompon from '../../components/TableCompon.js';
 
 const BooksListPage = ({ setPageRef }) => {
-    const [aboveBook2, setAboveBook2] = useState("")
-    const [curSelectBook, setCurSelectBook] = useState("")
+    const [aboveBook2, setAboveBook2] = useState("");
+    const [curSelectBook, setCurSelectBook] = useState("");
 
     let aboveBook = '';
     function setAboveBook(param) {
         aboveBook = param;
-        setAboveBook2(param)
+        setAboveBook2(param);
     }
 
     function mouseOverBook(e) {
-        setAboveBook(e.target.id)
+        setAboveBook(e.target.id);
     }
 
     function mouseOutBook() {
-        setAboveBook("")
+        setAboveBook("");
     }
 
     function mouseClickBook(e) {
-        setCurSelectBook(e.target)
-        setPageRef(e.target.id)
+        setCurSelectBook(e.target);
+        setPageRef(e.target.id);
     }
 
     var allRepos = [];
@@ -97,7 +97,7 @@ const BooksListPage = ({ setPageRef }) => {
     )
 
     return (
-        <div className='booksList'>
+        <div className='booksList' id="idBooksListPage" name="idBooksListPage">
             <TableCompon columnItems={columnItems} dataItems={bookItems} defPage={15}
                 cssRowH={'booksListHeader'} cssCellH={'booksInfoHeader'} cssRow={'booksListItem'} cssCell={'booksInfoItem'} />
         </div>

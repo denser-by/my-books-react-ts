@@ -5,26 +5,26 @@ import AuthorsProvider from '../../model/AuthorsProvider';
 import TableCompon from '../../components/TableCompon.js';
 
 const AuthorsListPage = ({ setPageRef }) => {
-    const [aboveAuthor2, setAboveAuthor2] = useState("")
-    const [curSelectAuthor, setCurSelectAuthor] = useState("")
+    const [aboveAuthor2, setAboveAuthor2] = useState("");
+    const [curSelectAuthor, setCurSelectAuthor] = useState("");
 
     let aboveAuthor = '';
     function setAboveAuthor(param) {
         aboveAuthor = param;
-        setAboveAuthor2(param)
+        setAboveAuthor2(param);
     }
 
     function mouseOverAuthor(e) {
-        setAboveAuthor(e.target)
+        setAboveAuthor(e.target);
     }
 
     function mouseOutAuthor() {
-        setAboveAuthor("")
+        setAboveAuthor("");
     }
 
     function mouseClickAuthor(e) {
-        setCurSelectAuthor(e.target)
-        setPageRef(e.target.id)
+        setCurSelectAuthor(e.target);
+        setPageRef(e.target.id);
     }
 
     let authorItems = AuthorsProvider.all();
@@ -75,7 +75,7 @@ const AuthorsListPage = ({ setPageRef }) => {
     )
 
     return (
-        <div className='authorsList'>
+        <div className='authorsList' id="idAuthorListPage" name="idAuthorListPage">
             <TableCompon columnItems={columnItems} dataItems={authorItems} defPage={15}
                 cssRowH={'authorsListHeader'} cssCellH={'authorsInfoHeader'} cssRow={'authorsListItem'} cssCell={'authorsInfoItem'} />
         </div>

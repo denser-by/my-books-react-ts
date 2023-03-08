@@ -5,7 +5,9 @@ import { Form, Input, Button } from 'reactstrap';
 import AuthorsProvider from '../../model/AuthorsProvider.js';
 import ImageUploading from 'react-images-uploading';
 
-const AuthorPage = ({ authorId, edit, create, closeProc }) => {
+const AuthorPage = ({ pr, authorId, edit, create, closeProc }) => {
+    if (pr.indexOf("Book") !== -1) return;
+    // console.log('AUTHOR_PAGE<'+ authorId +'><'+ edit+'><'+ create+'>'+pr);
 
     var author2 = AuthorsProvider.newAuthor();
 
@@ -64,11 +66,13 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
         author.age = stateAge;
         author.books = stateBooks;
         author.info = stateInfo;
+        author.photo = myImage;
 
         author2.name = stateName;
         author2.age = stateAge;
         author2.books = stateBooks;
         author2.info = stateInfo;
+        author2.photo = myImage;
 
         console.log(' save ' + JSON.stringify(author) + ' ' + JSON.stringify(author2));
 
@@ -111,7 +115,7 @@ const AuthorPage = ({ authorId, edit, create, closeProc }) => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <span className="authorShape">
+            <span className="authorShape" id="idAuthorPage" name="idAuthorPage">
                 <span className='authorShapeHeader'>
                     <span className="picture">
                         <ImageUploading

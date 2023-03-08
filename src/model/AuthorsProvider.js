@@ -47,7 +47,10 @@ class AuthorsProvider {
     }
 
     static all() {
-        return authorItems;
+        var result = [];
+        result.push(...authorItems);
+        console.log('all ' + result.length);
+        return result;
     }
 
     static find(id) {
@@ -56,7 +59,18 @@ class AuthorsProvider {
     }
 
     static create(data) {
-        authorItems.push(data);
+        // console.log('BEFORE create ' + authorItems.length);
+        // authorItems.push(data);
+        const authorIdx = authorItems.length;
+        authorItems.push(this.newAuthor());
+        authorItems[authorIdx].name = data.name;
+        authorItems[authorIdx].age = data.age;
+        authorItems[authorIdx].books = data.books;
+        authorItems[authorIdx].info = data.info;
+        authorItems[authorIdx].photo = data.photo;
+        console.log(' complete ' + authorIdx + '  ' + JSON.stringify(authorItems[authorIdx])
+            + '  ' + JSON.stringify(data));
+        // console.log('AFTER create ' + authorItems.length);
     }
 
     static update(data) {

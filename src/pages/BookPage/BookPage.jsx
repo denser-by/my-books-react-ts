@@ -5,7 +5,9 @@ import { Form, Input, Button } from 'reactstrap';
 import BooksProvider from '../../model/BooksProvider.js';
 import ImageUploading from 'react-images-uploading';
 
-const BookPage = ({ bookId, edit, create, closeProc }) => {
+const BookPage = ({ pr, bookId, edit, create, closeProc }) => {
+    if (pr.indexOf("Author") !== -1) return;
+    // console.log('BOOK_PAGE<'+ bookId +'><'+ edit+'><'+ create+'>'+pr);
 
     var book2 = BooksProvider.newBook();
 
@@ -68,11 +70,13 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
         book.year = stateYear;
         book.authors = stateAuthors;
         book.info = stateInfo;
+        book.cover_img = myImage;
 
         book2.name = stateName;
         book2.year = stateYear;
         book2.authors = stateAuthors;
         book2.info = stateInfo;
+        book2.cover_img = myImage;
 
         console.log(' save ' + JSON.stringify(book) + ' ' + JSON.stringify(book2));
 
@@ -115,7 +119,7 @@ const BookPage = ({ bookId, edit, create, closeProc }) => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <span className="bookShape">
+            <span className="bookShape" id="idBookPage" name="idBookPage">
                 <span className='bookShapeHeader'>
                     <span className="picture">
                         <ImageUploading
