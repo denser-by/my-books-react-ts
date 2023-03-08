@@ -1,5 +1,5 @@
 // import { useState } from 'react';
-import './mainpage.css'
+import './mainpage.css';
 import ContextMenu from '../../components/ContextMenu/ContextMenu';
 import BookPage from '../BookPage/BookPage';
 import BooksListPage from '../BooksListPage/BooksListPage';
@@ -85,8 +85,10 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     function getDeleteBookMsg(bookId) {
         if (bookId != null && ("" + bookId).length > 0) {
             let first = BooksProvider.find(bookId);
-            let message = "Are you sure? Delete \"" + first.name + "\" book.";
-            return message;
+            if (first != null && first.length > 0) {
+                let message = "Are you sure? Delete \"" + first.name + "\" book.";
+                return message;
+            }
         }
         return "";
     }
@@ -105,8 +107,12 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         return message;
     }
 
-    function getGenerate20BooksMsg() {
-        let message = "Are you sure? Generate 20 additional books.";
+    function getGenerateMsg(req) {
+        var message;
+        if(req === "20Authors")
+            message = "Are you sure? Generate 20 additional authors.";
+        else
+            message = "Are you sure? Generate 20 additional books.";
         return message;
     }
 
@@ -117,11 +123,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     function generate20BooksCancel() {
         setPageRef(contextOpsBooks[0].href);
-    }
-
-    function getGenerate20AuthorsMsg() {
-        let message = "Are you sure? Generate 20 additional authors.";
-        return message;
     }
 
     function generate20AuthorsOk() {
@@ -157,24 +158,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     return (
         <div className="mainPage">
-
-            {/* <Chart
-      chartType="PieChart"
-      data={data}
-      options={options}
-      width={"100%"}
-      height={"400px"}
-    /> */}
-
-            {/* <PieChart radius={12}
-  data={[
-    { title: 'One', value: 110, color: '#aabbcc' },
-    { title: 'Two', value: 15, color: '#031749' },
-    { title: 'Three', value: 20, color: '#55ae16' },
-  ]}
-/>; */}
-
-
             <h4>{displayCurrent(selectedItem)}</h4>
             <div className='commonLayout'>
                 <ContextMenu operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
@@ -194,9 +177,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} btnLabels={['Ok', 'Cancel']} /></span>
                 <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} btnLabels={['Yes', 'No']} /></span>
 
-                <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerate20BooksMsg()} answerYesProc={generate20BooksOk} answerNoProc={generate20BooksCancel} btnLabels={['Yes', 'No']} /></span>
-
-                <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerate20AuthorsMsg()} answerYesProc={generate20AuthorsOk} answerNoProc={generate20AuthorsCancel} btnLabels={['Yes', 'No']} /></span>
+                <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerateMsg} answerYesProc={generate20BooksOk} answerNoProc={generate20BooksCancel} btnLabels={['Yes', 'No']} /></span>
+                <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage question={getGenerateMsg('20Authors')} answerYesProc={generate20AuthorsOk} answerNoProc={generate20AuthorsCancel} btnLabels={['Yes', 'No']} /></span>
 
                 <span className={pageRef == "/search" ? "pageVisible" : "pageHidden"}><SearchPage /></span>
                 <span className={pageRef == "/maps" ? "pageVisible" : "pageHidden"}><LocationPage /></span>
