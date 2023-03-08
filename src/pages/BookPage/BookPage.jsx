@@ -203,7 +203,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={nameModified ? stateName : book.name} onChange={handleNameChange}
                             />
-                            <span className="fieldCurrent">{book.name}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.name}</span>
                         </span>
                         <span className="book-info">
                             <span className="book-info-label">Year</span>
@@ -211,14 +211,14 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={yearModified ? stateYear : book.year} onChange={handleYearChange}
                             />
-                            <span className="fieldCurrent">{book.year}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.year}</span>
                         </span>
                         <span className="book-info">
                             <span className="book-info-label">Authors</span>
                             <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={authorsModified ? stateAuthors : book.authors} onChange={handleAuthorsChange} />
-                            <span className="fieldCurrent">{book.authors}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.authors}</span>
                         </span>
                     </span>
                 </span>
@@ -227,7 +227,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Short content description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={infoModified ? stateInfo : book.info} onChange={handleInfoChange} />
-                    <div className="fieldCurrent">{book.info}</div>
+                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.info}</div>
                 </div>
                 <div className="buttonRow">
                     <span className={edit && !create ? "featureButton" : "ctrlHidden"}>

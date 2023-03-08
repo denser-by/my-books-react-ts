@@ -189,21 +189,21 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                             <Input type="textarea" id="authorName" name="authorName" readOnly={!edit} placeholder="Author name"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={nameModified ? stateName : author.name} onChange={handleNameChange} />
-                            <span className="fieldCurrent">{author.name}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.name}</span>
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">Born</span>
                             <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="Born in"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={ageModified ? stateAge : author.age} onChange={handleAgeChange} />
-                            <span className="fieldCurrent">{author.age}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.age}</span>
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">Publications</span>
                             <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={booksModified ? stateBooks : author.books} onChange={handleBooksChange} />
-                            <span className="fieldCurrent">{author.books}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.books}</span>
                         </span>
                     </span>
                 </span>
@@ -212,7 +212,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     <Input type="textarea" id="authorInfo" name="authorInfo" readOnly={!edit} placeholder="Short books related description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={infoModified ? stateInfo : author.info} onChange={handleInfoChange} />
-                    <div className="fieldCurrent">{author.info}</div>
+                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.info}</div>
                 </div>
                 <div className="buttonRow">
                     <span className={edit && !create ? "featureButton" : "ctrlHidden"}>
