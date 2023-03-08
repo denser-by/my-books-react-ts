@@ -24,6 +24,11 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     const [stateBooks, setStateBooks] = useState('');
     const [stateInfo, setStateInfo] = useState('');
 
+    const [nameModified, setNameModified] = React.useState(false);
+    const [ageModified, setAgeModified] = React.useState(false);
+    const [booksModified, setBooksModified] = React.useState(false);
+    const [infoModified, setInfoModified] = React.useState(false);
+
     const [state, setState] = useState({
         name: '',
         age: '',
@@ -34,21 +39,25 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     function handleNameChange(event) {
         setStateName(event.target.value);
         setState({ name: event.target.value });
+        setNameModified(true);
     }
 
     function handleAgeChange(event) {
         setStateAge(event.target.value);
         setState({ age: event.target.value });
+        setAgeModified(true);
     }
 
     function handleBooksChange(event) {
         setStateBooks(event.target.value);
         setState({ books: event.target.value });
+        setBooksModified(true);
     }
 
     function handleInfoChange(event) {
         setStateInfo(event.target.value);
         setState({ info: event.target.value });
+        setInfoModified(true);
     }
 
     function onAuthorView() {
@@ -81,17 +90,25 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         // author.books = state.books;
         // author.info = state.info;
 
-        author.name = stateName;
-        author.age = stateAge;
-        author.books = stateBooks;
-        author.info = stateInfo;
+        if (nameModified)
+            author.name = stateName;
+        if (ageModified)
+            author.age = stateAge;
+        if (booksModified)
+            author.books = stateBooks;
+        if (infoModified)
+            author.info = stateInfo;
         if (imageUploaded)
             author.photo = myImage;
 
-        author2.name = stateName;
-        author2.age = stateAge;
-        author2.books = stateBooks;
-        author2.info = stateInfo;
+        if (nameModified)
+            author2.name = stateName;
+        if (ageModified)
+            author2.age = stateAge;
+        if (booksModified)
+            author2.books = stateBooks;
+        if (infoModified)
+            author2.info = stateInfo;
         if (imageUploaded)
             author2.photo = myImage;
 
@@ -105,12 +122,16 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
 
         setStateName('');
         setState({ name: '' });
+        setNameModified(false);
         setStateAge('');
         setState({ age: '' });
+        setAgeModified(false);
         setStateBooks('');
         setState({ books: '' });
+        setBooksModified(false);
         setStateInfo('');
         setState({ info: '' });
+        setInfoModified(false);
         setImageUploaded(false);
         setMyImage('');
 
@@ -167,21 +188,21 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                             <span className="author-info-label">Name</span>
                             <Input type="textarea" id="authorName" name="authorName" readOnly={!edit} placeholder="Author name"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={stateName} onChange={handleNameChange} />
+                                value={nameModified ? stateName : author.name} onChange={handleNameChange} />
                             <span className="fieldCurrent">{author.name}</span>
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">Born</span>
                             <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="Born in"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={stateAge} onChange={handleAgeChange} />
+                                value={ageModified ? stateAge : author.age} onChange={handleAgeChange} />
                             <span className="fieldCurrent">{author.age}</span>
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">Publications</span>
                             <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={stateBooks} onChange={handleBooksChange} />
+                                value={booksModified ? stateBooks : author.books} onChange={handleBooksChange} />
                             <span className="fieldCurrent">{author.books}</span>
                         </span>
                     </span>
@@ -190,7 +211,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     <span className="author-info-label">Biography</span>
                     <Input type="textarea" id="authorInfo" name="authorInfo" readOnly={!edit} placeholder="Short books related description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                        value={stateInfo} onChange={handleInfoChange} />
+                        value={infoModified ? stateInfo : author.info} onChange={handleInfoChange} />
                     <div className="fieldCurrent">{author.info}</div>
                 </div>
                 <div className="buttonRow">
@@ -207,7 +228,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                         <Button type="button" onClick={onAuthorExport}>Export</Button>
                     </span>
                     <span className="featureButton">
-                        <Button type="button" onClick={onAuthorExit}>Back</Button>
+                        <Button type="button" onClick={onAuthorExit}>Cancel</Button>
                     </span>
                 </div>
             </span>

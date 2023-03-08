@@ -24,6 +24,11 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     const [stateAuthors, setStateAuthors] = useState('');
     const [stateInfo, setStateInfo] = useState('');
 
+    const [nameModified, setNameModified] = React.useState(false);
+    const [yearModified, setYearModified] = React.useState(false);
+    const [authorsModified, setAuthorsModified] = React.useState(false);
+    const [infoModified, setInfoModified] = React.useState(false);
+
     const [state, setState] = useState({
         name: '',
         year: '',
@@ -35,24 +40,28 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         // book2.name = event.target.value;
         setStateName(event.target.value);
         setState({ name: event.target.value });
+        setNameModified(true);
     }
 
     function handleYearChange(event) {
         // book2.year = event.target.value;
         setStateYear(event.target.value);
         setState({ year: event.target.value });
+        setYearModified(true);
     }
 
     function handleAuthorsChange(event) {
         // book2.authors = event.target.value;
         setStateAuthors(event.target.value);
         setState({ authors: event.target.value });
+        setAuthorsModified(true);
     }
 
     function handleInfoChange(event) {
         // book2.info = event.target.value;
         setStateInfo(event.target.value);
         setState({ info: event.target.value });
+        setInfoModified(true);
     }
 
     function onBookView() {
@@ -94,17 +103,25 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         // book.authors = state.authors;
         // book.info = state.info;
 
-        book.name = stateName;
-        book.year = stateYear;
-        book.authors = stateAuthors;
-        book.info = stateInfo;
+        if (nameModified)
+            book.name = stateName;
+        if (yearModified)
+            book.year = stateYear;
+        if (authorsModified)
+            book.authors = stateAuthors;
+        if (infoModified)
+            book.info = stateInfo;
         if (imageUploaded)
             book.cover_img = myImage;
 
-        book2.name = stateName;
-        book2.year = stateYear;
-        book2.authors = stateAuthors;
-        book2.info = stateInfo;
+        if (nameModified)
+            book2.name = stateName;
+        if (yearModified)
+            book2.year = stateYear;
+        if (authorsModified)
+            book2.authors = stateAuthors;
+        if (infoModified)
+            book2.info = stateInfo;
         if (imageUploaded)
             book2.cover_img = myImage;
 
@@ -118,12 +135,16 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
 
         setStateName('');
         setState({ name: '' });
+        setNameModified(false);
         setStateYear('');
         setState({ year: '' });
+        setYearModified(false);
         setStateAuthors('');
         setState({ authors: '' });
+        setAuthorsModified(false);
         setStateInfo('');
         setState({ info: '' });
+        setInfoModified(false);
         setImageUploaded(false);
         setMyImage('');
 
@@ -180,7 +201,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className="book-info-label">Title</span>
                             <Input type="textarea" id="bookName" name="bookName" readOnly={!edit} placeholder="Name of this fine book"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={stateName} onChange={handleNameChange}
+                                value={nameModified ? stateName : book.name} onChange={handleNameChange}
                             />
                             <span className="fieldCurrent">{book.name}</span>
                         </span>
@@ -188,7 +209,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className="book-info-label">Year</span>
                             <Input type="textarea" id="bookYear" name="bookYear" readOnly={!edit} placeholder="Year of publication"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={stateYear} onChange={handleYearChange}
+                                value={yearModified ? stateYear : book.year} onChange={handleYearChange}
                             />
                             <span className="fieldCurrent">{book.year}</span>
                         </span>
@@ -196,7 +217,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className="book-info-label">Authors</span>
                             <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={stateAuthors} onChange={handleAuthorsChange} />
+                                value={authorsModified ? stateAuthors : book.authors} onChange={handleAuthorsChange} />
                             <span className="fieldCurrent">{book.authors}</span>
                         </span>
                     </span>
@@ -205,7 +226,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <span className="book-info-label">Description</span>
                     <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Short content description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                        value={stateInfo} onChange={handleInfoChange} />
+                        value={infoModified ? stateInfo : book.info} onChange={handleInfoChange} />
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
                 <div className="buttonRow">
@@ -228,7 +249,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         <Button type="button" onClick={onBookSearch}>Search</Button>
                     </span>
                     <span className="featureButton">
-                        <Button type="button" onClick={onBookExit}>Back</Button>
+                        <Button type="button" onClick={onBookExit}>Cancel</Button>
                     </span>
                 </div>
             </span>
