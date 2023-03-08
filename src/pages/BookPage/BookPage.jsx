@@ -55,6 +55,11 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setState({ info: event.target.value });
     }
 
+    function onBookView() {
+        // alert('edit-book-press');
+        setPageRef("/viewBook?id=" + bookId);
+    }
+
     function onBookEdit() {
         // alert('edit-book-press');
         setPageRef("/editBook?id=" + bookId);
@@ -65,7 +70,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     }
 
     function onBookDelete() {
-        alert('delete-book-press');
+        // alert('delete-book-press');
+        setPageRef("/deleteBook?id=" + bookId);
     }
 
     function onBookSearch() {
@@ -201,6 +207,9 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <div className="fieldCurrent">{book.info}</div>
                 </div>
                 <div className="buttonRow">
+                    <span className={edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onBookView}>View</Button>
+                    </span>
                     <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
                         <Button type="submit">{create ? "Create" : "Save"}</Button>
                     </span>
@@ -216,7 +225,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
                         <Button type="button" onClick={onBookSearch}>Search</Button>
                     </span>
-                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                    <span className="featureButton">
                         <Button type="button" onClick={onBookExit}>Back</Button>
                     </span>
                 </div>

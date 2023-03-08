@@ -51,6 +51,11 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         setState({ info: event.target.value });
     }
 
+    function onAuthorView() {
+        // alert('edit-book-press');
+        setPageRef("/viewAuthor?id=" + authorId);
+    }
+
     function onAuthorEdit() {
         // alert('edit-author-press');
         setPageRef("/editAuthor?id=" + authorId);
@@ -187,6 +192,9 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     <div className="fieldCurrent">{author.info}</div>
                 </div>
                 <div className="buttonRow">
+                    <span className={edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onAuthorView}>View</Button>
+                    </span>
                     <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
                         <Button type="submit">{create ? "Create" : "Save"}</Button>
                     </span>
@@ -196,7 +204,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
                         <Button type="button" onClick={onAuthorExport}>Export</Button>
                     </span>
-                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                    <span className="featureButton">
                         <Button type="button" onClick={onAuthorExit}>Back</Button>
                     </span>
                 </div>
