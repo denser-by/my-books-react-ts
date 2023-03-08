@@ -5,7 +5,7 @@ import { Form, Input, Button } from 'reactstrap';
 import BooksProvider from '../../model/BooksProvider.js';
 import ImageUploading from 'react-images-uploading';
 
-const BookPage = ({ pr, bookId, edit, create, closeProc }) => {
+const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("Author") !== -1) return;
     // console.log('BOOK_PAGE<'+ bookId +'><'+ edit+'><'+ create+'>'+pr);
 
@@ -56,7 +56,8 @@ const BookPage = ({ pr, bookId, edit, create, closeProc }) => {
     }
 
     function onBookEdit() {
-        alert('edit-book-press');
+        // alert('edit-book-press');
+        setPageRef("/editBook?id=" + bookId);
     }
 
     function onBookExport() {
@@ -69,6 +70,11 @@ const BookPage = ({ pr, bookId, edit, create, closeProc }) => {
 
     function onBookSearch() {
         alert('search-book-press');
+    }
+
+    function onBookExit() {
+        // alert('exit-book-press');
+        setPageRef("/viewBooksAll");
     }
 
     function onImageUploadViewMode() {
@@ -209,6 +215,9 @@ const BookPage = ({ pr, bookId, edit, create, closeProc }) => {
                     </span>
                     <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
                         <Button type="button" onClick={onBookSearch}>Search</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onBookExit}>Back</Button>
                     </span>
                 </div>
             </span>

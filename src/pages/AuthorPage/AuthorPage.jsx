@@ -5,7 +5,7 @@ import { Form, Input, Button } from 'reactstrap';
 import AuthorsProvider from '../../model/AuthorsProvider.js';
 import ImageUploading from 'react-images-uploading';
 
-const AuthorPage = ({ pr, authorId, edit, create, closeProc }) => {
+const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     if (pr.indexOf("Book") !== -1) return;
     // console.log('AUTHOR_PAGE<'+ authorId +'><'+ edit+'><'+ create+'>'+pr);
 
@@ -52,11 +52,17 @@ const AuthorPage = ({ pr, authorId, edit, create, closeProc }) => {
     }
 
     function onAuthorEdit() {
-        alert('edit-author-press');
+        // alert('edit-author-press');
+        setPageRef("/editAuthor?id=" + authorId);
     }
 
     function onAuthorExport() {
         alert('export-author-press');
+    }
+
+    function onAuthorExit() {
+        // alert('exit-author-press');
+        setPageRef("/viewAuthorsAll");
     }
 
     function onImageUploadViewMode() {
@@ -189,6 +195,9 @@ const AuthorPage = ({ pr, authorId, edit, create, closeProc }) => {
                     </span>
                     <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
                         <Button type="button" onClick={onAuthorExport}>Export</Button>
+                    </span>
+                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                        <Button type="button" onClick={onAuthorExit}>Back</Button>
                     </span>
                 </div>
             </span>
