@@ -19,7 +19,17 @@ import mongoose from 'mongoose';
 // import sqlite3 from 'sqlite3';
 // var Connection = require('tedious').Connection;
 // import {Connection} from 'tedious';
+// let oracledb = require('oracledb');
+// import oracledb from 'oracledb';
 
+
+
+
+// const connection = oracledb.getConnection({
+//     user: "my_books_admin",
+//     password: 'password',
+//     connectString: "localhost/my_books2"
+// });
 
 // var config = {
 //     server: "localhost",
