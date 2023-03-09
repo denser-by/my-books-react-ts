@@ -17,7 +17,22 @@ import mongoose from 'mongoose';
 // import { openDatabase } from 'react-native-sqlite-storage';
 // const sqlite3 = require('sqlite3').verbose();
 // import sqlite3 from 'sqlite3';
+// var Connection = require('tedious').Connection;
+// import {Connection} from 'tedious';
 
+
+// var config = {
+//     server: "localhost",
+//     options: {},
+//     authentication: {
+//         type: "default",
+//         options: {
+//             userName: "my_books_admin",
+//             password: "password",
+//         }
+//     }
+// };
+// var connection = new Connection(config);
 
 // let db = new sqlite3.Database(':memory:');
 
