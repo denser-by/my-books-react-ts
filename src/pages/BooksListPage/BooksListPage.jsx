@@ -5,6 +5,15 @@ import axios from 'axios';
 import BooksProvider from '../../model/BooksProvider';
 import TableCompon from '../../components/TableCompon.js';
 import mongoose from 'mongoose';
+// const mysql = require('mysql');
+// import mysql from 'mysql';
+
+// const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "my_books_admin",
+//     password: "",
+//     database: "my_books2"
+// });
 
 // mongoose.connect('postgres://localhost:5432/my_books2',{
 //     useNewUrlParser: true,
