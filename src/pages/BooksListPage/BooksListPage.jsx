@@ -10,8 +10,15 @@ import mongoose from 'mongoose';
 // const { Sequelize } = require('sequelize');
 // const { Client } = require('pg');
 // const Pool = require('pg').Pool;
+// const mysql2 = require('mysql2');
+// import mysql from 'mysql2';
 
 
+// const connection = mysql2.createConnection({
+//     host: 'localhost',
+//     user: 'my_books_admin',
+//     database: 'my_books2'
+// });
 
 // const pool = new Pool({
 //     user: 'my_books_admin',
