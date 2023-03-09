@@ -7,6 +7,14 @@ import TableCompon from '../../components/TableCompon.js';
 import mongoose from 'mongoose';
 // const mysql = require('mysql');
 // import mysql from 'mysql';
+// const { Sequelize } = require('sequelize');
+
+
+// const sequelize = new Sequelize('postgres://my_books_admin:pass@localhost:5432/my_books2');
+// const sequelize = new Sequelize('my_books2', 'my_books_admin', 'password', {
+//     host: 'localhost',
+//     dialect: 'postgres' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+// });
 
 // const db = mysql.createConnection({
 //     host: "localhost",
