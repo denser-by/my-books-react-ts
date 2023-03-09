@@ -8,7 +8,18 @@ import mongoose from 'mongoose';
 // const mysql = require('mysql');
 // import mysql from 'mysql';
 // const { Sequelize } = require('sequelize');
+// const { Client } = require('pg');
+// const Pool = require('pg').Pool;
 
+
+
+// const pool = new Pool({
+//     user: 'my_books_admin',
+//     host: 'localhost',
+//     database: 'my_books2',
+//     password: 'password',
+//     port: 5432,
+// });
 
 // const sequelize = new Sequelize('postgres://my_books_admin:pass@localhost:5432/my_books2');
 // const sequelize = new Sequelize('my_books2', 'my_books_admin', 'password', {
