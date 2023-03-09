@@ -96,6 +96,7 @@
   },
   "devDependencies": {
     "@types/google.maps": "^3.52.1",
-    "@types/react-table": "^7.7.14"
+    "@types/react-table": "^7.7.14",
+    "sequelize-cli": "^6.6.0"
   }
 }
