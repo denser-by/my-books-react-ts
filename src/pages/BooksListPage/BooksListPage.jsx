@@ -12,7 +12,19 @@ import mongoose from 'mongoose';
 // const Pool = require('pg').Pool;
 // const mysql2 = require('mysql2');
 // import mysql from 'mysql2';
+// const mariadb = require('mariadb');
+// import mariadb from 'mariadb';
 
+
+// conn = mariadb.createConnection({
+//     host: "localhost",
+//     port: 5009,
+//     ssl: { ca: serverCert },
+//     user: "my_books_admin",
+//     password: "password",
+//     database: "my_books2",
+//     trace: true,
+//  });
 
 // const connection = mysql2.createConnection({
 //     host: 'localhost',
