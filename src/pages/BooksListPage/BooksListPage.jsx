@@ -4,6 +4,13 @@ import './../../components/ContextMenu/contextmenu.css';
 import axios from 'axios';
 import BooksProvider from '../../model/BooksProvider';
 import TableCompon from '../../components/TableCompon.js';
+import mongoose from 'mongoose';
+
+// mongoose.connect('postgres://localhost:5432/my_books2',{
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// });
+// const db = mongoose.connection;
 
 const BooksListPage = ({ setPageRef }) => {
     const [aboveBook2, setAboveBook2] = useState("");
