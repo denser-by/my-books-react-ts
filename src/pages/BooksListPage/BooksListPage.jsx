@@ -14,7 +14,14 @@ import mongoose from 'mongoose';
 // import mysql from 'mysql2';
 // const mariadb = require('mariadb');
 // import mariadb from 'mariadb';
+// import { openDatabase } from 'react-native-sqlite-storage';
+// const sqlite3 = require('sqlite3').verbose();
+// import sqlite3 from 'sqlite3';
 
+
+// let db = new sqlite3.Database(':memory:');
+
+// var db = openDatabase({ name: 'UserDatabase.db' });
 
 // conn = mariadb.createConnection({
 //     host: "localhost",
