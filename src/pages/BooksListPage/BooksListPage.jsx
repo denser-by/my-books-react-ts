@@ -5,6 +5,8 @@ import axios from 'axios';
 import BooksProvider from '../../model/BooksProvider';
 import TableCompon from '../../components/TableCompon.js';
 import mongoose from 'mongoose';
+// import { Appointment } from '../../model/sequelizeEntryPoint';
+// import Book from '../../model/Book';
 // const mysql = require('mysql');
 // import mysql from 'mysql';
 // const { Sequelize } = require('sequelize');
@@ -128,6 +130,9 @@ const BooksListPage = ({ setPageRef }) => {
     }
 
     let bookItems = BooksProvider.all();
+    // let bookItems = BooksProviderSqlite.all2();
+    // let b = new Book({id: 1, name: 'Book1', info: 'Description_1', year:2001});
+    // let ap = Appointment();
 
     bookItems.map(book => {
         book.view = "/viewBook?id=" + book.id;

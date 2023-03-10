@@ -16,7 +16,7 @@ function TablePageSeqence({ canPreviousPage, canNextPage, pageCount, pageIndex, 
             </span>
             <span className="pageIndex">
                 <strong className="pageIndexCenter">
-                    {pageIndex + 1}&nbsp;/&nbsp;{pageOptions.length}
+                    {pageOptions.length > 0 ? pageIndex + 1 : 0}&nbsp;/&nbsp;{pageOptions.length}
                 </strong>
             </span>
             <span className="pageIndex" onClick={() => nextPage()} disabled={!canNextPage}>

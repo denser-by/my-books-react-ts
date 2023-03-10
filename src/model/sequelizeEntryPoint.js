@@ -569,3 +569,5 @@ class DataPack {
 }
 
 console.error('end');
+
+export { Image, City, User, Role, Book, Author, AuthorBook, Appointment };
