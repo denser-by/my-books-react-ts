@@ -73,7 +73,8 @@
     "tls": "^0.0.1",
     "typescript": "^4.9.5",
     "uuid": "8.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.76.0"
   },
   "scripts": {
     "start": "react-scripts start",

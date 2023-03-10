@@ -2,15 +2,25 @@ console.log('Hello Sequelize');
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
-const sequelize = new Sequelize('my_books2', 'my_books_admin', 'root', {
-    host: 'localhost',
-    dialect: 'postgres', /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-    dialectOptions: {
-        application_name: 'my-books-react-ts',    // application in pg_stat_activity
-        client_encoding: 'WIN1251',
-        statement_timeout: '15000', //Times out queries after a set time in milliseconds
-    }
-});
+let sequelize;
+const dbPostrgreChoice = !false;
+
+if (dbPostrgreChoice) {
+    sequelize = new Sequelize('my_books2', 'my_books_admin', 'root', {
+        host: 'localhost',
+        dialect: 'postgres', /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+        dialectOptions: {
+            application_name: 'my-books-react-ts',    // application in pg_stat_activity
+            client_encoding: 'WIN1251',
+            statement_timeout: '15000', //Times out queries after a set time in milliseconds
+        }
+    });
+} else {
+    sequelize = new Sequelize({
+        dialect: 'sqlite',
+        storage: 'db.sqlite3'
+    });
+}
 
 console.log('Hello Sequelize' + sequelize);
 
