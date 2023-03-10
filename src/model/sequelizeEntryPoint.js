@@ -9,13 +9,10 @@ const sequelize = new Sequelize('my_books2', 'my_books_admin', 'root', {
         application_name: 'my-books-react-ts',    // application in pg_stat_activity
         client_encoding: 'WIN1251',
         statement_timeout: '15000', //Times out queries after a set time in milliseconds
-
     }
 });
 
-
 console.log('Hello Sequelize' + sequelize);
-
 
 class BooksDb {
     async auth() {
@@ -35,219 +32,150 @@ class BooksDb {
 let db = new BooksDb();
 db.auth();
 
-
 console.log('prepare model');
 
+class Image extends Model { }
+Image.init({
+    path: DataTypes.STRING,
+    mini_copy: DataTypes.BLOB('tiny'),
+    image_type: DataTypes.ENUM('cover_img', 'photo', 'avatar', 'sightseen', 'map'),
+    file_size: DataTypes.INTEGER
+}, {
+    modelName: 'image',
+    tableName: 'images',
+    sequelize,
+});
+
+class City extends Model { }
+City.init({
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    sightseen: DataTypes.INTEGER,
+    location: DataTypes.STRING
+}, {
+    modelName: 'city',
+    tableName: 'cities',
+    sequelize,
+});
+City.belongsTo(Image, {
+    foreignKey: 'sightseen'
+});
+
 const User = sequelize.define("user", {
-    name: DataTypes.TEXT,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    phone: DataTypes.STRING,
     username: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },
+    hash_password: DataTypes.STRING,
     favoriteColor: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         defaultValue: 'green'
     },
-    age: DataTypes.INTEGER,
-    cash: DataTypes.INTEGER
+    avatar: DataTypes.INTEGER,
+    fromCity: {
+        type: DataTypes.STRING,
+        defaultValue: 'Minsk'
+    }
 }, {
     modelName: 'user',
     tableName: 'users',
     sequelize,
-  });
-
-
-  class MyModel extends Model {}
-MyModel.init({
-  userId: {
-    type: DataTypes.INTEGER,
-    field: 'user_id'
-  }
-}, { 
-    modelName: 'mymodel',
-    tableName: 'mymodels',
-    sequelize,
- });
-
-
- class Collection extends Model {}
-Collection.init({
-  uid: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true // Automatically gets converted to SERIAL for postgres
-  }
-}, { 
-    modelName: 'collection',
-    tableName: 'collections',
-    sequelize,
-
- });
-
-class Document extends Model { }
-Document.init({
-    author: DataTypes.STRING
-}, { 
-    modelName: 'document',
-    tableName: 'documents',
-    sequelize,
 });
-
-class Version extends Model { }
-Version.init({
-    timestamp: DataTypes.DATE
-}, { 
-    modelName: 'version',
-    tableName: 'versions',
-    sequelize,
+User.belongsTo(Image, {
+    foreignKey: 'avatar'
 });
-
-Document.hasMany(Version); // This adds documentId attribute to version
-Document.belongsTo(Version, {
-    as: 'Current',
-    foreignKey: 'currentVersionId'
-}); // This adds currentVersionId attribute to document
-
-
-
-
-class Trainer extends Model { }
-Trainer.init({
-    firstName: Sequelize.STRING,
-    lastName: Sequelize.STRING
-}, { 
-    modelName: 'trainer',
-    tableName: 'trainers',
-    sequelize,
-});
-
-// Series will have a trainerId = Trainer.id foreign reference key
-// after we call Trainer.hasMany(series)
-class Series extends Model { }
-Series.init({
-    title: Sequelize.STRING,
-    subTitle: Sequelize.STRING,
-    description: Sequelize.TEXT,
-    // Set FK relationship (hasMany) with `Trainer`
-    trainerId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Trainer,
-            key: 'id'
-        }
-    }
-}, { 
-    modelName: 'series',
-    tableName: 'serieses',
-    sequelize,
-});
-
-// Video will have seriesId = Series.id foreign reference key
-// after we call Series.hasOne(Video)
-class Video extends Model { }
-Video.init({
-    title: Sequelize.STRING,
-    sequence: Sequelize.INTEGER,
-    description: Sequelize.TEXT,
-    // set relationship (hasOne) with `Series`
-    seriesId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Series, // Can be both a string representing the table name or a Sequelize model
-            key: 'id'
-        }
-    }
-}, { 
-    modelName: 'video',
-    tableName: 'videos',
-    sequelize,
-});
-
-Series.hasOne(Video);
-Trainer.hasMany(Series);
-
-
-
-class Organization extends Model { }
-Organization.init({
-    name: DataTypes.STRING
-}, { 
-    modelName: 'organization',
-    tableName: 'organizations',
-    sequelize,
-});
-
-
-
-
-class Project extends Model { }
-Project.init({
-    name: DataTypes.STRING
-}, { 
-    modelName: 'project',
-    tableName: 'projects',
-    sequelize,
-});
-
-class Task extends Model { }
-Task.init({
-    name: DataTypes.STRING
-}, { 
-    modelName: 'task',
-    tableName: 'tasks',
-    sequelize,
-});
-
-
 
 class Role extends Model { }
 Role.init({
-    name: DataTypes.STRING
-}, { 
+    name: DataTypes.STRING,
+    description: DataTypes.STRING
+}, {
     modelName: 'role',
     tableName: 'roles',
     sequelize,
 });
+User.belongsToMany(Role, { through: 'user_role', foreignKey: 'user' });
+Role.belongsToMany(User, { through: 'user_role', foreignKey: 'role' });
 
+class Book extends Model { }
+Book.init({
+    name: DataTypes.STRING,
+    info: DataTypes.TEXT,
+    year: DataTypes.INTEGER,
+    cover_img: DataTypes.INTEGER
+}, {
+    modelName: 'book',
+    tableName: 'books',
+    sequelize,
+});
+Book.belongsTo(Image, {
+    foreignKey: 'cover_img'
+});
 
+class Author extends Model { }
+Author.init({
+    name: DataTypes.STRING,
+    info: DataTypes.TEXT,
+    age: DataTypes.INTEGER,
+    photo: DataTypes.INTEGER
+}, {
+    modelName: 'author',
+    tableName: 'authors',
+    sequelize,
+});
+Author.belongsTo(Image, {
+    foreignKey: 'photo'
+});
 
-// 1:1
-Organization.belongsTo(User, { foreignKey: 'owner_id' });
-User.hasOne(Organization, { foreignKey: 'owner_id' });
+Book.belongsToMany(Author, { through: 'author_book', foreignKey: 'author' });
+Author.belongsToMany(Book, { through: 'author_book', foreignKey: 'book' });
 
-// 1:M
-Project.hasMany(Task, { foreignKey: 'tasks_pk' });
-Task.belongsTo(Project, { foreignKey: 'tasks_pk' });
-
-// N:M
-User.belongsToMany(Role, { through: 'user_has_roles', foreignKey: 'user_role_user_id' });
-Role.belongsToMany(User, { through: 'user_has_roles', foreignKey: 'roles_identifier' });
-
+class Appointment extends Model { }
+Appointment.init({
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    location: DataTypes.STRING,
+    address: DataTypes.STRING,
+    date: DataTypes.DATE,
+    city: DataTypes.INTEGER,
+    book: DataTypes.INTEGER,
+    map: DataTypes.INTEGER
+}, {
+    modelName: 'appointment',
+    tableName: 'appointments',
+    sequelize,
+});
+// Appointment.belongsTo(City, {
+//     foreignKey: 'city'
+// });
+// Appointment.belongsTo(Book, {
+//     foreignKey: 'book'
+// });
+Appointment.belongsTo(Image, {
+    foreignKey: 'map'
+});
 
 (async () => {
     await sequelize.sync({ force: true });
     console.error('sync finished');
 })();
 
-
-// const jane = User.build({ name: "Jane" });
-// console.log(jane instanceof User); // true
-// console.log(jane.name); // "Jane"
-
-
-// (async () => {
-//     await jane.save();
-//     console.log('Jane was saved to the database!');
-// })();
-
-
-// (async () => {
-//     const jane = await User.create({ name: "Jane" });
-//     // Jane exists in the database now!
-//     console.log(jane instanceof User); // true
-//     console.log(jane.name); // "Jane"
-// })();
-
+/*
+drop table users cascade;
+drop table user_role cascade;
+drop table roles cascade;
+drop table books cascade;
+drop table images cascade;
+drop table authors cascade;
+drop table author_book cascade;
+drop table cities cascade;
+drop table appointments cascade;
+select * from pg_tables where tableowner = 'my_books_admin';
+*/
 
 console.error('end');
