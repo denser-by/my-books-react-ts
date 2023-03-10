@@ -3,7 +3,7 @@ console.log('Hello Sequelize');
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
 let sequelize;
-const dbPostrgreChoice = !false;
+const dbPostrgreChoice = false;
 
 if (dbPostrgreChoice) {
     sequelize = new Sequelize('my_books2', 'my_books_admin', 'root', {
@@ -509,6 +509,20 @@ class DataPack {
             drop table cities cascade;
             drop table appointments cascade;
             select * from pg_tables where tableowner = 'my_books_admin';
+            `;
+    }
+
+    getCleanDbSqReq() {
+        return `
+            drop table user_role;
+            drop table users;
+            drop table roles;
+            drop table author_book;
+            drop table books;
+            drop table authors;
+            drop table images;
+            drop table cities;
+            drop table appointments;
             `;
     }
 
