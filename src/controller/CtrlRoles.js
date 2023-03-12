@@ -1,10 +1,10 @@
-const SvcBooks = require('../service/SvcBooks.js');
+const SvcRoles = require('../service/SvcRoles.js');
 
-class CtrlBooks {
+class CtrlRoles {
     async create(req, res) {
         try {
-            const createdBook = await SvcBooks.create(req.body);
-            res.json(createdBook);
+            const createdRole = await SvcRoles.create(req.body);
+            res.json(createdRole);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -12,8 +12,8 @@ class CtrlBooks {
 
     async getAll(req, res) {
         try {
-            const books = await SvcBooks.getAll();
-            return res.json(books);
+            const roles = await SvcRoles.getAll();
+            return res.json(roles);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -21,8 +21,8 @@ class CtrlBooks {
 
     async getOne(req, res) {
         try {
-            const book = await SvcBooks.getOne(req.params.id);
-            return res.json(book);
+            const role = await SvcRoles.getOne(req.params.id);
+            return res.json(role);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -30,8 +30,8 @@ class CtrlBooks {
 
     async update(req, res) {
         try {
-            const updatedBook = await SvcBooks.update(req.body);
-            return res.json(updatedBook);
+            const updatedRole = await SvcRoles.update(req.body);
+            return res.json(updatedRole);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -39,12 +39,12 @@ class CtrlBooks {
 
     async delete(req, res) {
         try {
-            const deletedBook = await SvcBooks.delete(req.params.id);
-            return res.json(deletedBook);
+            const deletedRole = await SvcRoles.delete(req.params.id);
+            return res.json(deletedRole);
         } catch (e) {
             res.status(500).json(e);
         }
     }
 }
 
-module.exports = new CtrlBooks()
+module.exports = new CtrlRoles()

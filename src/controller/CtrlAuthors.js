@@ -1,12 +1,10 @@
-import Author from '../model/Author.js';
-import SvcAuthors from '../service/SvcAuthors.js';
+const SvcAuthors = require('../service/SvcAuthors.js');
 
 class CtrlAuthors {
-
     async create(req, res) {
         try {
-            const author = await SvcAuthors.create(req.body);
-            res.json(author);
+            const createdAuthor = await SvcAuthors.create(req.body);
+            res.json(createdAuthor);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -35,18 +33,18 @@ class CtrlAuthors {
             const updatedAuthor = await SvcAuthors.update(req.body);
             return res.json(updatedAuthor);
         } catch (e) {
-            res.status(500).json(e.message);
+            res.status(500).json(e);
         }
     }
 
     async delete(req, res) {
         try {
-            const author = await SvcAuthors.delete(req.params.id);
-            return res.json(author);
+            const deletedAuthor = await SvcAuthors.delete(req.params.id);
+            return res.json(deletedAuthor);
         } catch (e) {
             res.status(500).json(e);
         }
     }
 }
 
-export default new CtrlAuthors();
+module.exports = new CtrlAuthors()
