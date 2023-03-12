@@ -40,6 +40,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.2.0",
     "net": "^1.0.2",
+    "nodemon": "^2.0.21",
     "oracledb": "^5.5.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
@@ -81,7 +82,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "start-dev-server": "webpack-dev-server --open",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-server": "nodemon ./src/server.js"
   },
   "browserslist": {
     "production": [
