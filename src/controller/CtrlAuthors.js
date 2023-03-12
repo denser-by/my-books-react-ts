@@ -4,7 +4,7 @@ class CtrlAuthors {
     async create(req, res) {
         try {
             const createdAuthor = await SvcAuthors.create(req.body);
-            res.json(createdAuthor);
+            res.status(200).json(createdAuthor);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -13,7 +13,7 @@ class CtrlAuthors {
     async getAll(req, res) {
         try {
             const authors = await SvcAuthors.getAll();
-            return res.json(authors);
+            return res.status(200).json(authors);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -22,7 +22,7 @@ class CtrlAuthors {
     async getOne(req, res) {
         try {
             const author = await SvcAuthors.getOne(req.params.id);
-            return res.json(author);
+            return res.status(200).json(author);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -31,7 +31,7 @@ class CtrlAuthors {
     async update(req, res) {
         try {
             const updatedAuthor = await SvcAuthors.update(req.body);
-            return res.json(updatedAuthor);
+            return res.status(200).json(updatedAuthor);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -40,7 +40,7 @@ class CtrlAuthors {
     async delete(req, res) {
         try {
             const deletedAuthor = await SvcAuthors.delete(req.params.id);
-            return res.json(deletedAuthor);
+            return res.status(200).json(deletedAuthor);
         } catch (e) {
             res.status(500).json(e);
         }

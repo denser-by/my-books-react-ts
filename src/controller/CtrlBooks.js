@@ -4,7 +4,7 @@ class CtrlBooks {
     async create(req, res) {
         try {
             const createdBook = await SvcBooks.create(req.body);
-            res.json(createdBook);
+            res.status(200).json(createdBook);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -13,7 +13,7 @@ class CtrlBooks {
     async getAll(req, res) {
         try {
             const books = await SvcBooks.getAll();
-            return res.json(books);
+            return res.status(200).json(books);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -22,7 +22,7 @@ class CtrlBooks {
     async getOne(req, res) {
         try {
             const book = await SvcBooks.getOne(req.params.id);
-            return res.json(book);
+            return res.status(200).json(book);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -31,7 +31,7 @@ class CtrlBooks {
     async update(req, res) {
         try {
             const updatedBook = await SvcBooks.update(req.body);
-            return res.json(updatedBook);
+            return res.status(200).json(updatedBook);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -40,7 +40,7 @@ class CtrlBooks {
     async delete(req, res) {
         try {
             const deletedBook = await SvcBooks.delete(req.params.id);
-            return res.json(deletedBook);
+            return res.status(200).json(deletedBook);
         } catch (e) {
             res.status(500).json(e);
         }

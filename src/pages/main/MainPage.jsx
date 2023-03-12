@@ -18,6 +18,7 @@ import { Chart } from "react-google-charts";
 import BookStatPage from '../BookStatPage/BookStatPage';
 import AuthorStatPage from '../AuthorStatPage/AuthorStatPage';
 import LocationPage from '../LocationPage/LocationPage';
+import UsersListPage from '../UsersListPage/UsersListPage';
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const [pageRef, setPageRef] = useState("")
@@ -59,7 +60,9 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const contextOpsAbout = [
         { icon: "anchor", key: "k31", href: "/contacts", name: "Contacts" },
         { icon: "anchor", key: "k32", href: "/order", name: "Order" },
-        { icon: "anchor", key: "k33", href: "/info", name: "Info" }
+        { icon: "anchor", key: "k33", href: "/info", name: "Info" },
+        { icon: "anchor", key: "k34", href: "/setup", name: "Settings" },
+        { icon: "anchor", key: "k35", href: "/viewUsersAll", name: "All Users" },
     ]
 
     function getId(ref) {
@@ -85,7 +88,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     function getDeleteBookMsg(bookId) {
         if (bookId != null && ("" + bookId).length > 0) {
             let first = BooksProvider.find(bookId);
-            if (first != null && first.length > 0) {
+            if (first != null && first.name != null && first.name.length > 0) {
                 let message = "Are you sure? Delete \"" + first.name + "\" book.";
                 return message;
             }
@@ -186,6 +189,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
                 <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>
                 <span className={pageRef == "/info" ? "pageVisible" : "pageHidden"}><InfoPage /></span>
+                <span className={pageRef == "/viewUsersAll" ? "pageVisible" : "pageHidden"}><UsersListPage setPageRef={setPageRef} /></span>
 
                 <span className={pageRef == "/bookStat" ? "pageVisible" : "pageHidden"}><BookStatPage /></span>
                 <span className={pageRef == "/authorStat" ? "pageVisible" : "pageHidden"}><AuthorStatPage /></span>

@@ -1,0 +1,43 @@
+.authorsList {
+    display: inline-flex;
+    flex-direction: column;
+    border: 2px solid #bc4404;
+    border-radius: 4px;
+    margin: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.authorsListItem {
+    background-color: #fefaef;
+    border-radius: 3px;
+    margin: 2px;
+    color: black;
+    border-bottom: 1px solid #eeee0b;
+}
+
+.authorsListHeader {
+    text-align: center;
+    align-items: center;
+    color: white;
+}
+
+.authorsInfoHeader {
+    background-color: #bc4404;
+    border: solid 3px #fefaef;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    color: white;
+}
+
+.authorsInfoItem {
+    color: black;
+    width: 20%;
+}
+
+.authorsInfoSpace {
+    margin: 2px;
+    border-radius: 9px;
+    color: black;
+}
