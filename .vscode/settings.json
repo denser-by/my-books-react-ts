@@ -9,6 +9,12 @@
             "database": "my_books2",
             "username": "my_books_admin",
             "password": "root"
+        },
+        {
+            "previewLimit": 150,
+            "driver": "SQLite",
+            "name": "db.sqlite",
+            "database": "${workspaceFolder:my-books-react-ts}/src/db.sqlite"
         }
     ]
 }

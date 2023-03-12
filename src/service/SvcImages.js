@@ -3,7 +3,12 @@ const image = require('../../models/index.js').Image;
 class SvcImages {
     async create(imageCreate) {
         try {
-            const imageItem = await image.create({ path: imageCreate.path, image_type: imageCreate.image_type, file_size: imageCreate.file_size });
+            const imageItem = await image.create({ 
+                path: imageCreate.path,
+                mini_copy: imageCreate.mini_copy,
+                image_type: imageCreate.image_type,
+                file_size: imageCreate.file_size
+            });
             return imageItem;
         } catch (e) {
             throw new Error('Can not create Image, ' + e);
@@ -39,7 +44,12 @@ class SvcImages {
             return null;
         }
         else {
-            rows[0].set({ path: imageUpdate.path, image_type: imageUpdate.image_type, file_size: imageUpdate.file_size });
+            rows[0].set({ 
+                path: imageCreate.path,
+                mini_copy: imageCreate.mini_copy,
+                image_type: imageCreate.image_type,
+                file_size: imageCreate.file_size
+            });
             rows[0].save();
             return rows[0];
         }
