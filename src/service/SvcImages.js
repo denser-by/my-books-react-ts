@@ -45,10 +45,10 @@ class SvcImages {
         }
         else {
             rows[0].set({ 
-                path: imageCreate.path,
-                mini_copy: imageCreate.mini_copy,
-                image_type: imageCreate.image_type,
-                file_size: imageCreate.file_size
+                path: imageUpdate.path,
+                mini_copy: imageUpdate.mini_copy,
+                image_type: imageUpdate.image_type,
+                file_size: imageUpdate.file_size
             });
             rows[0].save();
             return rows[0];
