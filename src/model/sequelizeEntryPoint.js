@@ -3,7 +3,7 @@ console.log('Hello Sequelize');
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
 let sequelize;
-const dbPostrgreChoice = false;
+const dbPostrgreChoice = !false;
 
 if (dbPostrgreChoice) {
     sequelize = new Sequelize('my_books2', 'my_books_admin', 'root', {
@@ -18,7 +18,7 @@ if (dbPostrgreChoice) {
 } else {
     sequelize = new Sequelize({
         dialect: 'sqlite',
-        storage: 'db.sqlite3'
+        storage: '../db.sqlite'
     });
 }
 
@@ -570,4 +570,4 @@ class DataPack {
 
 console.error('end');
 
-export { Image, City, User, Role, Book, Author, AuthorBook, Appointment };
+//export { Image, City, User, Role, Book, Author, AuthorBook, Appointment };
