@@ -12,6 +12,9 @@ module.exports = {
       path: {
         type: Sequelize.STRING
       },
+      mini_copy: {
+        type: Sequelize.BLOB
+      },
       image_type: {
         type: Sequelize.INTEGER
       },

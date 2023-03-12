@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Image.init({
     path: DataTypes.STRING,
+    mini_copy: DataTypes.BLOB,
     image_type: DataTypes.INTEGER,
     file_size: DataTypes.INTEGER
   }, {
