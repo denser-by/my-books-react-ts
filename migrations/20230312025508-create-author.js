@@ -21,6 +21,9 @@ module.exports = {
       photo: {
         type: Sequelize.INTEGER
       },
+      access_key: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

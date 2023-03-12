@@ -3,59 +3,93 @@ const author = require('../../models/index.js').Author;
 class SvcAuthors {
     async create(authorCreate) {
         try {
-            const authorItem = await author.create({ name:authorCreate.name, info:authorCreate.info, age:authorCreate.age, photo:authorCreate.photo });
-            return authorItem;
+            return await author.create({
+                name: authorCreate.name,
+                info: authorCreate.info,
+                age: authorCreate.age,
+                photo: authorCreate.photo,
+                access_key: authorCreate.access_key
+            });
         } catch (e) {
             throw new Error('Can not create Author, ' + e);
         }
     }
 
     async getAll() {
-        const { count, rows } = await author.findAndCountAll({});
-        console.log("Found Author " + count + " records");
+        var { count, rows } = await author.findAndCountAll({});
         if (count >= 1)
             return rows;
         return [];
     }
 
-    async getOne(id) {
-        if (!id)
+    async size() {
+        return await author.count();
+    }
+
+    async hasOne(id) {
+        if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
-        const { count, rows } = await author.findAndCountAll({ where: { id: id } });
-        if (count != 1) {
-            console.log("Can not find Author with id=" + id);
-            return null;
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count == 1 && rows[0].id == id)
+            return true;
+        return false;
+    }
+
+    async findOneByAccessKey(access_key) {
+        if (access_key != null && access_key != undefined && access_key.length > 0) {
+            var { count, rows } = await author.findAndCountAll({ where: { access_key: access_key } });
+            if (count > 0)
+                return rows[0];
         }
+        return null;
+    }
+
+    async getOne(id) {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
         return rows[0];
     }
 
     async update(authorUpdate) {
-        const id = authorUpdate.id;
-        if (!id)
+        var id = authorUpdate.id;
+        if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
-        const { count, rows } = await author.findAndCountAll({ where: { id: id } });
-        if (count != 1) {
-            console.log("Can not find Author with id=" + id);
-            return null;
-        }
-        else {
-            rows[0].set({ name:authorUpdate.name, info:authorUpdate.info, age:authorUpdate.age, photo:authorUpdate.photo });
-            rows[0].save();
-            return rows[0];
-        }
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        rows[0].set({
+            id: authorUpdate.id,
+            name: authorUpdate.name,
+            info: authorUpdate.info,
+            age: authorUpdate.age,
+            photo: authorUpdate.photo,
+            access_key: authorUpdate.access_key        
+        });
+        rows[0].save();
+        return rows[0];
     }
 
     async delete(id) {
-        if (!id)
+        if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
-        const { count, rows } = await author.findAndCountAll({ where: { id: id } });
-        if (count != 1) {
-            console.log("Can not delete Author with id=" + id);
-            return null;
-        }
-        await rows[0].destroy({ force: true });
-        console.log("Author with id=" + id + " has been deleted");
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        await rows[0].destroy({ force: true, truncate: true });
         return rows[0];
+    }
+
+    async deleteAll() {
+        var { count, rows } = await author.findAndCountAll({});
+        if (count < 1)
+            throw new Error('Objects not found, items ' + count);
+        rows.map(img => async function () {
+            await img.destroy({ force: true, truncate: true });
+        });
+        return count;
     }
 }
 

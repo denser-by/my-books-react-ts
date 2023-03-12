@@ -3,59 +3,87 @@ const role = require('../../models/index.js').Role;
 class SvcRoles {
     async create(roleCreate) {
         try {
-            const roleItem = await role.create({ name: roleCreate.name, description: roleCreate.description });
-            return roleItem;
+            return await role.create({
+                name: roleCreate.name,
+                description: roleCreate.description
+            });
         } catch (e) {
             throw new Error('Can not create Role, ' + e);
         }
     }
 
     async getAll() {
-        const { count, rows } = await role.findAndCountAll({});
-        console.log("Found Role " + count + " records");
+        var { count, rows } = await role.findAndCountAll({});
         if (count >= 1)
             return rows;
         return [];
     }
 
-    async getOne(id) {
-        if (!id)
+    async size() {
+        return await role.count();
+    }
+
+    async hasOne(id) {
+        if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
-        const { count, rows } = await role.findAndCountAll({ where: { id: id } });
-        if (count != 1) {
-            console.log("Can not find Role with id=" + id);
-            return null;
+        var { count, rows } = await role.findAndCountAll({ where: { id: id } });
+        if (count == 1 && rows[0].id == id)
+            return true;
+        return false;
+    }
+
+    async findOneByName(name) {
+        if (name != null && name != undefined && name.length > 0) {
+            var { count, rows } = await role.findAndCountAll({ where: { name: name } });
+            if (count > 0)
+                return rows[0];
         }
+        return null;
+    }
+
+    async getOne(id) {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await role.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
         return rows[0];
     }
 
     async update(roleUpdate) {
-        const id = roleUpdate.id;
-        if (!id)
+        var id = roleUpdate.id;
+        if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
-        const { count, rows } = await role.findAndCountAll({ where: { id: id } });
-        if (count != 1) {
-            console.log("Can not find Role with id=" + id);
-            return null;
-        }
-        else {
-            rows[0].set({ name: roleUpdate.name, description: roleUpdate.description });
-            rows[0].save();
-            return rows[0];
-        }
+        var { count, rows } = await role.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        rows[0].set({
+            id: roleUpdate.id,
+            name: roleUpdate.name,
+            description: roleUpdate.description
+        });
+        rows[0].save();
+        return rows[0];
     }
 
     async delete(id) {
-        if (!id)
+        if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
-        const { count, rows } = await role.findAndCountAll({ where: { id: id } });
-        if (count != 1) {
-            console.log("Can not delete Role with id=" + id);
-            return null;
-        }
-        await rows[0].destroy({ force: true });
-        console.log("Role with id=" + id + " has been deleted");
+        var { count, rows } = await role.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        await rows[0].destroy({ force: true, truncate: true });
         return rows[0];
+    }
+
+    async deleteAll() {
+        var { count, rows } = await role.findAndCountAll({});
+        if (count < 1)
+            throw new Error('Objects not found, items ' + count);
+        rows.map(img => async function () {
+            await img.destroy({ force: true, truncate: true });
+        });
+        return count;
     }
 }
 
