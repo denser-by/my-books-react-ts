@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const routerRole = require('./router/RouteRoles.js');
 const routerUser = require('./router/RouteUsers.js');
 const routerImage = require('./router/RouteImages.js');
@@ -11,6 +12,7 @@ const app = express();
 
 console.log('-------------------start-------------------------');
 
+app.use(cors());
 app.use(express.json());
 app.use([routerRole, routerUser, routerImage, routerAuthor, routerBook, routerCity, routerAppointment]);
 

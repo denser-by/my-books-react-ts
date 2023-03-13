@@ -64,7 +64,7 @@ class AuthorsProvider {
     static all() {
         var result = [];
         result.push(...authorItems);
-        console.log('all ' + result.length);
+        // console.log('all ' + result.length);
         return result;
     }
 

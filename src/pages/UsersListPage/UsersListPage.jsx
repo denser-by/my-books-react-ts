@@ -28,13 +28,37 @@ const UsersListPage = ({ setPageRef }) => {
         setPageRef(e.target.id);
     }
 
-    fetch('http://localhost:3001/users').then(userItem => {
+    async function getData(url = "", data = {}) {
+        const response = await fetch(url, {
+            method: "GET",
+            mode: "same-origin",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            referrerPolicy: "same-origin",
+            // body: JSON.stringify(data),
+        });
+        return response.json();
+    }
 
-        console.log('item::' + userItem);
-
-    }).catch( e => {
-        console.log('Error: ' + e);
+    getData("http://localhost:3001/books", { answer: 123 }).then((data) => {
+        console.log(data);
     });
+
+    fetch('http://localhost:3001/users')
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+
+        .then(userItem => {
+
+            console.log('item::' + userItem);
+
+        }).catch(e => {
+            console.log('Error: ' + e);
+        });
 
     let userItems = AuthorsProvider.all();
     // let userItems = SvcUsers.getAll();

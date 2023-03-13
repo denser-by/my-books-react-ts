@@ -90,7 +90,7 @@ class BooksProvider {
     static all() {
         var result = [];
         result.push(...bookItems);
-        console.log('all ' + result.length);
+        // console.log('all ' + result.length);
         return result;
     }
 
