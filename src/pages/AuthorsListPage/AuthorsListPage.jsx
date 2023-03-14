@@ -5,21 +5,21 @@ import AuthorsProvider from '../../model/AuthorsProvider';
 import TableCompon from '../../components/TableCompon.js';
 
 const AuthorsListPage = ({ setPageRef }) => {
-    const [aboveAuthor2, setAboveAuthor2] = useState("");
     const [curSelectAuthor, setCurSelectAuthor] = useState("");
 
     let aboveAuthor = '';
     function setAboveAuthor(param) {
         aboveAuthor = param;
-        setAboveAuthor2(param);
     }
 
     function mouseOverAuthor(e) {
-        setAboveAuthor(e.target);
+        setAboveAuthor(e.target.id);
+        e.target.className = 'contextOp above';
     }
 
-    function mouseOutAuthor() {
-        setAboveAuthor("");
+    function mouseOutAuthor(e) {
+        setAboveAuthor('');
+        e.target.className = 'contextOp';
     }
 
     function mouseClickAuthor(e) {

@@ -4,111 +4,23 @@ import './../../components/ContextMenu/contextmenu.css';
 import axios from 'axios';
 import BooksProvider from '../../model/BooksProvider';
 import TableCompon from '../../components/TableCompon.js';
-// import mongoose from 'mongoose';
-// import { Appointment } from '../../model/sequelizeEntryPoint';
-// import Book from '../../model/Book';
-// const mysql = require('mysql');
-// import mysql from 'mysql';
-// const { Sequelize } = require('sequelize');
-// const { Client } = require('pg');
-// const Pool = require('pg').Pool;
-// const mysql2 = require('mysql2');
-// import mysql from 'mysql2';
-// const mariadb = require('mariadb');
-// import mariadb from 'mariadb';
-// import { openDatabase } from 'react-native-sqlite-storage';
-// const sqlite3 = require('sqlite3').verbose();
-// import sqlite3 from 'sqlite3';
-// var Connection = require('tedious').Connection;
-// import {Connection} from 'tedious';
-// let oracledb = require('oracledb');
-// import oracledb from 'oracledb';
-
-
-
-
-// const connection = oracledb.getConnection({
-//     user: "my_books_admin",
-//     password: 'password',
-//     connectString: "localhost/my_books2"
-// });
-
-// var config = {
-//     server: "localhost",
-//     options: {},
-//     authentication: {
-//         type: "default",
-//         options: {
-//             userName: "my_books_admin",
-//             password: "password",
-//         }
-//     }
-// };
-// var connection = new Connection(config);
-
-// let db = new sqlite3.Database(':memory:');
-
-// var db = openDatabase({ name: 'UserDatabase.db' });
-
-// conn = mariadb.createConnection({
-//     host: "localhost",
-//     port: 5009,
-//     ssl: { ca: serverCert },
-//     user: "my_books_admin",
-//     password: "password",
-//     database: "my_books2",
-//     trace: true,
-//  });
-
-// const connection = mysql2.createConnection({
-//     host: 'localhost',
-//     user: 'my_books_admin',
-//     database: 'my_books2'
-// });
-
-// const pool = new Pool({
-//     user: 'my_books_admin',
-//     host: 'localhost',
-//     database: 'my_books2',
-//     password: 'password',
-//     port: 5432,
-// });
-
-// const sequelize = new Sequelize('postgres://my_books_admin:pass@localhost:5432/my_books2');
-// const sequelize = new Sequelize('my_books2', 'my_books_admin', 'password', {
-//     host: 'localhost',
-//     dialect: 'postgres' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-// });
-
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "my_books_admin",
-//     password: "",
-//     database: "my_books2"
-// });
-
-// mongoose.connect('postgres://localhost:5432/my_books2',{
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
-// const db = mongoose.connection;
 
 const BooksListPage = ({ setPageRef }) => {
-    const [aboveBook2, setAboveBook2] = useState("");
     const [curSelectBook, setCurSelectBook] = useState("");
 
-    let aboveBook = '';
+    var aboveBook = '';
     function setAboveBook(param) {
         aboveBook = param;
-        setAboveBook2(param);
     }
 
     function mouseOverBook(e) {
         setAboveBook(e.target.id);
+        e.target.className = 'contextOp above';
     }
 
-    function mouseOutBook() {
-        setAboveBook("");
+    function mouseOutBook(e) {
+        setAboveBook('');
+        e.target.className = 'contextOp';
     }
 
     function mouseClickBook(e) {
@@ -130,9 +42,6 @@ const BooksListPage = ({ setPageRef }) => {
     }
 
     let bookItems = BooksProvider.all();
-    // let bookItems = BooksProviderSqlite.all2();
-    // let b = new Book({id: 1, name: 'Book1', info: 'Description_1', year:2001});
-    // let ap = Appointment();
 
     bookItems.map(book => {
         book.view = "/viewBook?id=" + book.id;
