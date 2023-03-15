@@ -22,7 +22,7 @@ export class UserService {
         }
     }
 
-    async getAll(): Promise<CreateUserDto[]> {
+    async getAll() {
         var { count, rows } = await user.findAndCountAll({});
         if (count >= 1)
             return rows;

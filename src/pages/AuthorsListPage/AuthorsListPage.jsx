@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './authorslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
-import AuthorsProvider from '../../model/AuthorsProvider';
 import TableCompon from '../../components/TableCompon.js';
 
 const AuthorsListPage = ({ setPageRef }) => {
     const [curSelectAuthor, setCurSelectAuthor] = useState("");
+    const [curSelectAuthorsPageSize, setCurSelectAuthorsPageSize] = useState(12);
+    const [listAuthorItems, setListAuthorItems] = useState([]);
 
     let aboveAuthor = '';
     function setAboveAuthor(param) {
@@ -27,12 +28,21 @@ const AuthorsListPage = ({ setPageRef }) => {
         setPageRef(e.target.id);
     }
 
-    let authorItems = AuthorsProvider.all();
-
-    authorItems.map(author => {
-        author.view = "/viewAuthor?id=" + author.id;
-        author.edit = "/editAuthor?id=" + author.id;
-    });
+    fetch('http://localhost:3001/authors')
+        .then((response) => response.json())
+        .then(entireBody => {
+            var authorItems = [];
+            entireBody.map(authorItem => {
+                authorItems.push({
+                    name: authorItem.name,
+                    age: authorItem.age,
+                    numOfBooks: authorItem.numOfBooks,
+                    view: "/viewAuthor?id=" + authorItem.id,
+                    edit: "/editAuthor?id=" + authorItem.id
+                });
+            })
+            setListAuthorItems(authorItems);
+        });
 
     const columnItems = React.useMemo(
         () => [
@@ -76,7 +86,7 @@ const AuthorsListPage = ({ setPageRef }) => {
 
     return (
         <div className='authorsList' id="idAuthorListPage" name="idAuthorListPage">
-            <TableCompon columnItems={columnItems} dataItems={authorItems} defPage={15}
+            <TableCompon columnItems={columnItems} dataItems={listAuthorItems} defPage={curSelectAuthorsPageSize}
                 cssRowH={'authorsListHeader'} cssCellH={'authorsInfoHeader'} cssRow={'authorsListItem'} cssCell={'authorsInfoItem'} />
         </div>
     );

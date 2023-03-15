@@ -38,7 +38,7 @@ function TablePages({ pageSizeCurrent, setPageSizeCurrent }) {
         <span className="pageSize">
             <select value={pageSizeCurrent} onChange={e => setPageSizeCurrent(Number(e.target.value))}
                 style={{ display: 'inline', height: '32px', margin: '3px' }}>
-                {[2, 5, 10, 15, 25, 50, 100].map(pageSizeOpt => (
+                {[2, 5, 10, 12, 15, 25, 50, 100].map(pageSizeOpt => (
                     <option key={pageSizeOpt} value={pageSizeOpt}>
                         {pageSizeOpt}&nbsp;items
                     </option>
