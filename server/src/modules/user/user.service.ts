@@ -1,16 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from './dto/CreateUserDto';
 
 @Injectable()
 export class UserService {
-    getAll(): string {
-        return `This action returns all Users`;
+    delete(id: number): CreateUserDto | PromiseLike<CreateUserDto> {
+        throw new Error('Method not implemented.');
+    }
+    update(createDto: CreateUserDto): CreateUserDto | PromiseLike<CreateUserDto> {
+        throw new Error('Method not implemented.');
+    }
+    getOne(id: number): CreateUserDto | PromiseLike<CreateUserDto> {
+        throw new Error('Method not implemented.');
+    }
+    getAll(): CreateUserDto[] | PromiseLike<CreateUserDto[]> {
+        throw new Error('Method not implemented.');
+    }
+    create(createDto: CreateUserDto): CreateUserDto | PromiseLike<CreateUserDto> {
+        throw new Error('Method not implemented.');
     }
 
-    getOne(id: any): string {
-        return `This action returns a #${id} User`;
-    }
-
-    delete(id: any): string {
-        return `This action deletes a #${id} User`;
-    }
 }
