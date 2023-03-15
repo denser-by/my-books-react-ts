@@ -6,7 +6,7 @@ import BooksProvider from '../../model/BooksProvider.js';
 import ImageUploading from 'react-images-uploading';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
-    if (pr.indexOf("Author") !== -1) return;
+    if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0) return;
     // console.log('BOOK_PAGE<'+ bookId +'><'+ edit+'><'+ create+'>'+pr);
 
     var book2 = BooksProvider.newBook();

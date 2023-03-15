@@ -40,7 +40,7 @@ const AuthorsListPage = ({ setPageRef }) => {
                 authorItems.push({
                     name: authorItem.name,
                     age: authorItem.age,
-                    numOfAuthors: authorItem.numOfAuthors,
+                    numOfBooks: authorItem.numOfBooks,
                     view: "/viewAuthor?id=" + authorItem.id,
                     edit: "/editAuthor?id=" + authorItem.id
                 });
@@ -59,8 +59,8 @@ const AuthorsListPage = ({ setPageRef }) => {
                 accessor: 'age',
             },
             {
-                Header: 'Amount',
-                accessor: 'numOfAuthors',
+                Header: 'Books',
+                accessor: 'numOfBooks',
             },
             {
                 Header: 'View',

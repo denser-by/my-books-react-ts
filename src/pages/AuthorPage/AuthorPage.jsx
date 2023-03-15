@@ -6,7 +6,7 @@ import AuthorsProvider from '../../model/AuthorsProvider.js';
 import ImageUploading from 'react-images-uploading';
 
 const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
-    if (pr.indexOf("Book") !== -1) return;
+    if (pr.indexOf("Author") < 1 || pr.indexOf("Authors") >= 0) return;
     // console.log('AUTHOR_PAGE<'+ authorId +'><'+ edit+'><'+ create+'>'+pr);
 
     var author2 = AuthorsProvider.newAuthor();
