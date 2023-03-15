@@ -1,46 +1,95 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCityDto } from './dto/CreateCityDto';
+const city = require('../../../models/index.js').City;
 
 @Injectable()
 export class CityService {
-    create(cityDto: CreateCityDto): CreateCityDto {
-        cityDto.id = 123;
-        return cityDto;
+    async create(cityCreate: CreateCityDto): Promise<CreateCityDto> {
+        try {
+            return await city.create({
+                name: cityCreate.name,
+                description: cityCreate.description,
+                sightseen: cityCreate.sightseen,
+                location: cityCreate.location
+            });
+        } catch (e) {
+            throw new Error('Can not create City, ' + e);
+        }
     }
 
-    getAll(): CreateCityDto[] {
-        var result = [];
-        var cityDto1 = new CreateCityDto();
-        cityDto1.id = 123;
-        cityDto1.name = 'Name_123';
-        cityDto1.description = 'Descr_123';
-        result.push(cityDto1);
-        var cityDto2 = new CreateCityDto();
-        cityDto2.id = 321;
-        cityDto2.name = 'Name_321';
-        cityDto2.description = 'Descr_321';
-        result.push(cityDto2);
-        return result;
+    async getAll(): Promise<CreateCityDto[]> {
+        var { count, rows } = await city.findAndCountAll({});
+        if (count >= 1)
+            return rows;
+        return [];
     }
 
-    getOne(id: any): CreateCityDto {
-        var cityDto = new CreateCityDto();
-        cityDto.id = 123;
-        cityDto.name = 'Name_123';
-        cityDto.description = 'Descr_123';
-        return cityDto;
+    async size() {
+        return await city.count();
     }
 
-    update(cityDto: CreateCityDto): CreateCityDto {
-        cityDto.name = 'Updated ' + cityDto.name;
-        return cityDto;
+    async hasOne(id) {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await city.findAndCountAll({ where: { id: id } });
+        if (count == 1 && rows[0].id == id)
+            return true;
+        return false;
     }
 
-    delete(id: any): CreateCityDto {
-        var cityDto = new CreateCityDto();
-        cityDto.id = 123;
-        cityDto.name = 'Deleted name';
-        cityDto.description = 'Deleted descr';
-        return cityDto;
+    async findOneByName(name) {
+        if (name != null && name != undefined && name.length > 0) {
+            var { count, rows } = await city.findAndCountAll({ where: { name: name } });
+            if (count > 0)
+                return rows[0];
+        }
+        return null;
+    }
+
+    async getOne(id: any): Promise<CreateCityDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await city.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        return rows[0];
+    }
+
+    async update(cityUpdate: CreateCityDto): Promise<CreateCityDto> {
+        var id = cityUpdate.id;
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await city.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        rows[0].set({
+            id: cityUpdate.id,
+            name: cityUpdate.name,
+            description: cityUpdate.description,
+            sightseen: cityUpdate.sightseen,
+            location: cityUpdate.location
+        });
+        rows[0].save();
+        return rows[0];
+    }
+
+    async delete(id: any): Promise<CreateCityDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await city.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        await rows[0].destroy({ force: true, truncate: true });
+        return rows[0];
+    }
+
+    async deleteAll() {
+        var { count, rows } = await city.findAndCountAll({});
+        if (count < 1)
+            throw new Error('Objects not found, items ' + count);
+        rows.map(img => async function () {
+            await img.destroy({ force: true, truncate: true });
+        });
+        return count;
     }
 }

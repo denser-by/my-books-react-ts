@@ -24,4 +24,9 @@ export class CreateAuthorDto {
     @IsOptional()
     @ApiProperty({ required: false })
     photo: number;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    access_key: string;
 }

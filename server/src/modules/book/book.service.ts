@@ -1,46 +1,97 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBookDto } from './dto/CreateBookDto';
+const book = require('../../../models/index.js').Book;
 
 @Injectable()
 export class BookService {
-    create(bookDto: CreateBookDto): CreateBookDto {
-        bookDto.id = 123;
-        return bookDto;
+    async create(bookCreate: CreateBookDto): Promise<CreateBookDto> {
+        try {
+            return await book.create({
+                name: bookCreate.name,
+                info: bookCreate.info,
+                year: bookCreate.year,
+                cover_img: bookCreate.cover_img,
+                access_key: bookCreate.access_key
+            });
+        } catch (e) {
+            throw new Error('Can not create Book, ' + e);
+        }
     }
 
-    getAll(): CreateBookDto[] {
-        var result = [];
-        var bookDto1 = new CreateBookDto();
-        bookDto1.id = 123;
-        bookDto1.name = 'Name_123';
-        bookDto1.info = 'Descr_123';
-        result.push(bookDto1);
-        var bookDto2 = new CreateBookDto();
-        bookDto2.id = 321;
-        bookDto2.name = 'Name_321';
-        bookDto2.info = 'Descr_321';
-        result.push(bookDto2);
-        return result;
+    async getAll(): Promise<CreateBookDto[]> {
+        var { count, rows } = await book.findAndCountAll({});
+        if (count >= 1)
+            return rows;
+        return [];
     }
 
-    getOne(id: any): CreateBookDto {
-        var bookDto = new CreateBookDto();
-        bookDto.id = 123;
-        bookDto.name = 'Name_123';
-        bookDto.info = 'Descr_123';
-        return bookDto;
+    async size() {
+        return await book.count();
     }
 
-    update(bookDto: CreateBookDto): CreateBookDto {
-        bookDto.name = 'Updated ' + bookDto.name;
-        return bookDto;
+    async hasOne(id) {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await book.findAndCountAll({ where: { id: id } });
+        if (count == 1 && rows[0].id == id)
+            return true;
+        return false;
     }
 
-    delete(id: any): CreateBookDto {
-        var bookDto = new CreateBookDto();
-        bookDto.id = 123;
-        bookDto.name = 'Deleted name';
-        bookDto.info = 'Deleted descr';
-        return bookDto;
+    async findOneByAccessKey(access_key) {
+        if (access_key != null && access_key != undefined && access_key.length > 0) {
+            var { count, rows } = await book.findAndCountAll({ where: { access_key: access_key } });
+            if (count > 0)
+                return rows[0];
+        }
+        return null;
+    }
+
+    async getOne(id: any): Promise<CreateBookDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await book.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        return rows[0];
+    }
+
+    async update(bookUpdate: CreateBookDto): Promise<CreateBookDto> {
+        var id = bookUpdate.id;
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await book.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        rows[0].set({
+            id: bookUpdate.id,
+            name: bookUpdate.name,
+            info: bookUpdate.info,
+            year: bookUpdate.year,
+            cover_img: bookUpdate.cover_img,
+            access_key: bookUpdate.access_key
+        });
+        rows[0].save();
+        return rows[0];
+    }
+
+    async delete(id: any): Promise<CreateBookDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await book.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        await rows[0].destroy({ force: true, truncate: true });
+        return rows[0];
+    }
+
+    async deleteAll() {
+        var { count, rows } = await book.findAndCountAll({});
+        if (count < 1)
+            throw new Error('Objects not found, items ' + count);
+        rows.map(img => async function () {
+            await img.destroy({ force: true, truncate: true });
+        });
+        return count;
     }
 }

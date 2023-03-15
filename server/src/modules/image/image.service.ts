@@ -1,46 +1,73 @@
 import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/CreateImageDto';
+const image = require('../../../models/index.js').Image;
 
 @Injectable()
 export class ImageService {
-    create(imageDto: CreateImageDto): CreateImageDto {
-        imageDto.id = 123;
-        return imageDto;
+    async create(imageCreate: CreateImageDto): Promise<CreateImageDto> {
+        try {
+            return await image.create({
+                path: imageCreate.path,
+                mini_copy: imageCreate.mini_copy,
+                image_type: imageCreate.image_type,
+                file_size: imageCreate.file_size
+            });
+        } catch (e) {
+            throw new Error('Can not create Image, ' + e);
+        }
     }
 
-    getAll(): CreateImageDto[] {
-        var result = [];
-        var imageDto1 = new CreateImageDto();
-        imageDto1.id = 123;
-        imageDto1.path = '/path/to/img/file1.jpg';
-        imageDto1.image_type = 1;
-        result.push(imageDto1);
-        var imageDto2 = new CreateImageDto();
-        imageDto2.id = 321;
-        imageDto2.path = '/path/to/img/file2.jpg';
-        imageDto2.image_type = 1;
-        result.push(imageDto2);
-        return result;
+    async getAll(): Promise<CreateImageDto[]> {
+        var { count, rows } = await image.findAndCountAll({});
+        if (count >= 1)
+            return rows;
+        return [];
     }
 
-    getOne(id: any): CreateImageDto {
-        var imageDto = new CreateImageDto();
-        imageDto.id = 123;
-        imageDto.path = '/path/to/img/file1.jpg';
-        imageDto.image_type = 1;
-        return imageDto;
+    async getOne(id: any): Promise<CreateImageDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await image.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        return rows[0];
     }
 
-    update(imageDto: CreateImageDto): CreateImageDto {
-        imageDto.path = 'Updated ' + imageDto.path;
-        return imageDto;
+    async update(imageUpdate: CreateImageDto): Promise<CreateImageDto> {
+        var id = imageUpdate.id;
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await image.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        rows[0].set({
+            id: imageUpdate.id,
+            path: imageUpdate.path,
+            mini_copy: imageUpdate.mini_copy,
+            image_type: imageUpdate.image_type,
+            file_size: imageUpdate.file_size
+        });
+        rows[0].save();
+        return rows[0];
     }
 
-    delete(id: any): CreateImageDto {
-        var imageDto = new CreateImageDto();
-        imageDto.id = 123;
-        imageDto.path = 'Deleted ' + imageDto.path;
-        imageDto.image_type = 1;
-        return imageDto;
+    async delete(id: any): Promise<CreateImageDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await image.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        await rows[0].destroy({ force: true, truncate: true });
+        return rows[0];
+    }
+
+    async deleteAll() {
+        var { count, rows } = await image.findAndCountAll({});
+        if (count < 1)
+            throw new Error('Objects not found, items ' + count);
+        rows.map(img => async function () {
+            await img.destroy({ force: true, truncate: true });
+        });
+        return count;
     }
 }

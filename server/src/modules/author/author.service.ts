@@ -1,46 +1,97 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/CreateAuthorDto';
+const author = require('../../../models/index.js').Author;
 
 @Injectable()
 export class AuthorService {
-    create(authorDto: CreateAuthorDto): CreateAuthorDto {
-        authorDto.id = 123;
-        return authorDto;
+    async create(authorCreate: CreateAuthorDto): Promise<CreateAuthorDto> {
+        try {
+            return await author.create({
+                name: authorCreate.name,
+                info: authorCreate.info,
+                age: authorCreate.age,
+                photo: authorCreate.photo,
+                access_key: authorCreate.access_key
+            });
+        } catch (e) {
+            throw new Error('Can not create Author, ' + e);
+        }
     }
 
-    getAll(): CreateAuthorDto[] {
-        var result = [];
-        var authorDto1 = new CreateAuthorDto();
-        authorDto1.id = 123;
-        authorDto1.name = 'Name_123';
-        authorDto1.info = 'Descr_123';
-        result.push(authorDto1);
-        var authorDto2 = new CreateAuthorDto();
-        authorDto2.id = 321;
-        authorDto2.name = 'Name_321';
-        authorDto2.info = 'Descr_321';
-        result.push(authorDto2);
-        return result;
+    async getAll(): Promise<CreateAuthorDto[]> {
+        var { count, rows } = await author.findAndCountAll({});
+        if (count >= 1)
+            return rows;
+        return [];
     }
 
-    getOne(id: any): CreateAuthorDto {
-        var authorDto = new CreateAuthorDto();
-        authorDto.id = 123;
-        authorDto.name = 'Name_123';
-        authorDto.info = 'Descr_123';
-        return authorDto;
+    async size() {
+        return await author.count();
     }
 
-    update(authorDto: CreateAuthorDto): CreateAuthorDto {
-        authorDto.name = 'Updated ' + authorDto.name;
-        return authorDto;
+    async hasOne(id) {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count == 1 && rows[0].id == id)
+            return true;
+        return false;
     }
 
-    delete(id: any): CreateAuthorDto {
-        var authorDto = new CreateAuthorDto();
-        authorDto.id = 123;
-        authorDto.name = 'Deleted name';
-        authorDto.info = 'Deleted descr';
-        return authorDto;
+    async findOneByAccessKey(access_key) {
+        if (access_key != null && access_key != undefined && access_key.length > 0) {
+            var { count, rows } = await author.findAndCountAll({ where: { access_key: access_key } });
+            if (count > 0)
+                return rows[0];
+        }
+        return null;
+    }
+
+    async getOne(id: any): Promise<CreateAuthorDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        return rows[0];
+    }
+
+    async update(authorUpdate: CreateAuthorDto): Promise<CreateAuthorDto> {
+        var id = authorUpdate.id;
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        rows[0].set({
+            id: authorUpdate.id,
+            name: authorUpdate.name,
+            info: authorUpdate.info,
+            age: authorUpdate.age,
+            photo: authorUpdate.photo,
+            access_key: authorUpdate.access_key        
+        });
+        rows[0].save();
+        return rows[0];
+    }
+
+    async delete(id: any): Promise<CreateAuthorDto> {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await author.findAndCountAll({ where: { id: id } });
+        if (count != 1)
+            throw new Error('Object not found, ID=' + id);
+        await rows[0].destroy({ force: true, truncate: true });
+        return rows[0];
+    }
+
+    async deleteAll() {
+        var { count, rows } = await author.findAndCountAll({});
+        if (count < 1)
+            throw new Error('Objects not found, items ' + count);
+        rows.map(img => async function () {
+            await img.destroy({ force: true, truncate: true });
+        });
+        return count;
     }
 }

@@ -24,4 +24,9 @@ export class CreateBookDto {
     @IsOptional()
     @ApiProperty({ required: false })
     cover_img: number;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    access_key:string;
 }
