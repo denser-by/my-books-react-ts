@@ -6,18 +6,30 @@ import AuthorsProvider from '../../model/AuthorsProvider.js';
 import ImageUploading from 'react-images-uploading';
 
 const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
-    if (pr.indexOf("Author") < 1 || pr.indexOf("Authors") >= 0) return;
+    if (pr.indexOf("Author") < 1 || pr.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
     // console.log('AUTHOR_PAGE<'+ authorId +'><'+ edit+'><'+ create+'>'+pr);
 
+    var fetchedAuthor = AuthorsProvider.find(authorId);
+    fetch('http://localhost:3001/authors/' + authorId)
+        .then((response) => response.json())
+        .then(entireBody => {
+            console.log('entAuthor=' + JSON.stringify(entireBody));
+            if (authorId == entireBody.id) {
+                var authorItems = [];
+                authorItems.push({
+                    id: entireBody.id,
+                    name: entireBody.name,
+                    age: entireBody.age,
+                    books: entireBody.books,
+                    info: entireBody.info
+                });
+                fetchedAuthor = authorItems[0];
+            }
+            // setListBookItems(bookItems);
+        });
+
     var author2 = AuthorsProvider.newAuthor();
-
-    function getAuthor(authorId) {
-        if (("" + authorId).length >= 1 && authorId > 0)
-            return AuthorsProvider.find(authorId);
-        return AuthorsProvider.anyFirst();
-    }
-
-    let author = (authorId != null && ("" + authorId).length > 0) ? getAuthor(authorId) : author2;
+    var author = create ? author2 : fetchedAuthor;
 
     const [stateName, setStateName] = useState('');
     const [stateAge, setStateAge] = useState('');

@@ -6,18 +6,30 @@ import BooksProvider from '../../model/BooksProvider.js';
 import ImageUploading from 'react-images-uploading';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
-    if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0) return;
+    if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0 || bookId == undefined || bookId == null || ("" + bookId).length < 1) return;
     // console.log('BOOK_PAGE<'+ bookId +'><'+ edit+'><'+ create+'>'+pr);
 
+    var fetchedBook = BooksProvider.find(bookId);
+    fetch('http://localhost:3001/books/' + bookId)
+        .then((response) => response.json())
+        .then(entireBody => {
+            console.log('ENTIRE=' + JSON.stringify(entireBody));
+            if (bookId == entireBody.id) {
+                var bookItems = [];
+                bookItems.push({
+                    id: entireBody.id,
+                    name: entireBody.name,
+                    year: entireBody.year,
+                    authors: entireBody.authors,
+                    info: entireBody.info
+                });
+                fetchedBook = bookItems[0];
+            }
+            // setListBookItems(bookItems);
+        });
+
     var book2 = BooksProvider.newBook();
-
-    function getBook(bookId) {
-        if (("" + bookId).length >= 1 && bookId > 0)
-            return BooksProvider.find(bookId);
-        return BooksProvider.anyFirst();
-    }
-
-    let book = (bookId != null && ("" + bookId).length > 0) ? getBook(bookId) : book2;
+    var book = create ? book2 : fetchedBook;
 
     const [stateName, setStateName] = useState('');
     const [stateYear, setStateYear] = useState('');
