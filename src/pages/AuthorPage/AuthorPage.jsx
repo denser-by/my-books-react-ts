@@ -6,30 +6,38 @@ import AuthorsProvider from '../../model/AuthorsProvider.js';
 import ImageUploading from 'react-images-uploading';
 
 const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
-    if (pr.indexOf("Author") < 1 || pr.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
-    // console.log('AUTHOR_PAGE<'+ authorId +'><'+ edit+'><'+ create+'>'+pr);
+    if (pr.indexOf("createAuthor") < 1)
+        if (pr.indexOf("Author") < 1 || pr.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
 
-    var fetchedAuthor = AuthorsProvider.find(authorId);
-    fetch('http://localhost:3001/authors/' + authorId)
-        .then((response) => response.json())
-        .then(entireBody => {
-            console.log('entAuthor=' + JSON.stringify(entireBody));
-            if (authorId == entireBody.id) {
-                var authorItems = [];
-                authorItems.push({
-                    id: entireBody.id,
-                    name: entireBody.name,
-                    age: entireBody.age,
-                    books: entireBody.books,
-                    info: entireBody.info
-                });
-                fetchedAuthor = authorItems[0];
-            }
-            // setListBookItems(bookItems);
-        });
-
-    var author2 = AuthorsProvider.newAuthor();
-    var author = create ? author2 : fetchedAuthor;
+    var answerReady = false;
+    var author = AuthorsProvider.newAuthor();
+    if (!create)
+        fetch('http://localhost:3001/authors/' + authorId)
+            .then((response) => response.json())
+            .then(entireBody => {
+                if (authorId == entireBody.id && !answerReady) {
+                    answerReady = true;
+                    console.log('entAuthor=' + JSON.stringify(entireBody));
+                    author = {
+                        id: entireBody.id,
+                        name: entireBody.name,
+                        age: entireBody.age,
+                        books: entireBody.books,
+                        info: entireBody.info,
+                        photo: entireBody.photo
+                    };
+                    setStateName(author.name);
+                    setNameModified(true);
+                    setStateAge(author.age);
+                    setAgeModified(true);
+                    setStateBooks(author.books);
+                    setBooksModified(true);
+                    setStateInfo(author.info);
+                    setInfoModified(true);
+                    setMyImage(author.photo);
+                    setImageUploaded(true);
+                }
+            });
 
     const [stateName, setStateName] = useState('');
     const [stateAge, setStateAge] = useState('');
@@ -113,19 +121,8 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         if (imageUploaded)
             author.photo = myImage;
 
-        if (nameModified)
-            author2.name = stateName;
-        if (ageModified)
-            author2.age = stateAge;
-        if (booksModified)
-            author2.books = stateBooks;
-        if (infoModified)
-            author2.info = stateInfo;
-        if (imageUploaded)
-            author2.photo = myImage;
-
         if (create) {
-            AuthorsProvider.create(author2);
+            AuthorsProvider.create(author);
             console.log(' create complete ');
         } else if (edit) {
             AuthorsProvider.update(author);
@@ -201,21 +198,21 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                             <Input type="textarea" id="authorName" name="authorName" readOnly={!edit} placeholder="Author name"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={nameModified ? stateName : author.name} onChange={handleNameChange} />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.name}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : author.name}</span>
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">Born</span>
                             <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="Born in"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={ageModified ? stateAge : author.age} onChange={handleAgeChange} />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.age}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{ageModified ? stateAge : author.age}</span>
                         </span>
                         <span className="author-info">
                             <span className="author-info-label">Publications</span>
                             <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={booksModified ? stateBooks : author.books} onChange={handleBooksChange} />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.books}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{booksModified ? stateBooks : author.books}</span>
                         </span>
                     </span>
                 </span>
@@ -224,7 +221,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     <Input type="textarea" id="authorInfo" name="authorInfo" readOnly={!edit} placeholder="Short books related description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={infoModified ? stateInfo : author.info} onChange={handleInfoChange} />
-                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{author.info}</div>
+                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{infoModified ? stateInfo : author.info}</div>
                 </div>
                 <div className="buttonRow">
                     <span className={edit && !create ? "featureButton" : "ctrlHidden"}>

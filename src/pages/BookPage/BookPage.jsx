@@ -6,30 +6,38 @@ import BooksProvider from '../../model/BooksProvider.js';
 import ImageUploading from 'react-images-uploading';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
-    if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0 || bookId == undefined || bookId == null || ("" + bookId).length < 1) return;
-    // console.log('BOOK_PAGE<'+ bookId +'><'+ edit+'><'+ create+'>'+pr);
+    if (pr.indexOf("createBook") < 1)
+        if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0 || bookId == undefined || bookId == null || ("" + bookId).length < 1) return;
 
-    var fetchedBook = BooksProvider.find(bookId);
-    fetch('http://localhost:3001/books/' + bookId)
-        .then((response) => response.json())
-        .then(entireBody => {
-            console.log('ENTIRE=' + JSON.stringify(entireBody));
-            if (bookId == entireBody.id) {
-                var bookItems = [];
-                bookItems.push({
-                    id: entireBody.id,
-                    name: entireBody.name,
-                    year: entireBody.year,
-                    authors: entireBody.authors,
-                    info: entireBody.info
-                });
-                fetchedBook = bookItems[0];
-            }
-            // setListBookItems(bookItems);
-        });
-
-    var book2 = BooksProvider.newBook();
-    var book = create ? book2 : fetchedBook;
+    var answerReady = false;
+    var book = BooksProvider.newBook();
+    if (!create)
+        fetch('http://localhost:3001/books/' + bookId)
+            .then((response) => response.json())
+            .then(entireBody => {
+                if (bookId == entireBody.id && !answerReady) {
+                    answerReady = true;
+                    console.log('ENTIRE=' + JSON.stringify(entireBody));
+                    book = {
+                        id: entireBody.id,
+                        name: entireBody.name,
+                        year: entireBody.year,
+                        authors: entireBody.authors,
+                        info: entireBody.info,
+                        cover_img: entireBody.cover_img
+                    };
+                    setStateName(book.name);
+                    setNameModified(true);
+                    setStateYear(book.year);
+                    setYearModified(true);
+                    setStateAuthors(book.authors);
+                    setAuthorsModified(true);
+                    setStateInfo(book.info);
+                    setInfoModified(true);
+                    setMyImage(book.cover_img);
+                    setImageUploaded(true);
+                }
+            });
 
     const [stateName, setStateName] = useState('');
     const [stateYear, setStateYear] = useState('');
@@ -126,19 +134,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         if (imageUploaded)
             book.cover_img = myImage;
 
-        if (nameModified)
-            book2.name = stateName;
-        if (yearModified)
-            book2.year = stateYear;
-        if (authorsModified)
-            book2.authors = stateAuthors;
-        if (infoModified)
-            book2.info = stateInfo;
-        if (imageUploaded)
-            book2.cover_img = myImage;
-
         if (create) {
-            BooksProvider.create(book2);
+            BooksProvider.create(book);
             console.log(' create complete ');
         } else if (edit) {
             BooksProvider.update(book);
@@ -215,7 +212,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={nameModified ? stateName : book.name} onChange={handleNameChange}
                             />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.name}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : book.name}</span>
                         </span>
                         <span className="book-info">
                             <span className="book-info-label">Year</span>
@@ -223,14 +220,14 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={yearModified ? stateYear : book.year} onChange={handleYearChange}
                             />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.year}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{yearModified ? stateYear : book.year}</span>
                         </span>
                         <span className="book-info">
                             <span className="book-info-label">Authors</span>
                             <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={authorsModified ? stateAuthors : book.authors} onChange={handleAuthorsChange} />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.authors}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{authorsModified ? stateAuthors : book.authors}</span>
                         </span>
                     </span>
                 </span>
@@ -239,7 +236,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Short content description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={infoModified ? stateInfo : book.info} onChange={handleInfoChange} />
-                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{book.info}</div>
+                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{infoModified ? stateInfo : book.info}</div>
                 </div>
                 <div className="buttonRow">
                     <span className={edit && !create ? "featureButton" : "ctrlHidden"}>
