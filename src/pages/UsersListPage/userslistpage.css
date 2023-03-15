@@ -1,4 +1,4 @@
-.authorsList {
+.usersList {
     display: inline-flex;
     flex-direction: column;
     border: 2px solid #bc4404;
@@ -8,7 +8,7 @@
     padding-right: 2px;
 }
 
-.authorsListItem {
+.usersListItem {
     background-color: #fefaef;
     border-radius: 3px;
     margin: 2px;
@@ -16,13 +16,13 @@
     border-bottom: 1px solid #eeee0b;
 }
 
-.authorsListHeader {
+.usersListHeader {
     text-align: center;
     align-items: center;
     color: white;
 }
 
-.authorsInfoHeader {
+.usersInfoHeader {
     background-color: #bc4404;
     border: solid 3px #fefaef;
     border-radius: 10px;
@@ -31,13 +31,28 @@
     color: white;
 }
 
-.authorsInfoItem {
+.usersInfoItem {
     color: black;
     width: 20%;
 }
 
-.authorsInfoSpace {
+.usersInfoSpace {
     margin: 2px;
     border-radius: 9px;
     color: black;
+}
+
+.contextUserOp {
+    font-weight: 800;
+    cursor: pointer;
+    border: 3px solid #fefaef;
+    border-radius: 15px;
+    margin: 5px;
+    color: #103755;
+}
+
+.contextUserOp.above {
+    background-color: #fefaef;
+    color: #4e3f30;
+    border: 3px solid #4e3f30;
 }

@@ -8,19 +8,23 @@ const UsersListPage = ({ setPageRef }) => {
     const [curSelectUsersPageSize, setCurSelectUsersPageSize] = useState(12);
     const [listUserItems, setListUserItems] = useState([]);
 
-    let aboveUser = '';
-    function setAboveUser(param) {
-        aboveUser = param;
+    var aboveUserId = '';
+    var aboveUserTarget = null;
+    function setAboveUser(param, target) {
+        aboveUserId = param;
+        if (aboveUserTarget != null)
+            aboveUserTarget.className = 'contextUserOp';
+        aboveUserTarget = target;
     }
 
     function mouseOverUser(e) {
-        setAboveUser(e.target.id);
-        e.target.className = 'contextOp above';
+        setAboveUser(e.target.id, e.target);
+        e.target.className = 'contextUserOp above';
     }
 
     function mouseOutUser(e) {
-        setAboveUser('');
-        e.target.className = 'contextOp';
+        setAboveUser('', e.target);
+        e.target.className = 'contextUserOp';
     }
 
     function mouseClickUser(e) {

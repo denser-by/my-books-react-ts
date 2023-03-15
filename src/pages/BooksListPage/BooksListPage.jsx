@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './bookslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import axios from 'axios';
+// import { Form, Input, Button } from 'reactstrap';
 import TableCompon from '../../components/TableCompon.js';
 
 const BooksListPage = ({ setPageRef }) => {
@@ -9,19 +10,23 @@ const BooksListPage = ({ setPageRef }) => {
     const [curSelectBooksPageSize, setCurSelectBooksPageSize] = useState(12);
     const [listBookItems, setListBookItems] = useState([]);
 
-    var aboveBook = '';
-    function setAboveBook(param) {
-        aboveBook = param;
+    var aboveBookId = '';
+    var aboveBookTarget = null;
+    function setAboveBook(param, target) {
+        aboveBookId = param;
+        if (aboveBookTarget != null)
+            aboveBookTarget.className = 'contextBookOp';
+        aboveBookTarget = target;
     }
 
     function mouseOverBook(e) {
-        setAboveBook(e.target.id);
-        e.target.className = 'contextOp above';
+        setAboveBook(e.target.id, e.target);
+        e.target.className = 'contextBookOp above';
     }
 
     function mouseOutBook(e) {
-        setAboveBook('');
-        e.target.className = 'contextOp';
+        setAboveBook('', e.target);
+        e.target.className = 'contextBookOp';
     }
 
     function mouseClickBook(e) {
@@ -60,8 +65,9 @@ const BooksListPage = ({ setPageRef }) => {
                 accessor: 'view',
                 Cell: (row: CellProps<any>) => {
                     const obj = "" + row.cell.value;
+                    // return <Button id={obj} type="button" onClick={mouseClickBook}>View</Button>;
                     return <span id={obj}
-                        className={aboveBook === obj ? "contextOp above" : "contextOp"}
+                        className={aboveBookId === obj ? "contextBookOp above" : "contextBookOp"}
                         onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
                     >View</span>;
                 },
@@ -72,7 +78,7 @@ const BooksListPage = ({ setPageRef }) => {
                 Cell: (row: CellProps<any>) => {
                     const obj = "" + row.cell.value;
                     return <span id={obj}
-                        className={aboveBook === obj ? "contextOp above" : "contextOp"}
+                        className={aboveBookId === obj ? "contextBookOp above" : "contextBookOp"}
                         onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
                     >Edit</span>;
                 },
@@ -83,7 +89,7 @@ const BooksListPage = ({ setPageRef }) => {
                 Cell: (row: CellProps<any>) => {
                     const obj = "" + row.cell.value;
                     return <span id={obj}
-                        className={aboveBook === obj ? "contextOp above" : "contextOp"}
+                        className={aboveBookId === obj ? "contextBookOp above" : "contextBookOp"}
                         onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
                     >Delete</span>;
                 },

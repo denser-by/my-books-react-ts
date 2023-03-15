@@ -8,19 +8,23 @@ const AuthorsListPage = ({ setPageRef }) => {
     const [curSelectAuthorsPageSize, setCurSelectAuthorsPageSize] = useState(12);
     const [listAuthorItems, setListAuthorItems] = useState([]);
 
-    let aboveAuthor = '';
-    function setAboveAuthor(param) {
-        aboveAuthor = param;
+    var aboveAuthorId = '';
+    var aboveAuthorTarget = null;
+    function setAboveAuthor(param, target) {
+        aboveAuthorId = param;
+        if (aboveAuthorTarget != null)
+            aboveAuthorTarget.className = 'contextAuthorOp';
+        aboveAuthorTarget = target;
     }
 
     function mouseOverAuthor(e) {
-        setAboveAuthor(e.target.id);
-        e.target.className = 'contextOp above';
+        setAboveAuthor(e.target.id, e.target);
+        e.target.className = 'contextAuthorOp above';
     }
 
     function mouseOutAuthor(e) {
-        setAboveAuthor('');
-        e.target.className = 'contextOp';
+        setAboveAuthor('', e.target);
+        e.target.className = 'contextAuthorOp';
     }
 
     function mouseClickAuthor(e) {
@@ -36,7 +40,7 @@ const AuthorsListPage = ({ setPageRef }) => {
                 authorItems.push({
                     name: authorItem.name,
                     age: authorItem.age,
-                    numOfBooks: authorItem.numOfBooks,
+                    numOfAuthors: authorItem.numOfAuthors,
                     view: "/viewAuthor?id=" + authorItem.id,
                     edit: "/editAuthor?id=" + authorItem.id
                 });
@@ -56,7 +60,7 @@ const AuthorsListPage = ({ setPageRef }) => {
             },
             {
                 Header: 'Amount',
-                accessor: 'numOfBooks',
+                accessor: 'numOfAuthors',
             },
             {
                 Header: 'View',
@@ -64,7 +68,7 @@ const AuthorsListPage = ({ setPageRef }) => {
                 Cell: (row: CellProps<any>) => {
                     const obj = "" + row.cell.value;
                     return <span id={obj}
-                        className={aboveAuthor === obj ? "contextOp above" : "contextOp"}
+                        className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
                         onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
                     >View</span>;
                 },
@@ -75,7 +79,7 @@ const AuthorsListPage = ({ setPageRef }) => {
                 Cell: (row: CellProps<any>) => {
                     const obj = "" + row.cell.value;
                     return <span id={obj}
-                        className={aboveAuthor === obj ? "contextOp above" : "contextOp"}
+                        className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
                         onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
                     >Edit</span>;
                 },
