@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { ImageService } from '../image/image.service';
 import { CreateBookDto } from './dto/CreateBookDto';
 const book = require('../../../models/index.js').Book;
 
 @Injectable()
 export class BookService {
+
+    constructor(private readonly imageService: ImageService) { }
+
     async create(bookCreate: CreateBookDto): Promise<CreateBookDto> {
         try {
             return await book.create({
@@ -29,7 +33,7 @@ export class BookService {
         return await book.count();
     }
 
-    async hasOne(id) {
+    async hasOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
@@ -38,7 +42,7 @@ export class BookService {
         return false;
     }
 
-    async findOneByAccessKey(access_key) {
+    async findOneByAccessKey(access_key: string) {
         if (access_key != null && access_key != undefined && access_key.length > 0) {
             var { count, rows } = await book.findAndCountAll({ where: { access_key: access_key } });
             if (count > 0)
@@ -47,13 +51,24 @@ export class BookService {
         return null;
     }
 
-    async getOne(id: any): Promise<CreateBookDto> {
+    async getOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
-        return rows[0];
+        var bookRef = rows[0];
+        var imageRef = this.imageService.getOne(bookRef.cover_img);
+        var result = {
+            id: bookRef.id,
+            name: bookRef.name,
+            info: bookRef.info,
+            year: bookRef.year,
+            cover_img: bookRef.cover_img,
+            access_key: bookRef.access_key,
+            cover_img_path: (await imageRef).path
+        };
+        return result;
     }
 
     async update(bookUpdate: CreateBookDto): Promise<CreateBookDto> {
@@ -75,7 +90,7 @@ export class BookService {
         return rows[0];
     }
 
-    async delete(id: any): Promise<CreateBookDto> {
+    async delete(id: number): Promise<CreateBookDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });

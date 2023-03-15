@@ -24,7 +24,29 @@ export class ImageService {
         return [];
     }
 
-    async getOne(id: any): Promise<CreateImageDto> {
+    async size() {
+        return await image.count();
+    }
+
+    async hasOne(id: number) {
+        if (id == null || id == undefined || id < 0)
+            throw new Error('Не указан ID');
+        var { count, rows } = await image.findAndCountAll({ where: { id: id } });
+        if (count == 1 && rows[0].id == id)
+            return true;
+        return false;
+    }
+
+    async findOneByPath(path: string) {
+        if (path != null && path != undefined && path.length > 0) {
+            var { count, rows } = await image.findAndCountAll({ where: { path: path } });
+            if (count > 0)
+                return rows[0];
+        }
+        return null;
+    }
+
+    async getOne(id: number): Promise<CreateImageDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await image.findAndCountAll({ where: { id: id } });
@@ -51,7 +73,7 @@ export class ImageService {
         return rows[0];
     }
 
-    async delete(id: any): Promise<CreateImageDto> {
+    async delete(id: number): Promise<CreateImageDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await image.findAndCountAll({ where: { id: id } });

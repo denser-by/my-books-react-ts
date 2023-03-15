@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { ImageService } from '../image/image.service';
 import { CreateUserDto } from './dto/CreateUserDto';
 const user = require('../../../models/index.js').User;
 
 @Injectable()
 export class UserService {
+
+    constructor(private readonly imageService: ImageService) { }
+
     async create(userCreate: CreateUserDto): Promise<CreateUserDto> {
         try {
             return await user.create({
@@ -33,7 +37,7 @@ export class UserService {
         return await user.count();
     }
 
-    async hasOne(id) {
+    async hasOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await user.findAndCountAll({ where: { id: id } });
@@ -42,7 +46,7 @@ export class UserService {
         return false;
     }
 
-    async findOneByLogin(login) {
+    async findOneByLogin(login: string) {
         if (login != null && login != undefined && login.length > 0) {
             var { count, rows } = await user.findAndCountAll({ where: { login: login } });
             if (count > 0)
@@ -51,7 +55,7 @@ export class UserService {
         return null;
     }
 
-    async getOne(id: any): Promise<CreateUserDto> {
+    async getOne(id: number): Promise<CreateUserDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await user.findAndCountAll({ where: { id: id } });
@@ -83,7 +87,7 @@ export class UserService {
         return rows[0];
     }
 
-    async delete(id: any): Promise<CreateUserDto> {
+    async delete(id: number): Promise<CreateUserDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await user.findAndCountAll({ where: { id: id } });

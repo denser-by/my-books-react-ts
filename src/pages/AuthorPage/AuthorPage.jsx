@@ -4,6 +4,9 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import AuthorsProvider from '../../model/AuthorsProvider.js';
 import ImageUploading from 'react-images-uploading';
+import AuthorImage1 from './../../images/author1.gif';
+import AuthorImage2 from './../../images/author2.gif';
+import AuthorImage3 from './../../images/author3.gif';
 
 const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     if (pr.indexOf("createAuthor") < 1)
@@ -34,7 +37,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     setBooksModified(true);
                     setStateInfo(author.info);
                     setInfoModified(true);
-                    setMyImage(author.photo);
+                    setMyImage(getImage(author.photo));
                     setImageUploaded(true);
                 }
             });
@@ -164,6 +167,14 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         return author.photo != null && author.photo.length > 0;
     }
 
+    function getImage(imageIdx) {
+        switch (imageIdx) {
+            case 21: return AuthorImage1;
+            case 22: return AuthorImage2;
+            case 23: return AuthorImage3;
+        }
+    }
+
     return (
         <Form onSubmit={handleSubmit}>
             <span className="authorShape" id="idAuthorPage" name="idAuthorPage">
@@ -188,7 +199,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for author's photo..."
-                                    src={imageUploaded ? myImage : (isPhotoDefined() ? author.photo : myImage)} />
+                                    src={imageUploaded ? myImage : (isPhotoDefined() ? getImage(author.photo) : myImage)} />
                             )}
                         </ImageUploading>
                     </span>

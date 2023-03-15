@@ -26,7 +26,7 @@ export class RoleService {
         return await role.count();
     }
 
-    async hasOne(id) {
+    async hasOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await role.findAndCountAll({ where: { id: id } });
@@ -35,7 +35,7 @@ export class RoleService {
         return false;
     }
 
-    async findOneByName(name) {
+    async findOneByName(name: string) {
         if (name != null && name != undefined && name.length > 0) {
             var { count, rows } = await role.findAndCountAll({ where: { name: name } });
             if (count > 0)
@@ -44,7 +44,7 @@ export class RoleService {
         return null;
     }
 
-    async getOne(id: any): Promise<CreateRoleDto> {
+    async getOne(id: number): Promise<CreateRoleDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await role.findAndCountAll({ where: { id: id } });
@@ -69,7 +69,7 @@ export class RoleService {
         return rows[0];
     }
 
-    async delete(id: any): Promise<CreateRoleDto> {
+    async delete(id: number): Promise<CreateRoleDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await role.findAndCountAll({ where: { id: id } });

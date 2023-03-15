@@ -26,7 +26,10 @@ export class CreateBookDto {
     cover_img: number;
 
     @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
-    access_key:string;
+    @ApiProperty({ required: false })
+    access_key: string;
+
+    @IsString()
+    @ApiProperty({ required: false })
+    cover_img_path: string;
 }

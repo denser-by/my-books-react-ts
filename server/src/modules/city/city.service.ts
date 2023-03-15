@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { ImageService } from '../image/image.service';
 import { CreateCityDto } from './dto/CreateCityDto';
 const city = require('../../../models/index.js').City;
 
 @Injectable()
 export class CityService {
+
+    constructor(private readonly imageService: ImageService) { }
+
     async create(cityCreate: CreateCityDto): Promise<CreateCityDto> {
         try {
             return await city.create({
@@ -28,7 +32,7 @@ export class CityService {
         return await city.count();
     }
 
-    async hasOne(id) {
+    async hasOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await city.findAndCountAll({ where: { id: id } });
@@ -37,7 +41,7 @@ export class CityService {
         return false;
     }
 
-    async findOneByName(name) {
+    async findOneByName(name: string) {
         if (name != null && name != undefined && name.length > 0) {
             var { count, rows } = await city.findAndCountAll({ where: { name: name } });
             if (count > 0)
@@ -46,7 +50,7 @@ export class CityService {
         return null;
     }
 
-    async getOne(id: any): Promise<CreateCityDto> {
+    async getOne(id: number): Promise<CreateCityDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await city.findAndCountAll({ where: { id: id } });
@@ -73,7 +77,7 @@ export class CityService {
         return rows[0];
     }
 
-    async delete(id: any): Promise<CreateCityDto> {
+    async delete(id: number): Promise<CreateCityDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await city.findAndCountAll({ where: { id: id } });

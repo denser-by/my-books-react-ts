@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { ImageService } from '../image/image.service';
 import { CreateAuthorDto } from './dto/CreateAuthorDto';
 const author = require('../../../models/index.js').Author;
 
 @Injectable()
 export class AuthorService {
+
+    constructor(private readonly imageService: ImageService) { }
+
     async create(authorCreate: CreateAuthorDto): Promise<CreateAuthorDto> {
         try {
             return await author.create({
@@ -29,7 +33,7 @@ export class AuthorService {
         return await author.count();
     }
 
-    async hasOne(id) {
+    async hasOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
@@ -38,7 +42,7 @@ export class AuthorService {
         return false;
     }
 
-    async findOneByAccessKey(access_key) {
+    async findOneByAccessKey(access_key: string) {
         if (access_key != null && access_key != undefined && access_key.length > 0) {
             var { count, rows } = await author.findAndCountAll({ where: { access_key: access_key } });
             if (count > 0)
@@ -47,7 +51,7 @@ export class AuthorService {
         return null;
     }
 
-    async getOne(id: any): Promise<CreateAuthorDto> {
+    async getOne(id: number): Promise<CreateAuthorDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
@@ -69,13 +73,13 @@ export class AuthorService {
             info: authorUpdate.info,
             age: authorUpdate.age,
             photo: authorUpdate.photo,
-            access_key: authorUpdate.access_key        
+            access_key: authorUpdate.access_key
         });
         rows[0].save();
         return rows[0];
     }
 
-    async delete(id: any): Promise<CreateAuthorDto> {
+    async delete(id: number): Promise<CreateAuthorDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });

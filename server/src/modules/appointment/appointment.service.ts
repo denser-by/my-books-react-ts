@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { ImageService } from '../image/image.service';
 import { CreateAppointmentDto } from './dto/CreateAppointmentDto';
 const appointment = require('../../../models/index.js').Appointment;
 
 @Injectable()
 export class AppointmentService {
+
+    constructor(private readonly imageService: ImageService) { }
+
     async create(appointmentCreate: CreateAppointmentDto): Promise<CreateAppointmentDto> {
         try {
             return await appointment.create({
@@ -32,7 +36,7 @@ export class AppointmentService {
         return await appointment.count();
     }
 
-    async hasOne(id) {
+    async hasOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await appointment.findAndCountAll({ where: { id: id } });
@@ -41,7 +45,7 @@ export class AppointmentService {
         return false;
     }
 
-    async findOneByName(name) {
+    async findOneByName(name: string) {
         if (name != null && name != undefined && name.length > 0) {
             var { count, rows } = await appointment.findAndCountAll({ where: { name: name } });
             if (count > 0)
@@ -50,7 +54,7 @@ export class AppointmentService {
         return null;
     }
 
-    async getOne(id: any): Promise<CreateAppointmentDto> {
+    async getOne(id: number): Promise<CreateAppointmentDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await appointment.findAndCountAll({ where: { id: id } });
@@ -81,7 +85,7 @@ export class AppointmentService {
         return rows[0];
     }
 
-    async delete(id: any): Promise<CreateAppointmentDto> {
+    async delete(id: number): Promise<CreateAppointmentDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await appointment.findAndCountAll({ where: { id: id } });

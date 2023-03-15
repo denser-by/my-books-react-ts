@@ -15,10 +15,12 @@ import { AuthorController } from './modules/author/author.controller';
 import { ImageController } from './modules/image/image.controller';
 import { CityController } from './modules/city/city.controller';
 import { AppointmentController } from './modules/appointment/appointment.controller';
+import { DataController } from './modules/data/data.controller';
+import { ServiceData } from './modules/data/DataService';
 
 @Module({
   imports: [],
-  controllers: [AppController, RoleController, UserController, BookController, AuthorController, ImageController, CityController, AppointmentController],
-  providers: [AppService, RoleService, UserService, BookService, AuthorService, ImageService, CityService, AppointmentService],
+  controllers: [AppController, RoleController, UserController, BookController, AuthorController, ImageController, CityController, AppointmentController, DataController],
+  providers: [AppService, RoleService, UserService, BookService, AuthorService, ImageService, CityService, AppointmentService, ServiceData],
 })
 export class AppModule {}

@@ -4,6 +4,26 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import BooksProvider from '../../model/BooksProvider.js';
 import ImageUploading from 'react-images-uploading';
+import BookImage1 from './../../images/1.jpg';
+import BookImage2 from './../../images/2.jpg';
+import BookImage3 from './../../images/3.jpg';
+import BookImage4 from './../../images/4.jpg';
+import BookImage5 from './../../images/5.jpg';
+import BookImage6 from './../../images/6.jpg';
+import BookImage7 from './../../images/7.jpg';
+import BookImage8 from './../../images/8.jpg';
+import BookImage9 from './../../images/9.jpg';
+import BookImage10 from './../../images/10.jpg';
+import BookImage11 from './../../images/11.jpg';
+import BookImage12 from './../../images/12.jpg';
+import BookImage13 from './../../images/13.jpg';
+import BookImage14 from './../../images/14.jpg';
+import BookImage15 from './../../images/15.jpg';
+import BookImage16 from './../../images/16.jpg';
+import BookImage17 from './../../images/17.jpg';
+import BookImage18 from './../../images/18.jpg';
+import BookImage19 from './../../images/19.jpg';
+import BookImage20 from './../../images/20.jpg';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -17,7 +37,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             .then(entireBody => {
                 if (bookId == entireBody.id && !answerReady) {
                     answerReady = true;
-                    console.log('ENTIRE=' + JSON.stringify(entireBody));
+                    // console.log('ENTIRE=' + JSON.stringify(entireBody));
                     book = {
                         id: entireBody.id,
                         name: entireBody.name,
@@ -34,7 +54,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     setAuthorsModified(true);
                     setStateInfo(book.info);
                     setInfoModified(true);
-                    setMyImage(book.cover_img);
+                    setMyImage(getImage(book.cover_img));
                     setImageUploaded(true);
                 }
             });
@@ -177,6 +197,31 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         return book.cover_img != null && book.cover_img.length > 0;
     }
 
+    function getImage(imageIdx) {
+        switch (imageIdx) {
+            case 1: return BookImage1;
+            case 2: return BookImage2;
+            case 3: return BookImage3;
+            case 4: return BookImage4;
+            case 5: return BookImage5;
+            case 6: return BookImage6;
+            case 7: return BookImage7;
+            case 8: return BookImage8;
+            case 9: return BookImage9;
+            case 10: return BookImage10;
+            case 11: return BookImage11;
+            case 12: return BookImage12;
+            case 13: return BookImage13;
+            case 14: return BookImage14;
+            case 15: return BookImage15;
+            case 16: return BookImage16;
+            case 17: return BookImage17;
+            case 18: return BookImage18;
+            case 19: return BookImage19;
+            case 20: return BookImage20;
+        }
+    }
+
     return (
         <Form onSubmit={handleSubmit}>
             <span className="bookShape" id="idBookPage" name="idBookPage">
@@ -201,7 +246,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for book's cover image..."
-                                    src={imageUploaded ? myImage : (isCoverImageDefined() ? book.cover_img : myImage)} />
+                                    src={imageUploaded ? myImage : (isCoverImageDefined() ? getImage(book.cover_img) : myImage)} />
                             )}
                         </ImageUploading>
                     </span>
