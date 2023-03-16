@@ -28,10 +28,10 @@ export class CreateBookDto {
     @ApiProperty({ required: false })
     authors: string[];
 
-    @IsNumber()
+    @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    cover_img: number;
+    cover_img_path: string;
 
     @IsString()
     @IsOptional()
@@ -41,5 +41,5 @@ export class CreateBookDto {
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    cover_img_path: string;
+    cover_img_data: string;
 }

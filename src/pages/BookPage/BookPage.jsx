@@ -35,8 +35,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         year: '',
         authors: [],
         info: '',
-        cover_img: '-1',
-        cover_img_path: ''
+        cover_img_path: '',
+        cover_img_data: ''
     };
     if (!create) {
         const apiUrl = 'http://localhost:3001/books/' + bookId;
@@ -52,8 +52,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         year: entireBody.year != null ? entireBody.year : '',
                         authors: entireBody.authors,
                         info: entireBody.info,
-                        cover_img: entireBody.cover_img,
-                        cover_img_path: ''
+                        cover_img_path: entireBody.cover_img_path,
+                        cover_img_data: entireBody.cover_img_data
                     };
                     if (!nameModified) {
                         setStateName(book.name);
@@ -72,7 +72,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         setInfoModified(true);
                     }
                     if (!imageUploaded) {
-                        setMyImage(getImage(book.cover_img));
+                        setMyImage(getImage(book));
                         setImageUploaded(true);
                     }
                 }
@@ -176,19 +176,14 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         if (infoModified)
             book.info = stateInfo;
         if (imageUploaded) {
-            // book.cover_img = myImage;
-            book.cover_img_path = myImage;
+            // book.cover_img_path = myImage;
+            book.cover_img_data = myImage;
         }
 
         if (book.id != null && ('' + book.id).length > 0)
             book.id = Number.parseInt('' + book.id);
         else
             book.id = '';
-
-        if (book.cover_img != null && ('' + book.cover_img).length > 0)
-            book.cover_img = Number.parseInt('' + book.cover_img);
-        else
-            book.cover_img = '';
 
         if (book.year != null && ('' + book.year).length > 0)
             book.year = Number.parseInt('' + book.year);
@@ -241,31 +236,33 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     };
 
     function isCoverImageDefined() {
-        return book.cover_img != null && book.cover_img.length > 0;
+        return book.cover_img_path != null && book.cover_img_path.length > 0 || book.cover_img_data != null && book.cover_img_data.length > 0;
     }
 
-    function getImage(imageIdx) {
-        switch (imageIdx) {
-            case 1: return BookImage1;
-            case 2: return BookImage2;
-            case 3: return BookImage3;
-            case 4: return BookImage4;
-            case 5: return BookImage5;
-            case 6: return BookImage6;
-            case 7: return BookImage7;
-            case 8: return BookImage8;
-            case 9: return BookImage9;
-            case 10: return BookImage10;
-            case 11: return BookImage11;
-            case 12: return BookImage12;
-            case 13: return BookImage13;
-            case 14: return BookImage14;
-            case 15: return BookImage15;
-            case 16: return BookImage16;
-            case 17: return BookImage17;
-            case 18: return BookImage18;
-            case 19: return BookImage19;
-            case 20: return BookImage20;
+    function getImage(book) {
+        if (book.cover_img_data != null && book.cover_img_data.length > 20)
+            return book.cover_img_data;
+        else if (book.cover_img_path != null && book.cover_img_path.length > 0) {
+            if(book.cover_img_path.indexOf('/1.jpg') > -1) return BookImage1; else
+            if(book.cover_img_path.indexOf('/2.jpg') > -1) return BookImage2; else
+            if(book.cover_img_path.indexOf('/3.jpg') > -1) return BookImage3; else
+            if(book.cover_img_path.indexOf('/4.jpg') > -1) return BookImage4; else
+            if(book.cover_img_path.indexOf('/5.jpg') > -1) return BookImage5; else
+            if(book.cover_img_path.indexOf('/6.jpg') > -1) return BookImage6; else
+            if(book.cover_img_path.indexOf('/7.jpg') > -1) return BookImage7; else
+            if(book.cover_img_path.indexOf('/8.jpg') > -1) return BookImage8; else
+            if(book.cover_img_path.indexOf('/9.jpg') > -1) return BookImage9; else
+            if(book.cover_img_path.indexOf('/10.jpg') > -1) return BookImage10; else
+            if(book.cover_img_path.indexOf('/11.jpg') > -1) return BookImage11; else
+            if(book.cover_img_path.indexOf('/12.jpg') > -1) return BookImage12; else
+            if(book.cover_img_path.indexOf('/13.jpg') > -1) return BookImage13; else
+            if(book.cover_img_path.indexOf('/14.jpg') > -1) return BookImage14; else
+            if(book.cover_img_path.indexOf('/15.jpg') > -1) return BookImage15; else
+            if(book.cover_img_path.indexOf('/16.jpg') > -1) return BookImage16; else
+            if(book.cover_img_path.indexOf('/17.jpg') > -1) return BookImage17; else
+            if(book.cover_img_path.indexOf('/18.jpg') > -1) return BookImage18; else
+            if(book.cover_img_path.indexOf('/19.jpg') > -1) return BookImage19; else
+            if(book.cover_img_path.indexOf('/20.jpg') > -1) return BookImage20;
         }
     }
 
@@ -293,7 +290,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for book's cover image..."
-                                    src={imageUploaded ? myImage : (isCoverImageDefined() ? getImage(book.cover_img) : myImage)} />
+                                    src={imageUploaded ? myImage : (isCoverImageDefined() ? getImage(book) : myImage)} />
                             )}
                         </ImageUploading>
                     </span>

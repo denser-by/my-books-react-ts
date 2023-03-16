@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       mini_copy: {
-        type: Sequelize.BLOB
+        type: Sequelize.TEXT
       },
       image_type: {
         type: Sequelize.INTEGER
