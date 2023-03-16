@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateImageDto } from '../image/dto/CreateImageDto';
 import { ImageService } from '../image/image.service';
 import { CreateAuthorDto } from './dto/CreateAuthorDto';
 const author = require('../../../models/index.js').Author;
@@ -10,13 +11,35 @@ export class AuthorService {
 
     async create(authorCreate: CreateAuthorDto): Promise<CreateAuthorDto> {
         try {
-            return await author.create({
+            var photo_id = -1;
+            if (authorCreate.photo_data != null && authorCreate.photo_data.length > 0) {
+                var imageDto1 = await this.imageService.findOneByData(authorCreate.photo_data);
+                if (imageDto1 != null)
+                    photo_id = imageDto1.id;
+            } else if (authorCreate.photo_path != null && authorCreate.photo_path.length > 0) {
+                var imageDto2 = await this.imageService.findOneByPath(authorCreate.photo_path);
+                if (imageDto2 != null)
+                    photo_id = imageDto2.id;
+            }
+            if (photo_id < 0)
+                if (authorCreate.photo_data != null && authorCreate.photo_data.length > 0 || authorCreate.photo_path != null && authorCreate.photo_path.length > 0) {
+                    var imageDto3 = new CreateImageDto();
+                    imageDto3.image_type = 1;
+                    if (authorCreate.photo_data != null && authorCreate.photo_data.length > 0)
+                        imageDto3.mini_copy = authorCreate.photo_data;
+                    else if (authorCreate.photo_path != null && authorCreate.photo_path.length > 0)
+                        imageDto3.path = authorCreate.photo_path;
+                    let imageResult = await this.imageService.create(imageDto3);
+                    photo_id = imageResult.id;
+                }
+            let value = await author.create({
                 name: authorCreate.name,
                 info: authorCreate.info,
                 age: authorCreate.age,
-                photo: authorCreate.photo,
+                photo: photo_id,
                 access_key: authorCreate.access_key
             });
+            return value;
         } catch (e) {
             throw new Error('Can not create Author, ' + e);
         }
@@ -64,12 +87,13 @@ export class AuthorService {
             info: bookRef.info,
             age: bookRef.age,
             books: [],
-            photo: bookRef.photo,
+            photo_path: '',
             access_key: bookRef.access_key,
-            photo_path: ''
+            photo_data: ''
         };
         if (bookRef.photo != null && bookRef.photo > 0) {
-            var imageRef = this.imageService.getOne(bookRef.photo);
+            var imageRef = this.imageService.getOne(bookRef.cover_img);
+            result.photo_data = (await imageRef).mini_copy;
             result.photo_path = (await imageRef).path;
         }
         return result;
@@ -82,16 +106,37 @@ export class AuthorService {
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
+        var photo_id = -1;
+        if (authorUpdate.photo_data != null && authorUpdate.photo_data.length > 0) {
+            var imageDto1 = await this.imageService.findOneByData(authorUpdate.photo_data);
+            if (imageDto1 != null)
+                photo_id = imageDto1.id;
+        } else if (authorUpdate.photo_path != null && authorUpdate.photo_path.length > 0) {
+            var imageDto2 = await this.imageService.findOneByPath(authorUpdate.photo_path);
+            if (imageDto2 != null)
+                photo_id = imageDto2.id;
+        }
+        if (photo_id < 0)
+            if (authorUpdate.photo_data != null && authorUpdate.photo_data.length > 0 || authorUpdate.photo_path != null && authorUpdate.photo_path.length > 0) {
+                var imageDto3 = new CreateImageDto();
+                imageDto3.image_type = 1;
+                if (authorUpdate.photo_data != null && authorUpdate.photo_data.length > 0)
+                    imageDto3.mini_copy = authorUpdate.photo_data;
+                else if (authorUpdate.photo_path != null && authorUpdate.photo_path.length > 0)
+                    imageDto3.path = authorUpdate.photo_path;
+                let imageResult = await this.imageService.create(imageDto3);
+                photo_id = imageResult.id;
+            }
         rows[0].set({
             id: authorUpdate.id,
             name: authorUpdate.name,
             info: authorUpdate.info,
             age: authorUpdate.age,
-            photo: authorUpdate.photo,
+            photo: photo_id,
             access_key: authorUpdate.access_key
         });
         rows[0].save();
-        return rows[0];        
+        return rows[0];
     }
 
     async delete(id: number): Promise<CreateAuthorDto> {

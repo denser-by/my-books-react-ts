@@ -91,14 +91,11 @@ export class BookService {
             access_key: bookRef.access_key,
             cover_img_data: ''
         };
-        console.log('__PREP__=' + JSON.stringify(bookRef));
         if (bookRef.cover_img != null && bookRef.cover_img > 0) {
             var imageRef = this.imageService.getOne(bookRef.cover_img);
-            console.log('__REF=' + JSON.stringify(imageRef));
             result.cover_img_data = (await imageRef).mini_copy;
             result.cover_img_path = (await imageRef).path;
         }
-        console.log('RESULT=' + JSON.stringify(result));
         return result;
     }
 

@@ -28,10 +28,10 @@ export class CreateAuthorDto {
     @ApiProperty({ required: false })
     books: number[];
 
-    @IsNumber()
+    @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    photo: number;
+    photo_path: string;
 
     @IsString()
     @IsOptional()
@@ -41,5 +41,5 @@ export class CreateAuthorDto {
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    photo_path: string;
+    photo_data: string;
 }

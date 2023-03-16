@@ -137,19 +137,19 @@ export class ServiceData {
         }
     }
 
-    async recreateAuthor(name, info, age, photo, access_key) {
+    async recreateAuthor(name, info, age, photo_path, access_key) {
         var author = await this.svcAuthor.findOneByAccessKey(access_key);
         if (!author) {
             let dto = new CreateAuthorDto();
             dto.name = name;
             dto.info = info;
             dto.age = age;
-            dto.photo = photo;
+            dto.photo_path = photo_path;
             dto.access_key = access_key;
             author = await this.svcAuthor.create(dto);
             console.log('after create ' + JSON.stringify(author));
         } else {
-            author.set({ name: name, info: info, age: age, photo: photo, access_key: access_key });
+            author.set({ name: name, info: info, age: age, photo_path: photo_path, access_key: access_key });
             author.save();
             console.log('after save ' + JSON.stringify(author));
         }
@@ -216,36 +216,36 @@ export class ServiceData {
         await this.recreateBook('Book29', 'Book Description 29', 2005, covers20[8].path, 'book_key_29');
         await this.recreateBook('Book30', 'Book Description 30', 2002, covers20[9].path, 'book_key_30');
 
-        await this.recreateAuthor('Author1', 'Author Description 1', 1999, authors3[0].id, 'auth_key_1');
-        await this.recreateAuthor('Author2', 'Author Description 2', 2000, authors3[1].id, 'auth_key_2');
-        await this.recreateAuthor('Author3', 'Author Description 3', 2001, authors3[2].id, 'auth_key_3');
-        await this.recreateAuthor('Author4', 'Author Description 4', 2002, authors3[0].id, 'auth_key_4');
-        await this.recreateAuthor('Author5', 'Author Description 5', 2003, authors3[1].id, 'auth_key_5');
-        await this.recreateAuthor('Author6', 'Author Description 6', 2004, authors3[2].id, 'auth_key_6');
-        await this.recreateAuthor('Author7', 'Author Description 7', 2005, authors3[0].id, 'auth_key_7');
-        await this.recreateAuthor('Author8', 'Author Description 8', 2006, authors3[1].id, 'auth_key_8');
-        await this.recreateAuthor('Author9', 'Author Description 9', 2007, authors3[2].id, 'auth_key_9');
-        await this.recreateAuthor('Author10', 'Author Description 10', 2005, authors3[0].id, 'auth_key_10');
-        await this.recreateAuthor('Author11', 'Author Description 11', 2006, authors3[1].id, 'auth_key_11');
-        await this.recreateAuthor('Author12', 'Author Description 12', 2007, authors3[2].id, 'auth_key_12');
-        await this.recreateAuthor('Author13', 'Author Description 13', 2001, authors3[0].id, 'auth_key_13');
-        await this.recreateAuthor('Author14', 'Author Description 14', 2002, authors3[1].id, 'auth_key_14');
-        await this.recreateAuthor('Author15', 'Author Description 15', 2003, authors3[2].id, 'auth_key_15');
-        await this.recreateAuthor('Author16', 'Author Description 16', 2004, authors3[0].id, 'auth_key_16');
-        await this.recreateAuthor('Author17', 'Author Description 17', 2005, authors3[1].id, 'auth_key_17');
-        await this.recreateAuthor('Author18', 'Author Description 18', 2006, authors3[2].id, 'auth_key_18');
-        await this.recreateAuthor('Author19', 'Author Description 19', 2007, authors3[0].id, 'auth_key_19');
-        await this.recreateAuthor('Author20', 'Author Description 20', 2004, authors3[1].id, 'auth_key_20');
-        await this.recreateAuthor('Author21', 'Author Description 21', 1999, authors3[2].id, 'auth_key_21');
-        await this.recreateAuthor('Author22', 'Author Description 22', 2000, authors3[0].id, 'auth_key_22');
-        await this.recreateAuthor('Author23', 'Author Description 23', 2001, authors3[1].id, 'auth_key_23');
-        await this.recreateAuthor('Author24', 'Author Description 24', 2002, authors3[2].id, 'auth_key_24');
-        await this.recreateAuthor('Author25', 'Author Description 25', 2003, authors3[0].id, 'auth_key_25');
-        await this.recreateAuthor('Author26', 'Author Description 26', 2004, authors3[1].id, 'auth_key_26');
-        await this.recreateAuthor('Author27', 'Author Description 27', 2005, authors3[2].id, 'auth_key_27');
-        await this.recreateAuthor('Author28', 'Author Description 28', 2006, authors3[0].id, 'auth_key_28');
-        await this.recreateAuthor('Author29', 'Author Description 29', 2007, authors3[1].id, 'auth_key_29');
-        await this.recreateAuthor('Author30', 'Author Description 30', 2003, authors3[2].id, 'auth_key_30');
+        await this.recreateAuthor('Author1', 'Author Description 1', 1999, authors3[0].path, 'auth_key_1');
+        await this.recreateAuthor('Author2', 'Author Description 2', 2000, authors3[1].path, 'auth_key_2');
+        await this.recreateAuthor('Author3', 'Author Description 3', 2001, authors3[2].path, 'auth_key_3');
+        await this.recreateAuthor('Author4', 'Author Description 4', 2002, authors3[0].path, 'auth_key_4');
+        await this.recreateAuthor('Author5', 'Author Description 5', 2003, authors3[1].path, 'auth_key_5');
+        await this.recreateAuthor('Author6', 'Author Description 6', 2004, authors3[2].path, 'auth_key_6');
+        await this.recreateAuthor('Author7', 'Author Description 7', 2005, authors3[0].path, 'auth_key_7');
+        await this.recreateAuthor('Author8', 'Author Description 8', 2006, authors3[1].path, 'auth_key_8');
+        await this.recreateAuthor('Author9', 'Author Description 9', 2007, authors3[2].path, 'auth_key_9');
+        await this.recreateAuthor('Author10', 'Author Description 10', 2005, authors3[0].path, 'auth_key_10');
+        await this.recreateAuthor('Author11', 'Author Description 11', 2006, authors3[1].path, 'auth_key_11');
+        await this.recreateAuthor('Author12', 'Author Description 12', 2007, authors3[2].path, 'auth_key_12');
+        await this.recreateAuthor('Author13', 'Author Description 13', 2001, authors3[0].path, 'auth_key_13');
+        await this.recreateAuthor('Author14', 'Author Description 14', 2002, authors3[1].path, 'auth_key_14');
+        await this.recreateAuthor('Author15', 'Author Description 15', 2003, authors3[2].path, 'auth_key_15');
+        await this.recreateAuthor('Author16', 'Author Description 16', 2004, authors3[0].path, 'auth_key_16');
+        await this.recreateAuthor('Author17', 'Author Description 17', 2005, authors3[1].path, 'auth_key_17');
+        await this.recreateAuthor('Author18', 'Author Description 18', 2006, authors3[2].path, 'auth_key_18');
+        await this.recreateAuthor('Author19', 'Author Description 19', 2007, authors3[0].path, 'auth_key_19');
+        await this.recreateAuthor('Author20', 'Author Description 20', 2004, authors3[1].path, 'auth_key_20');
+        await this.recreateAuthor('Author21', 'Author Description 21', 1999, authors3[2].path, 'auth_key_21');
+        await this.recreateAuthor('Author22', 'Author Description 22', 2000, authors3[0].path, 'auth_key_22');
+        await this.recreateAuthor('Author23', 'Author Description 23', 2001, authors3[1].path, 'auth_key_23');
+        await this.recreateAuthor('Author24', 'Author Description 24', 2002, authors3[2].path, 'auth_key_24');
+        await this.recreateAuthor('Author25', 'Author Description 25', 2003, authors3[0].path, 'auth_key_25');
+        await this.recreateAuthor('Author26', 'Author Description 26', 2004, authors3[1].path, 'auth_key_26');
+        await this.recreateAuthor('Author27', 'Author Description 27', 2005, authors3[2].path, 'auth_key_27');
+        await this.recreateAuthor('Author28', 'Author Description 28', 2006, authors3[0].path, 'auth_key_28');
+        await this.recreateAuthor('Author29', 'Author Description 29', 2007, authors3[1].path, 'auth_key_29');
+        await this.recreateAuthor('Author30', 'Author Description 30', 2003, authors3[2].path, 'auth_key_30');
 
         await this.recreateBook('Book31', 'Book Description 31', 2007, covers20[10].path, 'book_key_31');
         await this.recreateBook('Book32', 'Book Description 32', 1998, covers20[11].path, 'book_key_32');
