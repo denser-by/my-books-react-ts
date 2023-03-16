@@ -16,6 +16,8 @@ export class UserController {
     }
 
     @Get()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateUserDto, isArray: true })
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
@@ -24,18 +26,24 @@ export class UserController {
     }
 
     @Get(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateUserDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateUserDto> {
         return this.userService.getOne(id);
     }
 
     @Put()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateUserDto })
     async update(@Body() createDto: CreateUserDto): Promise<CreateUserDto> {
         return this.userService.update(createDto);
     }
 
     @Delete(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateUserDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateUserDto> {
         return this.userService.delete(id);

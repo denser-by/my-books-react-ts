@@ -16,6 +16,8 @@ export class CityController {
     }
 
     @Get()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateCityDto, isArray: true })
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
@@ -24,18 +26,24 @@ export class CityController {
     }
 
     @Get(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateCityDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateCityDto> {
         return this.cityService.getOne(id);
     }
 
     @Put()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateCityDto })
     async update(@Body() createDto: CreateCityDto): Promise<CreateCityDto> {
         return this.cityService.update(createDto);
     }
 
     @Delete(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateCityDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateCityDto> {
         return this.cityService.delete(id);

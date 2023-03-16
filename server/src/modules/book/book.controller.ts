@@ -16,6 +16,8 @@ export class BookController {
     }
 
     @Get()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateBookDto, isArray: true })
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
@@ -24,18 +26,24 @@ export class BookController {
     }
 
     @Get(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateBookDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateBookDto> {
         return this.bookService.getOne(id);
     }
 
     @Put()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateBookDto })
     async update(@Body() createDto: CreateBookDto): Promise<CreateBookDto> {
         return this.bookService.update(createDto);
     }
 
     @Delete(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateBookDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateBookDto> {
         return this.bookService.delete(id);

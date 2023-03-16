@@ -16,6 +16,8 @@ export class RoleController {
     }
 
     @Get()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateRoleDto, isArray: true })
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
@@ -24,18 +26,24 @@ export class RoleController {
     }
 
     @Get(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateRoleDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateRoleDto> {
         return this.roleService.getOne(id);
     }
 
     @Put()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateRoleDto })
     async update(@Body() createDto: CreateRoleDto): Promise<CreateRoleDto> {
         return this.roleService.update(createDto);
     }
 
     @Delete(':id')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateRoleDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateRoleDto> {
         return this.roleService.delete(id);
