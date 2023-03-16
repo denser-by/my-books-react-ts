@@ -42,8 +42,10 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
             .then((response) => response.json())
             .then(entireBody => {
                 var authorItems = [];
+                var seq_num = 1;
                 entireBody.map(authorItem => {
                     authorItems.push({
+                        seq_num: seq_num,
                         name: authorItem.name,
                         age: authorItem.age,
                         numOfBooks: authorItem.numOfBooks,
@@ -51,6 +53,7 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                         edit: "/editAuthor?id=" + authorItem.id,
                         delete: "/deleteAuthor?id=" + authorItem.id
                     });
+                    seq_num++;
                 })
                 setListAuthorItems(authorItems);
             });
@@ -58,6 +61,13 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
 
     const columnItems = React.useMemo(
         () => [
+            {
+                Header: '№',
+                accessor: 'seq_num',
+                Cell: (row: CellProps<any>) => {
+                    return <center><strong>{row.cell.value}.</strong></center>;
+                },
+            },
             {
                 Header: 'Name',
                 accessor: 'name',

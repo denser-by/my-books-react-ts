@@ -43,14 +43,17 @@ const BooksListPage = ({ setPageRef, pr }) => {
             .then(entireBody => {
                 // console.log('ENTIRE ' + JSON.stringify(entireBody));
                 var bookItems = [];
+                var seq_num = 1;
                 entireBody.map(bookItem => {
                     bookItems.push({
+                        seq_num: seq_num,
                         name: bookItem.name,
                         year: bookItem.year,
                         view: "/viewBook?id=" + bookItem.id,
                         edit: "/editBook?id=" + bookItem.id,
                         delete: "/deleteBook?id=" + bookItem.id
                     });
+                    seq_num++;
                 })
                 setListBookItems(bookItems);
             });
@@ -58,6 +61,13 @@ const BooksListPage = ({ setPageRef, pr }) => {
 
     const columnItems = React.useMemo(
         () => [
+            {
+                Header: '№',
+                accessor: 'seq_num',
+                Cell: (row: CellProps<any>) => {
+                    return <center><strong>{row.cell.value}.</strong></center>;
+                },
+            },
             {
                 Header: 'Name',
                 accessor: 'name',
