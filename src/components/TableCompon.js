@@ -83,7 +83,7 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
     );
 }
 
-function TableCompon({ columnItems, dataItems, defPage, cssRowH, cssCellH, cssRow, cssCell }) {
+function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRowH, cssCellH, cssRow, cssCell }) {
     let columns = columnItems;
     let data = dataItems;
     const {
@@ -105,7 +105,7 @@ function TableCompon({ columnItems, dataItems, defPage, cssRowH, cssCellH, cssRo
         {
             columns,
             data,
-            initialState: { pageIndex: 0, pageSize: defPage },
+            initialState: { pageIndex: curPageIndex, pageSize: curPageSize },
         },
         usePagination
     )

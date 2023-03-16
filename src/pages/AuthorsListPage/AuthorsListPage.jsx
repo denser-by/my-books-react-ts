@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './authorslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
@@ -7,7 +7,10 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
     if (pr.indexOf("AuthorsAll") < 1) return;
 
     const [curSelectAuthor, setCurSelectAuthor] = useState("");
-    const [curSelectAuthorsPageSize, setCurSelectAuthorsPageSize] = useState(12);
+    const [authorPageState, setAuthorPageState] = useState({
+        pageSize: 10,
+        pageNumber: 0
+    });
     const [listAuthorItems, setListAuthorItems] = useState([]);
 
     var aboveAuthorId = '';
@@ -34,22 +37,24 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
         setPageRef(e.target.id);
     }
 
-    fetch('http://localhost:3001/authors')
-        .then((response) => response.json())
-        .then(entireBody => {
-            var authorItems = [];
-            entireBody.map(authorItem => {
-                authorItems.push({
-                    name: authorItem.name,
-                    age: authorItem.age,
-                    numOfBooks: authorItem.numOfBooks,
-                    view: "/viewAuthor?id=" + authorItem.id,
-                    edit: "/editAuthor?id=" + authorItem.id,
-                    delete: "/deleteAuthor?id=" + authorItem.id
-                });
-            })
-            setListAuthorItems(authorItems);
-        });
+    useEffect(() => {
+        fetch('http://localhost:3001/authors')
+            .then((response) => response.json())
+            .then(entireBody => {
+                var authorItems = [];
+                entireBody.map(authorItem => {
+                    authorItems.push({
+                        name: authorItem.name,
+                        age: authorItem.age,
+                        numOfBooks: authorItem.numOfBooks,
+                        view: "/viewAuthor?id=" + authorItem.id,
+                        edit: "/editAuthor?id=" + authorItem.id,
+                        delete: "/deleteAuthor?id=" + authorItem.id
+                    });
+                })
+                setListAuthorItems(authorItems);
+            });
+    }, [authorPageState]);
 
     const columnItems = React.useMemo(
         () => [
@@ -104,7 +109,7 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
 
     return (
         <div className='authorsList' id="idAuthorListPage" name="idAuthorListPage">
-            <TableCompon columnItems={columnItems} dataItems={listAuthorItems} defPage={curSelectAuthorsPageSize}
+            <TableCompon columnItems={columnItems} dataItems={listAuthorItems} curPageSize={authorPageState.pageSize} curPageIndex={authorPageState.pageNumber}
                 cssRowH={'authorsListHeader'} cssCellH={'authorsInfoHeader'} cssRow={'authorsListItem'} cssCell={'authorsInfoItem'} />
         </div>
     );

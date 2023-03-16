@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './bookslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
@@ -7,7 +7,10 @@ const BooksListPage = ({ setPageRef, pr }) => {
     if (pr.indexOf("BooksAll") < 1) return;
 
     const [curSelectBook, setCurSelectBook] = useState("");
-    const [curSelectBooksPageSize, setCurSelectBooksPageSize] = useState(12);
+    const [bookPageState, setBookPageState] = useState({
+        pageSize: 10,
+        pageNumber: 0
+    });
     const [listBookItems, setListBookItems] = useState([]);
 
     var aboveBookId = '';
@@ -34,21 +37,24 @@ const BooksListPage = ({ setPageRef, pr }) => {
         setPageRef(e.target.id);
     }
 
-    fetch('http://localhost:3001/books')
-        .then((response) => response.json())
-        .then(entireBody => {
-            var bookItems = [];
-            entireBody.map(bookItem => {
-                bookItems.push({
-                    name: bookItem.name,
-                    year: bookItem.year,
-                    view: "/viewBook?id=" + bookItem.id,
-                    edit: "/editBook?id=" + bookItem.id,
-                    delete: "/deleteBook?id=" + bookItem.id
-                });
-            })
-            setListBookItems(bookItems);
-        });
+    useEffect(() => {
+        fetch('http://localhost:3001/books')
+            .then((response) => response.json())
+            .then(entireBody => {
+                // console.log('ENTIRE ' + JSON.stringify(entireBody));
+                var bookItems = [];
+                entireBody.map(bookItem => {
+                    bookItems.push({
+                        name: bookItem.name,
+                        year: bookItem.year,
+                        view: "/viewBook?id=" + bookItem.id,
+                        edit: "/editBook?id=" + bookItem.id,
+                        delete: "/deleteBook?id=" + bookItem.id
+                    });
+                })
+                setListBookItems(bookItems);
+            });
+    }, [bookPageState]);
 
     const columnItems = React.useMemo(
         () => [
@@ -99,7 +105,7 @@ const BooksListPage = ({ setPageRef, pr }) => {
 
     return (
         <div className='booksList' id="idBooksListPage" name="idBooksListPage">
-            <TableCompon columnItems={columnItems} dataItems={listBookItems} defPage={curSelectBooksPageSize}
+            <TableCompon columnItems={columnItems} dataItems={listBookItems} curPageSize={bookPageState.pageSize} curPageIndex={bookPageState.pageNumber}
                 cssRowH={'booksListHeader'} cssCellH={'booksInfoHeader'} cssRow={'booksListItem'} cssCell={'booksInfoItem'} />
         </div>
     );
