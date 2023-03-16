@@ -46,6 +46,15 @@ export class ImageService {
         return null;
     }
 
+    async findOneByData(data: string) {
+        if (data != null && data != undefined && data.length > 0) {
+            var { count, rows } = await image.findAndCountAll({ where: { mini_copy: data } });
+            if (count > 0)
+                return rows[0];
+        }
+        return null;
+    }
+
     async getOne(id: number): Promise<CreateImageDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');

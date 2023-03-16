@@ -11,17 +11,27 @@ export class BookService {
 
     async create(bookCreate: CreateBookDto): Promise<CreateBookDto> {
         try {
-            var cover_img_id;
-            if (bookCreate.cover_img_data != null && bookCreate.cover_img_data.length > 0 || bookCreate.cover_img_path != null && bookCreate.cover_img_path.length > 0) {
-                var imageDto = new CreateImageDto();
-                imageDto.image_type = 1;
-                if (bookCreate.cover_img_data != null && bookCreate.cover_img_data.length > 0)
-                    imageDto.mini_copy = bookCreate.cover_img_data;
-                else if (bookCreate.cover_img_path != null && bookCreate.cover_img_path.length > 0)
-                    imageDto.path = bookCreate.cover_img_path;
-                imageDto = await this.imageService.create(imageDto);
-                cover_img_id = imageDto.id;
+            var cover_img_id = -1;
+            if (bookCreate.cover_img_data != null && bookCreate.cover_img_data.length > 0) {
+                var imageDto1 = await this.imageService.findOneByData(bookCreate.cover_img_data);
+                if (imageDto1 != null)
+                    cover_img_id = imageDto1.id;
+            } else if (bookCreate.cover_img_path != null && bookCreate.cover_img_path.length > 0) {
+                var imageDto2 = await this.imageService.findOneByPath(bookCreate.cover_img_path);
+                if (imageDto2 != null)
+                    cover_img_id = imageDto2.id;
             }
+            if (cover_img_id < 0)
+                if (bookCreate.cover_img_data != null && bookCreate.cover_img_data.length > 0 || bookCreate.cover_img_path != null && bookCreate.cover_img_path.length > 0) {
+                    var imageDto3 = new CreateImageDto();
+                    imageDto3.image_type = 1;
+                    if (bookCreate.cover_img_data != null && bookCreate.cover_img_data.length > 0)
+                        imageDto3.mini_copy = bookCreate.cover_img_data;
+                    else if (bookCreate.cover_img_path != null && bookCreate.cover_img_path.length > 0)
+                        imageDto3.path = bookCreate.cover_img_path;
+                    let imageResult = await this.imageService.create(imageDto3);
+                    cover_img_id = imageResult.id;
+                }
             let value = await book.create({
                 name: bookCreate.name,
                 info: bookCreate.info,
@@ -99,17 +109,27 @@ export class BookService {
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
-        var cover_img_id;
-        if (bookUpdate.cover_img_data != null && bookUpdate.cover_img_data.length > 0 || bookUpdate.cover_img_path != null && bookUpdate.cover_img_path.length > 0) {
-            var imageDto = new CreateImageDto();
-            imageDto.image_type = 1;
-            if (bookUpdate.cover_img_data != null && bookUpdate.cover_img_data.length > 0)
-                imageDto.mini_copy = bookUpdate.cover_img_data;
-            else if (bookUpdate.cover_img_path != null && bookUpdate.cover_img_path.length > 0)
-                imageDto.path = bookUpdate.cover_img_path;
-            imageDto = await this.imageService.create(imageDto);
-            cover_img_id = imageDto.id;
+        var cover_img_id = -1;
+        if (bookUpdate.cover_img_data != null && bookUpdate.cover_img_data.length > 0) {
+            var imageDto1 = await this.imageService.findOneByData(bookUpdate.cover_img_data);
+            if (imageDto1 != null)
+                cover_img_id = imageDto1.id;
+        } else if (bookUpdate.cover_img_path != null && bookUpdate.cover_img_path.length > 0) {
+            var imageDto2 = await this.imageService.findOneByPath(bookUpdate.cover_img_path);
+            if (imageDto2 != null)
+                cover_img_id = imageDto2.id;
         }
+        if (cover_img_id < 0)
+            if (bookUpdate.cover_img_data != null && bookUpdate.cover_img_data.length > 0 || bookUpdate.cover_img_path != null && bookUpdate.cover_img_path.length > 0) {
+                var imageDto3 = new CreateImageDto();
+                imageDto3.image_type = 1;
+                if (bookUpdate.cover_img_data != null && bookUpdate.cover_img_data.length > 0)
+                    imageDto3.mini_copy = bookUpdate.cover_img_data;
+                else if (bookUpdate.cover_img_path != null && bookUpdate.cover_img_path.length > 0)
+                    imageDto3.path = bookUpdate.cover_img_path;
+                let imageResult = await this.imageService.create(imageDto3);
+                cover_img_id = imageResult.id;
+            }
         rows[0].set({
             id: bookUpdate.id,
             name: bookUpdate.name,
