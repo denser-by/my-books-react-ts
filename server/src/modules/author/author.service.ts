@@ -80,19 +80,19 @@ export class AuthorService {
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
-        var bookRef = rows[0];
+        var authorRef = rows[0];
         var result = {
-            id: bookRef.id,
-            name: bookRef.name,
-            info: bookRef.info,
-            age: bookRef.age,
+            id: authorRef.id,
+            name: authorRef.name,
+            info: authorRef.info,
+            age: authorRef.age,
             books: [],
             photo_path: '',
-            access_key: bookRef.access_key,
+            access_key: authorRef.access_key,
             photo_data: ''
         };
-        if (bookRef.photo != null && bookRef.photo > 0) {
-            var imageRef = this.imageService.getOne(bookRef.cover_img);
+        if (authorRef.photo != null && authorRef.photo > 0) {
+            var imageRef = this.imageService.getOne(authorRef.photo);
             result.photo_data = (await imageRef).mini_copy;
             result.photo_path = (await imageRef).path;
         }

@@ -18,8 +18,8 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         age: '',
         books: [],
         info: '',
-        photo: '-1',
-        photo_path: ''
+        photo_path: '',
+        photo_data: ''
     };
     if (!create) {
         const request = 'http://localhost:3001/authors/' + authorId;
@@ -35,8 +35,8 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         age: entireBody.age != null ? entireBody.age : '',
                         books: entireBody.books,
                         info: entireBody.info,
-                        photo: entireBody.photo,
-                        photo_path: ''
+                        photo_path: entireBody.photo_path,
+                        photo_data: entireBody.photo_data
                     };
                     if (!nameModified) {
                         setStateName(author.name);
@@ -55,7 +55,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         setInfoModified(true);
                     }
                     if (!imageUploaded) {
-                        setMyImage(getImage(author.photo));
+                        setMyImage(getImage(author));
                         setImageUploaded(true);
                     }
                 }
@@ -146,19 +146,14 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         if (infoModified)
             author.info = stateInfo;
         if (imageUploaded) {
-            // author.photo = myImage;
-            author.photo_path = myImage;
+            // author.photo_path = myImage;
+            author.photo_data = myImage;
         }
 
         if (author.id != null && ('' + author.id).length > 0)
             author.id = Number.parseInt('' + author.id);
         else
             author.id = '';
-
-        if (author.photo != null && ('' + author.photo).length > 0)
-            author.photo = Number.parseInt('' + author.photo);
-        else
-            author.photo = '';
 
         if (author.age != null && ('' + author.age).length > 0)
             author.age = Number.parseInt('' + author.age);
@@ -201,7 +196,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     const [myImage, setMyImage] = React.useState("");
     const [imageUploaded, setImageUploaded] = React.useState(false);
 
-    const onAuthorsPhotoChange = (imageList, addUpdateIndex) => {
+    const onAuthorsphoto_pathChange = (imageList, addUpdateIndex) => {
         // console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
@@ -210,15 +205,17 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         });
     };
 
-    function isPhotoDefined() {
-        return author.photo != null && author.photo.length > 0;
+    function isphoto_pathDefined() {
+        return author.photo_path != null && author.photo_path.length > 0;
     }
 
-    function getImage(imageIdx) {
-        switch (imageIdx) {
-            case 21: return AuthorImage1;
-            case 22: return AuthorImage2;
-            case 23: return AuthorImage3;
+    function getImage(author) {
+        if (author.photo_data != null && author.photo_data.length > 20)
+            return author.photo_data;
+        else if (author.photo_path != null && author.photo_path.length > 0) {
+            if(author.photo_path.indexOf('/author1.gif') > -1) return AuthorImage1; else
+            if(author.photo_path.indexOf('/author2.gif') > -1) return AuthorImage2; else
+            if(author.photo_path.indexOf('/author3.gif') > -1) return AuthorImage3; 
         }
     }
 
@@ -229,7 +226,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                     <span className="picture">
                         <ImageUploading
                             multiple
-                            onChange={onAuthorsPhotoChange}
+                            onChange={onAuthorsphoto_pathChange}
                             value={images}
                             maxNumber={1}
                             dataURLKey="data_url"
@@ -245,8 +242,8 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             }) => (
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
-                                    alt="Place for author's photo..."
-                                    src={imageUploaded ? myImage : (isPhotoDefined() ? getImage(author.photo) : myImage)} />
+                                    alt="Place for author's photo_path..."
+                                    src={imageUploaded ? myImage : (isphoto_pathDefined() ? getImage(author) : myImage)} />
                             )}
                         </ImageUploading>
                     </span>

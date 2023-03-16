@@ -259,7 +259,7 @@ export class ServiceData {
         await this.recreateBook('Book40', 'Book Description 40', 2001, covers20[19].path, 'book_key_40');
         await this.recreateBook('Book41', 'Book Description 41', 2003, covers20[5].path, 'book_key_41');
 
-        await this.recreateAuthor('Author31', 'Author Description 31', 2007, authors3[2].id, 'auth_key_31');
+        await this.recreateAuthor('Author31', 'Author Description 31', 2007, authors3[2].path, 'auth_key_31');
         console.log('...service check books and authors complete...books=' + (await this.svcBook.size()) + '-authors=' + (await this.svcAuthor.size()));
     }
 
