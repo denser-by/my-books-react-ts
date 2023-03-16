@@ -5,7 +5,9 @@ import axios from 'axios';
 // import { Form, Input, Button } from 'reactstrap';
 import TableCompon from '../../components/TableCompon.js';
 
-const BooksListPage = ({ setPageRef }) => {
+const BooksListPage = ({ setPageRef, pr }) => {
+    if (pr.indexOf("BooksAll") < 1) return;
+
     const [curSelectBook, setCurSelectBook] = useState("");
     const [curSelectBooksPageSize, setCurSelectBooksPageSize] = useState(12);
     const [listBookItems, setListBookItems] = useState([]);

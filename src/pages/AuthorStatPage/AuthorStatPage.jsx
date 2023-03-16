@@ -6,25 +6,26 @@ import React from "react";
 import { Chart } from "react-google-charts";
 import { getAuthorsCaption, getAuthorsData } from './../BookStatPage/chartData.js';
 
-const AuthorStatPage = ({ kind }) => {
+const AuthorStatPage = ({ pr, kind }) => {
+  if (pr.indexOf("authorStat") < 1) return;
 
-    kind = 'author-age';
-    const options = getAuthorsCaption(kind);
-    const data = getAuthorsData(kind);
+  kind = 'author-age';
+  const options = getAuthorsCaption(kind);
+  const data = getAuthorsData(kind);
 
-    return (
-        <span className="authorsStatShape">
-    <Chart
-      chartType="PieChart"
-      data={data}
-      options={options}
-      width={"100%"}
-      height={"400px"}
-      className='pcAuthors'
-      style={{ cursor: 'pointer', color: 'brown', }}
+  return (
+    <span className="authorsStatShape">
+      <Chart
+        chartType="PieChart"
+        data={data}
+        options={options}
+        width={"100%"}
+        height={"400px"}
+        className='pcAuthors'
+        style={{ cursor: 'pointer', color: 'brown', }}
       />
-      </span>
-    );
+    </span>
+  );
 };
 
 export default AuthorStatPage;

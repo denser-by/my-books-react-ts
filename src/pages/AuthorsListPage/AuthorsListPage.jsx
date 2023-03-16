@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import './authorslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
+import axios from 'axios';
 
-const AuthorsListPage = ({ setPageRef }) => {
+const AuthorsListPage = ({ setPageRef, pr }) => {
+    if (pr.indexOf("AuthorsAll") < 1) return;
+
     const [curSelectAuthor, setCurSelectAuthor] = useState("");
     const [curSelectAuthorsPageSize, setCurSelectAuthorsPageSize] = useState(12);
     const [listAuthorItems, setListAuthorItems] = useState([]);

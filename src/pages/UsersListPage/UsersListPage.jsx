@@ -3,7 +3,9 @@ import './userslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
 
-const UsersListPage = ({ setPageRef }) => {
+const UsersListPage = ({ setPageRef, pr }) => {
+    if (pr.indexOf("UsersAll") < 1) return;
+
     const [curSelectUser, setCurSelectUser] = useState("");
     const [curSelectUsersPageSize, setCurSelectUsersPageSize] = useState(12);
     const [listUserItems, setListUserItems] = useState([]);
