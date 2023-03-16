@@ -51,13 +51,28 @@ export class AuthorService {
         return null;
     }
 
-    async getOne(id: number): Promise<CreateAuthorDto> {
+    async getOne(id: number) {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
-        return rows[0];
+        var bookRef = rows[0];
+        var result = {
+            id: bookRef.id,
+            name: bookRef.name,
+            info: bookRef.info,
+            age: bookRef.age,
+            books: [],
+            photo: bookRef.photo,
+            access_key: bookRef.access_key,
+            photo_path: ''
+        };
+        if (bookRef.photo != null && bookRef.photo > 0) {
+            var imageRef = this.imageService.getOne(bookRef.photo);
+            result.photo_path = (await imageRef).path;
+        }
+        return result;
     }
 
     async update(authorUpdate: CreateAuthorDto): Promise<CreateAuthorDto> {
@@ -76,7 +91,7 @@ export class AuthorService {
             access_key: authorUpdate.access_key
         });
         rows[0].save();
-        return rows[0];
+        return rows[0];        
     }
 
     async delete(id: number): Promise<CreateAuthorDto> {

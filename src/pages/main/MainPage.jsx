@@ -10,7 +10,6 @@ import ContactsPage from '../ContactsPage/ContactsPage';
 import OrderPage from '../OrderPage/OrderPage';
 import InfoPage from '../InfoPage/InfoPage';
 import SearchPage from '../SearchPage/SearchPage';
-import AuthorsProvider from '../../model/AuthorsProvider';
 import BookStatPage from '../BookStatPage/BookStatPage';
 import AuthorStatPage from '../AuthorStatPage/AuthorStatPage';
 import LocationPage from '../LocationPage/LocationPage';
@@ -134,7 +133,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function generate20AuthorsOk() {
-        AuthorsProvider.generate20Authors();
         setPageRef(contextOpsAuthors[0].href);
     }
 

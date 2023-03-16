@@ -91,7 +91,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     const [state, setState] = useState({
         name: '',
         year: '',
-        authors: '',
+        authors: [],
         info: ''
     })
 
@@ -203,8 +203,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setStateYear('');
         setState({ year: '' });
         setYearModified(false);
-        setStateAuthors('');
-        setState({ authors: '' });
+        setStateAuthors([]);
+        setState({ authors: [] });
         setAuthorsModified(false);
         setStateInfo('');
         setState({ info: '' });

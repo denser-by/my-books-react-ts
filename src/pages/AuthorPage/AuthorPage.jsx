@@ -2,18 +2,26 @@ import React, { useState } from 'react';
 import './authorpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
-import AuthorsProvider from '../../model/AuthorsProvider.js';
 import ImageUploading from 'react-images-uploading';
 import AuthorImage1 from './../../images/author1.gif';
 import AuthorImage2 from './../../images/author2.gif';
 import AuthorImage3 from './../../images/author3.gif';
+import axios from 'axios';
 
 const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     if (pr.indexOf("createAuthor") < 1)
         if (pr.indexOf("Author") < 1 || pr.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
 
     var answerReady = false;
-    var author = AuthorsProvider.newAuthor();
+    var author = {
+        id: '1',
+        name: '',
+        age: '',
+        books: [],
+        info: '',
+        photo: '-1',
+        photo_path: ''
+    };
     if (!create)
         fetch('http://localhost:3001/authors/' + authorId)
             .then((response) => response.json())
@@ -27,24 +35,35 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                         age: entireBody.age,
                         books: entireBody.books,
                         info: entireBody.info,
-                        photo: entireBody.photo
+                        photo: entireBody.photo,
+                        photo_path: ''
                     };
-                    setStateName(author.name);
-                    setNameModified(true);
-                    setStateAge(author.age);
-                    setAgeModified(true);
-                    setStateBooks(author.books);
-                    setBooksModified(true);
-                    setStateInfo(author.info);
-                    setInfoModified(true);
-                    setMyImage(getImage(author.photo));
-                    setImageUploaded(true);
+                    if (!nameModified) {
+                        setStateName(author.name);
+                        setNameModified(true);
+                    }
+                    if (!ageModified) {
+                        setStateAge(author.age);
+                        setAgeModified(true);
+                    }
+                    if (!stateBooks) {
+                        setStateBooks(author.books);
+                        setBooksModified(true);
+                    }
+                    if (!stateInfo) {
+                        setStateInfo(author.info);
+                        setInfoModified(true);
+                    }
+                    if (!imageUploaded) {
+                        setMyImage(getImage(author.photo));
+                        setImageUploaded(true);
+                    }
                 }
             });
 
     const [stateName, setStateName] = useState('');
     const [stateAge, setStateAge] = useState('');
-    const [stateBooks, setStateBooks] = useState('');
+    const [stateBooks, setStateBooks] = useState([]);
     const [stateInfo, setStateInfo] = useState('');
 
     const [nameModified, setNameModified] = React.useState(false);
@@ -55,7 +74,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     const [state, setState] = useState({
         name: '',
         age: '',
-        books: '',
+        books: [],
         info: ''
     })
 
@@ -66,14 +85,18 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
     }
 
     function handleAgeChange(event) {
-        setStateAge(event.target.value);
-        setState({ age: event.target.value });
+        let age = event.target.value;
+        console.log('change age: ' + age);
+        setStateAge(age);
+        setState({ age });
         setAgeModified(true);
     }
 
     function handleBooksChange(event) {
-        setStateBooks(event.target.value);
-        setState({ books: event.target.value });
+        let newBooks = [event.target.value];
+        console.log('books change ' + newBooks);
+        setStateBooks(newBooks);
+        setState({ books: newBooks });
         setBooksModified(true);
     }
 
@@ -121,14 +144,26 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
             author.books = stateBooks;
         if (infoModified)
             author.info = stateInfo;
-        if (imageUploaded)
-            author.photo = myImage;
+        if (imageUploaded) {
+            // author.photo = myImage;
+            author.photo_path = myImage;
+        }
+
+        author.id = Number.parseInt('' + author.id);
+        author.photo = Number.parseInt('' + author.photo);
+        author.age = Number.parseInt('' + author.age);
 
         if (create) {
-            AuthorsProvider.create(author);
+            console.log(' author to POST ' + JSON.stringify(author));
+            axios.post('http://localhost:3001/authors', author).then(res => {
+                console.log(' author POST complete ' + JSON.stringify(res));
+            });
             console.log(' create complete ');
         } else if (edit) {
-            AuthorsProvider.update(author);
+            console.log(' author to PUT ' + JSON.stringify(author));
+            axios.put('http://localhost:3001/authors', author).then(res => {
+                console.log(' author PUT complete ' + JSON.stringify(res));
+            });
             console.log(' update complete ');
         }
 
@@ -138,8 +173,8 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         setStateAge('');
         setState({ age: '' });
         setAgeModified(false);
-        setStateBooks('');
-        setState({ books: '' });
+        setStateBooks([]);
+        setState({ books: [] });
         setBooksModified(false);
         setStateInfo('');
         setState({ info: '' });

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './bookslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
-import axios from 'axios';
-// import { Form, Input, Button } from 'reactstrap';
 import TableCompon from '../../components/TableCompon.js';
 
 const BooksListPage = ({ setPageRef, pr }) => {
@@ -67,7 +65,6 @@ const BooksListPage = ({ setPageRef, pr }) => {
                 accessor: 'view',
                 Cell: (row: CellProps<any>) => {
                     const obj = "" + row.cell.value;
-                    // return <Button id={obj} type="button" onClick={mouseClickBook}>View</Button>;
                     return <span id={obj}
                         className={aboveBookId === obj ? "contextBookOp above" : "contextBookOp"}
                         onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
