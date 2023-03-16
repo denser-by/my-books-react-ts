@@ -8,11 +8,10 @@ import AuthorImage2 from './../../images/author2.gif';
 import AuthorImage3 from './../../images/author3.gif';
 import axios from 'axios';
 
-const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
-    if (pr.indexOf("createAuthor") < 1)
-        if (pr.indexOf("Author") < 1 || pr.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
+const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
+    if (pr2.indexOf("createAuthor") < 1)
+        if (pr2.indexOf("Author") < 1 || pr2.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
 
-    var answerReady = false;
     var author = {
         id: '1',
         name: '',
@@ -22,17 +21,18 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
         photo: '-1',
         photo_path: ''
     };
-    if (!create)
-        fetch('http://localhost:3001/authors/' + authorId)
+    if (!create) {
+        const request = 'http://localhost:3001/authors/' + authorId;
+        console.log('AP=' + request);
+        fetch(request)
             .then((response) => response.json())
             .then(entireBody => {
-                if (authorId == entireBody.id && !answerReady) {
-                    answerReady = true;
+                if (authorId == entireBody.id) {
                     console.log('entAuthor=' + JSON.stringify(entireBody));
                     author = {
                         id: entireBody.id,
                         name: entireBody.name,
-                        age: entireBody.age,
+                        age: entireBody.age != null ? entireBody.age : '',
                         books: entireBody.books,
                         info: entireBody.info,
                         photo: entireBody.photo,
@@ -60,6 +60,7 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
                     }
                 }
             });
+    }
 
     const [stateName, setStateName] = useState('');
     const [stateAge, setStateAge] = useState('');
@@ -149,9 +150,20 @@ const AuthorPage = ({ setPageRef, pr, authorId, edit, create, closeProc }) => {
             author.photo_path = myImage;
         }
 
-        author.id = Number.parseInt('' + author.id);
-        author.photo = Number.parseInt('' + author.photo);
-        author.age = Number.parseInt('' + author.age);
+        if (author.id != null && ('' + author.id).length > 0)
+            author.id = Number.parseInt('' + author.id);
+        else
+            author.id = '';
+
+        if (author.photo != null && ('' + author.photo).length > 0)
+            author.photo = Number.parseInt('' + author.photo);
+        else
+            author.photo = '';
+
+        if (author.age != null && ('' + author.age).length > 0)
+            author.age = Number.parseInt('' + author.age);
+        else
+            author.age = null;
 
         if (create) {
             console.log(' author to POST ' + JSON.stringify(author));

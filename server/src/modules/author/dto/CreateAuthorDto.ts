@@ -3,11 +3,13 @@ import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'cla
 
 export class CreateAuthorDto {
     @IsNumber()
+    @IsOptional()
     id: number;
 
     @IsString()
-    @IsNotEmpty({ message: 'This author ought to have name' })
-    @Length(5, 255)
+    @IsOptional()
+    // @IsNotEmpty({ message: 'This author ought to have name' })
+    // @Length(0, 255)
     @ApiProperty()
     name: string;
 

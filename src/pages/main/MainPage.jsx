@@ -188,9 +188,9 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={refPage()} bookId={getId(pageRef)} edit={false} closeProc={bookEditorClose} /></span>
                 <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={refPage()} bookId={getId(pageRef)} edit={true} closeProc={bookEditorClose} /></span>
 
-                <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={refPage()} create={true} edit={true} closeProc={authorEditorClose} /></span>
-                <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={refPage()} authorId={getId(pageRef)} edit={false} closeProc={authorEditorClose} /></span>
-                <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={refPage()} authorId={getId(pageRef)} edit={true} closeProc={authorEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr2={refPage()} create={true} edit={true} closeProc={authorEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr2={refPage()} authorId={getId(pageRef)} edit={false} closeProc={authorEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr2={refPage()} authorId={getId(pageRef)} edit={true} closeProc={authorEditorClose} /></span>
 
                 <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage setPageRef={setPageRef} pr={refPage()} /></span>
                 <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage setPageRef={setPageRef} pr={refPage()} /></span>

@@ -29,7 +29,6 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
         if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0 || bookId == undefined || bookId == null || ("" + bookId).length < 1) return;
 
-    var answerReady = false;
     var book = {
         id: '1',
         name: '',
@@ -39,17 +38,18 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         cover_img: '-1',
         cover_img_path: ''
     };
-    if (!create)
-        fetch('http://localhost:3001/books/' + bookId)
+    if (!create) {
+        const apiUrl = 'http://localhost:3001/books/' + bookId;
+        console.log('BP=' + apiUrl);
+        fetch(apiUrl)
             .then((response) => response.json())
             .then(entireBody => {
-                if (bookId == entireBody.id && !answerReady) {
-                    answerReady = true;
+                if (bookId == entireBody.id) {
                     console.log('ENTIRE=' + JSON.stringify(entireBody));
                     book = {
                         id: entireBody.id,
                         name: entireBody.name,
-                        year: entireBody.year,
+                        year: entireBody.year != null ? entireBody.year : '',
                         authors: entireBody.authors,
                         info: entireBody.info,
                         cover_img: entireBody.cover_img,
@@ -77,6 +77,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     }
                 }
             });
+    }
 
     const [stateName, setStateName] = useState('');
     const [stateYear, setStateYear] = useState('');
@@ -179,9 +180,20 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             book.cover_img_path = myImage;
         }
 
-        book.id = Number.parseInt('' + book.id);
-        book.cover_img = Number.parseInt('' + book.cover_img);
-        book.year = Number.parseInt('' + book.year);
+        if (book.id != null && ('' + book.id).length > 0)
+            book.id = Number.parseInt('' + book.id);
+        else
+            book.id = '';
+
+        if (book.cover_img != null && ('' + book.cover_img).length > 0)
+            book.cover_img = Number.parseInt('' + book.cover_img);
+        else
+            book.cover_img = '';
+
+        if (book.year != null && ('' + book.year).length > 0)
+            book.year = Number.parseInt('' + book.year);
+        else
+            book.year = null;
 
         if (create) {
             console.log(' book to POST ' + JSON.stringify(book));
