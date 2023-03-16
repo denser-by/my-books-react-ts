@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateImageDto {
+    @IsNumber()
     id: number;
 
     @IsString()

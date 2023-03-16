@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import React, { useState } from "react";
 import './mainpage.css';
 import ContextMenu from '../../components/ContextMenu/ContextMenu';
 import BookPage from '../BookPage/BookPage';
@@ -12,9 +12,6 @@ import InfoPage from '../InfoPage/InfoPage';
 import SearchPage from '../SearchPage/SearchPage';
 import BooksProvider from '../../model/BooksProvider';
 import AuthorsProvider from '../../model/AuthorsProvider';
-import { PieChart } from 'react-minimal-pie-chart';
-import React, { useState } from "react";
-import { Chart } from "react-google-charts";
 import BookStatPage from '../BookStatPage/BookStatPage';
 import AuthorStatPage from '../AuthorStatPage/AuthorStatPage';
 import LocationPage from '../LocationPage/LocationPage';
@@ -159,6 +156,10 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         setPageRef(contextOpsBooks[0].href);
     }
 
+    function refPage() {
+        return "" + pageRef;
+    }
+
     return (
         <div className="mainPage">
             <h4>{displayCurrent(selectedItem)}</h4>
@@ -166,33 +167,33 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <ContextMenu operations={getOps(selectedItem, contextOpsBooks, contextOpsAuthors, contextOpsSearch, contextOpsAbout)}
                     setPageRef={setPageRef} />
 
-                <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={"" + pageRef} create={true} edit={true} closeProc={bookEditorClose} /></span>
-                <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={"" + pageRef} bookId={getId(pageRef)} edit={false} closeProc={bookEditorClose} /></span>
-                <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={"" + pageRef} bookId={getId(pageRef)} edit={true} closeProc={bookEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/createBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={refPage()} create={true} edit={true} closeProc={bookEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/viewBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={refPage()} bookId={getId(pageRef)} edit={false} closeProc={bookEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/editBook") ? "pageVisible" : "pageHidden"}><BookPage setPageRef={setPageRef} pr={refPage()} bookId={getId(pageRef)} edit={true} closeProc={bookEditorClose} /></span>
 
-                <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={"" + pageRef} create={true} edit={true} closeProc={authorEditorClose} /></span>
-                <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={"" + pageRef} authorId={getId(pageRef)} edit={false} closeProc={authorEditorClose} /></span>
-                <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={"" + pageRef} authorId={getId(pageRef)} edit={true} closeProc={authorEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/createAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={refPage()} create={true} edit={true} closeProc={authorEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/viewAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={refPage()} authorId={getId(pageRef)} edit={false} closeProc={authorEditorClose} /></span>
+                <span className={requestCheck(pageRef, "/editAuthor") ? "pageVisible" : "pageHidden"}><AuthorPage setPageRef={setPageRef} pr={refPage()} authorId={getId(pageRef)} edit={true} closeProc={authorEditorClose} /></span>
 
-                <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage setPageRef={setPageRef} pr={"" + pageRef} /></span>
-                <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage setPageRef={setPageRef} pr={"" + pageRef} /></span>
+                <span className={pageRef == "/viewBooksAll" ? "pageVisible" : "pageHidden"}><BooksListPage setPageRef={setPageRef} pr={refPage()} /></span>
+                <span className={pageRef == "/viewAuthorsAll" ? "pageVisible" : "pageHidden"}><AuthorsListPage setPageRef={setPageRef} pr={refPage()} /></span>
 
-                <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={"" + pageRef} question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} btnLabels={['Ok', 'Cancel']} /></span>
-                <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={"" + pageRef} question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} btnLabels={['Yes', 'No']} /></span>
+                <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} btnLabels={['Ok', 'Cancel']} /></span>
+                <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} btnLabels={['Yes', 'No']} /></span>
 
-                <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={"" + pageRef} question={getGenerateMsg()} answerYesProc={generate20BooksOk} answerNoProc={generate20BooksCancel} btnLabels={['Yes', 'No']} /></span>
-                <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={"" + pageRef} question={getGenerateMsg('20Authors')} answerYesProc={generate20AuthorsOk} answerNoProc={generate20AuthorsCancel} btnLabels={['Yes', 'No']} /></span>
+                <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getGenerateMsg()} answerYesProc={generate20BooksOk} answerNoProc={generate20BooksCancel} btnLabels={['Yes', 'No']} /></span>
+                <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getGenerateMsg('20Authors')} answerYesProc={generate20AuthorsOk} answerNoProc={generate20AuthorsCancel} btnLabels={['Yes', 'No']} /></span>
 
                 <span className={pageRef == "/search" ? "pageVisible" : "pageHidden"}><SearchPage /></span>
-                <span className={pageRef == "/maps" ? "pageVisible" : "pageHidden"}><LocationPage /></span>
+                <span className={pageRef == "/maps" ? "pageVisible" : "pageHidden"}><LocationPage pr={refPage()} /></span>
 
                 <span className={pageRef == "/contacts" ? "pageVisible" : "pageHidden"}><ContactsPage /></span>
                 <span className={pageRef == "/order" ? "pageVisible" : "pageHidden"}><OrderPage /></span>
                 <span className={pageRef == "/info" ? "pageVisible" : "pageHidden"}><InfoPage /></span>
-                <span className={pageRef == "/viewUsersAll" ? "pageVisible" : "pageHidden"}><UsersListPage setPageRef={setPageRef} pr={"" + pageRef} /></span>
+                <span className={pageRef == "/viewUsersAll" ? "pageVisible" : "pageHidden"}><UsersListPage setPageRef={setPageRef} pr={refPage()} /></span>
 
-                <span className={pageRef == "/bookStat" ? "pageVisible" : "pageHidden"}><BookStatPage pr={"" + pageRef} /></span>
-                <span className={pageRef == "/authorStat" ? "pageVisible" : "pageHidden"}><AuthorStatPage pr={"" + pageRef} /></span>
+                <span className={pageRef == "/bookStat" ? "pageVisible" : "pageHidden"}><BookStatPage pr={refPage()} /></span>
+                <span className={pageRef == "/authorStat" ? "pageVisible" : "pageHidden"}><AuthorStatPage pr={refPage()} /></span>
             </div>
         </div>
     );

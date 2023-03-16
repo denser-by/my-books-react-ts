@@ -24,6 +24,7 @@ import BookImage17 from './../../images/17.jpg';
 import BookImage18 from './../../images/18.jpg';
 import BookImage19 from './../../images/19.jpg';
 import BookImage20 from './../../images/20.jpg';
+import axios from 'axios';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -37,31 +38,42 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             .then(entireBody => {
                 if (bookId == entireBody.id && !answerReady) {
                     answerReady = true;
-                    // console.log('ENTIRE=' + JSON.stringify(entireBody));
+                    console.log('ENTIRE=' + JSON.stringify(entireBody));
                     book = {
                         id: entireBody.id,
                         name: entireBody.name,
                         year: entireBody.year,
                         authors: entireBody.authors,
                         info: entireBody.info,
-                        cover_img: entireBody.cover_img
+                        cover_img: entireBody.cover_img,
+                        cover_img_path: ''
                     };
-                    setStateName(book.name);
-                    setNameModified(true);
-                    setStateYear(book.year);
-                    setYearModified(true);
-                    setStateAuthors(book.authors);
-                    setAuthorsModified(true);
-                    setStateInfo(book.info);
-                    setInfoModified(true);
-                    setMyImage(getImage(book.cover_img));
-                    setImageUploaded(true);
+                    if (!nameModified) {
+                        setStateName(book.name);
+                        setNameModified(true);
+                    }
+                    if (!yearModified) {
+                        setStateYear(book.year);
+                        setYearModified(true);
+                    }
+                    if (!authorsModified) {
+                        setStateAuthors(book.authors);
+                        setAuthorsModified(true);
+                    }
+                    if (!infoModified) {
+                        setStateInfo(book.info);
+                        setInfoModified(true);
+                    }
+                    if (!imageUploaded) {
+                        setMyImage(getImage(book.cover_img));
+                        setImageUploaded(true);
+                    }
                 }
             });
 
     const [stateName, setStateName] = useState('');
     const [stateYear, setStateYear] = useState('');
-    const [stateAuthors, setStateAuthors] = useState('');
+    const [stateAuthors, setStateAuthors] = useState([]);
     const [stateInfo, setStateInfo] = useState('');
 
     const [nameModified, setNameModified] = React.useState(false);
@@ -85,15 +97,19 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
 
     function handleYearChange(event) {
         // book2.year = event.target.value;
-        setStateYear(event.target.value);
-        setState({ year: event.target.value });
+        let year = Number.parseInt(event.target.value);
+        console.log('change year: ' + year);
+        setStateYear(year);
+        setState({ year: year });
         setYearModified(true);
     }
 
     function handleAuthorsChange(event) {
         // book2.authors = event.target.value;
-        setStateAuthors(event.target.value);
-        setState({ authors: event.target.value });
+        let newAuthors = [event.target.value];
+        console.log('author change ' + newAuthors);
+        setStateAuthors(newAuthors);
+        setState({ authors: newAuthors });
         setAuthorsModified(true);
     }
 
@@ -151,14 +167,22 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             book.authors = stateAuthors;
         if (infoModified)
             book.info = stateInfo;
-        if (imageUploaded)
-            book.cover_img = myImage;
+        if (imageUploaded) {
+            // book.cover_img = myImage;
+            book.cover_img_path = myImage;
+        }
 
         if (create) {
             BooksProvider.create(book);
             console.log(' create complete ');
         } else if (edit) {
-            BooksProvider.update(book);
+            // BooksProvider.update(book);
+
+            console.log(' book to PUT ' + JSON.stringify(book));
+            axios.put('http://localhost:3001/books', book).then(res => {
+                console.log(' book PUT complete ' + JSON.stringify(res));
+            });
+
             console.log(' update complete ');
         }
 
