@@ -44,7 +44,8 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                     age: authorItem.age,
                     numOfBooks: authorItem.numOfBooks,
                     view: "/viewAuthor?id=" + authorItem.id,
-                    edit: "/editAuthor?id=" + authorItem.id
+                    edit: "/editAuthor?id=" + authorItem.id,
+                    delete: "/deleteAuthor?id=" + authorItem.id
                 });
             })
             setListAuthorItems(authorItems);
@@ -84,6 +85,17 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                         className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
                         onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
                     >Edit</span>;
+                },
+            },
+            {
+                Header: 'Delete',
+                accessor: 'delete',
+                Cell: (row: CellProps<any>) => {
+                    const obj = "" + row.cell.value;
+                    return <span id={obj}
+                        className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
+                        onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
+                    >Delete</span>;
                 },
             },
         ],

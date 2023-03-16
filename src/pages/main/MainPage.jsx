@@ -36,14 +36,13 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         { icon: "anchor", key: "k41", href: "/viewBooksAll", name: "All Books" },
         { icon: "anchor", key: "k42", href: "/createBook?", name: "Create Book" },
         { icon: "anchor", key: "k43", href: "/eraseAllBooks", name: "Erase All" },
-        { icon: "anchor", key: "k44", href: "/generate20Books", name: "Generate 20" },
         { icon: "anchor", key: "k45", href: "/bookStat", name: "Analytics" }
     ]
 
     const contextOpsAuthors = [
         { icon: "anchor", key: "k11", href: "/viewAuthorsAll", name: "All Authors" },
         { icon: "anchor", key: "k12", href: "/createAuthor?", name: "Create Author" },
-        { icon: "anchor", key: "k13", href: "/generate20Authors", name: "Generate 20" },
+        { icon: "anchor", key: "k15", href: "/eraseAllAuthors", name: "Erase All" },
         { icon: "anchor", key: "k14", href: "/authorStat", name: "Analytics" }
     ]
 
@@ -98,6 +97,24 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         }
     }
 
+    function getDeleteAuthorMsg(authorId) {
+        if (authorId != null && ("" + authorId).length > 0) {
+            let first = {
+                name: ''
+            };
+            console.log(' author to GET ' + authorId);
+            axios.get('http://localhost:3001/authors/' + authorId).then(res => {
+                console.log(' author GET complete ' + JSON.stringify(res));
+                first = res.data;
+                if (first != null && first.name != null && first.name.length > 0) {
+                    let message = "Are you sure? Delete \"" + first.name + "\" author.";
+                    return message;
+                }
+            });
+        }
+    }
+
+
     function deleteBookOk(bookId) {
         console.log(' book to DELETE ' + bookId);
         axios.delete('http://localhost:3001/books/' + bookId).then(res => {
@@ -106,8 +123,20 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         setPageRef(contextOpsBooks[0].href);
     }
 
+    function deleteAuthorOk(authorId) {
+        console.log(' author to DELETE ' + authorId);
+        axios.delete('http://localhost:3001/authors/' + authorId).then(res => {
+            console.log(' author DELETE complete ' + JSON.stringify(res));
+        });
+        setPageRef(contextOpsAuthors[0].href);
+    }
+
     function deleteBookCancel() {
         setPageRef(contextOpsBooks[0].href);
+    }
+
+    function deleteAuthorCancel() {
+        setPageRef(contextOpsAuthors[0].href);
     }
 
     function getDeleteAllBooksMsg() {
@@ -115,33 +144,17 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         return message;
     }
 
-    function getGenerateMsg(req) {
-        var message;
-        if (req === "20Authors")
-            message = "Are you sure? Generate 20 additional authors.";
-        else
-            message = "Are you sure? Generate 20 additional books.";
+    function getDeleteAllAuthorsMsg() {
+        let message = "Are you sure? Delete all books items.";
         return message;
-    }
-
-    function generate20BooksOk() {
-        setPageRef(contextOpsBooks[0].href);
-    }
-
-    function generate20BooksCancel() {
-        setPageRef(contextOpsBooks[0].href);
-    }
-
-    function generate20AuthorsOk() {
-        setPageRef(contextOpsAuthors[0].href);
-    }
-
-    function generate20AuthorsCancel() {
-        setPageRef(contextOpsAuthors[0].href);
     }
 
     function deleteAllBooksOk() {
         setPageRef(contextOpsBooks[0].href);
+    }
+
+    function deleteAllAuthorsOk() {
+        setPageRef(contextOpsAuthors[0].href);
     }
 
     function bookEditorClose() {
@@ -154,6 +167,10 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     function deleteAllBooksCancel() {
         setPageRef(contextOpsBooks[0].href);
+    }
+
+    function deleteAllAuthorsCancel() {
+        setPageRef(contextOpsAuthors[0].href);
     }
 
     function refPage() {
@@ -180,9 +197,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
                 <span className={requestCheck(pageRef, "/deleteBook") ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getDeleteBookMsg(getId(pageRef))} answerYesProc={deleteBookOk} answerNoProc={deleteBookCancel} param={getId(pageRef)} btnLabels={['Ok', 'Cancel']} /></span>
                 <span className={pageRef == "/eraseAllBooks" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getDeleteAllBooksMsg()} answerYesProc={deleteAllBooksOk} answerNoProc={deleteAllBooksCancel} btnLabels={['Yes', 'No']} /></span>
-
-                <span className={pageRef == "/generate20Books" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getGenerateMsg()} answerYesProc={generate20BooksOk} answerNoProc={generate20BooksCancel} btnLabels={['Yes', 'No']} /></span>
-                <span className={pageRef == "/generate20Authors" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getGenerateMsg('20Authors')} answerYesProc={generate20AuthorsOk} answerNoProc={generate20AuthorsCancel} btnLabels={['Yes', 'No']} /></span>
+                <span className={requestCheck(pageRef, "/deleteAuthor") ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getDeleteAuthorMsg(getId(pageRef))} answerYesProc={deleteAuthorOk} answerNoProc={deleteAuthorCancel} param={getId(pageRef)} btnLabels={['Ok', 'Cancel']} /></span>
+                <span className={pageRef == "/eraseAllAuthors" ? "pageVisible" : "pageHidden"}><ConfirmationPage pr={refPage()} question={getDeleteAllAuthorsMsg()} answerYesProc={deleteAllAuthorsOk} answerNoProc={deleteAllAuthorsCancel} btnLabels={['Yes', 'No']} /></span>
 
                 <span className={pageRef == "/search" ? "pageVisible" : "pageHidden"}><SearchPage /></span>
                 <span className={pageRef == "/maps" ? "pageVisible" : "pageHidden"}><LocationPage pr={refPage()} /></span>

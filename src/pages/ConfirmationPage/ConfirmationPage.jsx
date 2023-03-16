@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './confirmationpage.css';
 
 const ConfirmationPage = ({ pr, question, answerYesProc, answerNoProc, param, btnLabels }) => {
-    if (pr.indexOf("deleteBook") < 1 && pr.indexOf("eraseAllBooks") < 1 && pr.indexOf("generate20Books") < 1 && pr.indexOf("generate20Authors") < 1) return;
+    if (pr.indexOf("deleteBook") < 1 && pr.indexOf("eraseAllBooks") < 1 && pr.indexOf("deleteAuthor") < 1 && pr.indexOf("eraseAllAuthors") < 1) return;
 
     const [above, setAbove] = useState("");
 
