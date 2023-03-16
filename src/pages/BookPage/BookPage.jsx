@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './bookpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
-import BooksProvider from '../../model/BooksProvider.js';
 import ImageUploading from 'react-images-uploading';
 import BookImage1 from './../../images/1.jpg';
 import BookImage2 from './../../images/2.jpg';
@@ -31,7 +30,15 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0 || bookId == undefined || bookId == null || ("" + bookId).length < 1) return;
 
     var answerReady = false;
-    var book = BooksProvider.newBook();
+    var book = {
+        id: '1',
+        name: '',
+        year: '',
+        authors: [],
+        info: '',
+        cover_img: '-1',
+        cover_img_path: ''
+    };
     if (!create)
         fetch('http://localhost:3001/books/' + bookId)
             .then((response) => response.json())
@@ -97,7 +104,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
 
     function handleYearChange(event) {
         // book2.year = event.target.value;
-        let year = Number.parseInt(event.target.value);
+        let year = event.target.value;
         console.log('change year: ' + year);
         setStateYear(year);
         setState({ year: year });
@@ -172,17 +179,21 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             book.cover_img_path = myImage;
         }
 
+        book.id = Number.parseInt('' + book.id);
+        book.cover_img = Number.parseInt('' + book.cover_img);
+        book.year = Number.parseInt('' + book.year);
+
         if (create) {
-            BooksProvider.create(book);
+            console.log(' book to POST ' + JSON.stringify(book));
+            axios.post('http://localhost:3001/books', book).then(res => {
+                console.log(' book POST complete ' + JSON.stringify(res));
+            });
             console.log(' create complete ');
         } else if (edit) {
-            // BooksProvider.update(book);
-
             console.log(' book to PUT ' + JSON.stringify(book));
             axios.put('http://localhost:3001/books', book).then(res => {
                 console.log(' book PUT complete ' + JSON.stringify(res));
             });
-
             console.log(' update complete ');
         }
 

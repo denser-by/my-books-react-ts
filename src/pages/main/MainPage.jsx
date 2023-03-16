@@ -10,12 +10,12 @@ import ContactsPage from '../ContactsPage/ContactsPage';
 import OrderPage from '../OrderPage/OrderPage';
 import InfoPage from '../InfoPage/InfoPage';
 import SearchPage from '../SearchPage/SearchPage';
-import BooksProvider from '../../model/BooksProvider';
 import AuthorsProvider from '../../model/AuthorsProvider';
 import BookStatPage from '../BookStatPage/BookStatPage';
 import AuthorStatPage from '../AuthorStatPage/AuthorStatPage';
 import LocationPage from '../LocationPage/LocationPage';
 import UsersListPage from '../UsersListPage/UsersListPage';
+import axios from "axios";
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const [pageRef, setPageRef] = useState("")
@@ -84,17 +84,26 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
 
     function getDeleteBookMsg(bookId) {
         if (bookId != null && ("" + bookId).length > 0) {
-            let first = BooksProvider.find(bookId);
-            if (first != null && first.name != null && first.name.length > 0) {
-                let message = "Are you sure? Delete \"" + first.name + "\" book.";
-                return message;
-            }
+            let first = {
+                name: ''
+            };
+            console.log(' book to GET ' + bookId);
+            axios.get('http://localhost:3001/books/' + bookId).then(res => {
+                console.log(' book GET complete ' + JSON.stringify(res));
+                first = res.data;
+                if (first != null && first.name != null && first.name.length > 0) {
+                    let message = "Are you sure? Delete \"" + first.name + "\" book.";
+                    return message;
+                }
+            });
         }
-        return "";
     }
 
     function deleteBookOk(bookId) {
-        BooksProvider.delete(bookId);
+        console.log(' book to DELETE ' + bookId);
+        axios.delete('http://localhost:3001/books/' + bookId).then(res => {
+            console.log(' book DELETE complete ' + JSON.stringify(res));
+        });
         setPageRef(contextOpsBooks[0].href);
     }
 
@@ -103,7 +112,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function getDeleteAllBooksMsg() {
-        let message = "Are you sure? Delete all " + BooksProvider.size() + " books items.";
+        let message = "Are you sure? Delete all books items.";
         return message;
     }
 
@@ -117,7 +126,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function generate20BooksOk() {
-        BooksProvider.generate20Books();
         setPageRef(contextOpsBooks[0].href);
     }
 
@@ -135,12 +143,6 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function deleteAllBooksOk() {
-        const oneByOneDelete = false;
-        if (oneByOneDelete) {
-            let booksAll = BooksProvider.all();
-            booksAll.map(book => BooksProvider.delete(book.id));
-        }
-        BooksProvider.deleteAll();
         setPageRef(contextOpsBooks[0].href);
     }
 

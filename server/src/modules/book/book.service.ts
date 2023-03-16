@@ -58,16 +58,20 @@ export class BookService {
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
         var bookRef = rows[0];
-        var imageRef = this.imageService.getOne(bookRef.cover_img);
         var result = {
             id: bookRef.id,
             name: bookRef.name,
             info: bookRef.info,
             year: bookRef.year,
+            authors: [],
             cover_img: bookRef.cover_img,
             access_key: bookRef.access_key,
-            cover_img_path: (await imageRef).path
+            cover_img_path: ''
         };
+        if(bookRef.cover_img != null && bookRef.cover_img > 0) {
+            var imageRef = this.imageService.getOne(bookRef.cover_img);
+            result.cover_img_path = (await imageRef).path;
+        }
         return result;
     }
 
