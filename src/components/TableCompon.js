@@ -34,6 +34,14 @@ function TablePageSeqence({ canPreviousPage, canNextPage, pageCount, pageIndex, 
     );
 }
 
+function TableRecordCount({ pageSizeCurrent, pageCount, justCount }) {
+    return (
+        <span className="pageSize pageIndex"><strong>
+            {justCount != null && justCount >= 0 ? justCount : (pageSizeCurrent * pageCount)}&nbsp;items</strong>
+        </span>
+    );
+}
+
 function TablePages({ pageSizeCurrent, setPageSizeCurrent }) {
     return (
         <span className="pageSize">
@@ -41,7 +49,7 @@ function TablePages({ pageSizeCurrent, setPageSizeCurrent }) {
                 style={{ display: 'inline', height: '32px', margin: '3px' }}>
                 {[2, 5, 10, 12, 15, 25, 50, 100].map(pageSizeOpt => (
                     <option key={pageSizeOpt} value={pageSizeOpt}>
-                        {pageSizeOpt}&nbsp;items
+                        Page of &nbsp;{pageSizeOpt}
                     </option>
                 ))}
             </select>
@@ -93,6 +101,7 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
 }
 
 function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRowH, cssCellH, cssRow, cssCell }) {
+    const numOfTableItems = dataItems.length;
     let columns = columnItems;
     let data = dataItems;
     const {
@@ -127,9 +136,10 @@ function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRow
                     page={page} prepareRow={prepareRow} cssRowH={cssRowH} cssCellH={cssCellH} cssRow={cssRow} cssCell={cssCell} />
             </span>
             <span className="tableFooter">
+                <TablePages pageSizeCurrent={pageSize} setPageSizeCurrent={setPageSize} />
                 <TablePageSeqence canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageCount={pageCount} pageIndex={pageIndex}
                     pageOptions={pageOptions} previousPage={previousPage} nextPage={nextPage} gotoPage={gotoPage} />
-                <TablePages pageSizeCurrent={pageSize} setPageSizeCurrent={setPageSize} />
+                <TableRecordCount pageSizeCurrent={pageSize} pageCount={pageCount} justCount={numOfTableItems} />
             </span>
         </span>
     )
