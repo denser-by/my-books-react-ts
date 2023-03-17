@@ -24,6 +24,30 @@
     min-height: 27px;
 }
 
+.contextBtn {
+    margin: 3px;
+    background-color: white;
+    height: 50%;
+}
+
+.withContextBtn {
+    margin: 3px;
+    background-color: white;
+    height: 100%;
+}
+
+.aboveCtrl {
+    position: absolute;
+    top: 130;
+    left: 130;
+    border: solid 5px #eeee0b;
+    border-radius: 15px;
+    padding: 20px;
+    display: inline-flex;
+    background-color: #f8f4e4;
+    color: black;
+}
+
 .fieldSubmit {
     text-align: center;
     padding: 2px;

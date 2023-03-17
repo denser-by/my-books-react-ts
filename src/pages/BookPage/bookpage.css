@@ -12,6 +12,11 @@
     flex-direction: row;
 }
 
+.authorSelector {
+    display: inline-flex;
+    flex-direction: row;
+}
+
 input {
     background-color: white;
     color: black;
@@ -36,6 +41,10 @@ input {
     flex-direction: column;
     color: #eeee0b;
     min-width: 400px;
+}
+
+.high {
+    min-height: 150px;
 }
 
 .book-info-label {
