@@ -7,6 +7,7 @@ import AuthorImage1 from './../../images/author1.gif';
 import AuthorImage2 from './../../images/author2.gif';
 import AuthorImage3 from './../../images/author3.gif';
 import axios from 'axios';
+import DatePicker from 'react-date-picker';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
@@ -38,6 +39,10 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         photo_path: entireBody.photo_path,
                         photo_data: entireBody.photo_data
                     };
+                    if (!ageSelectedModified) {
+                        setAgeSelected(new Date('' + author.age + '-01-01'));
+                        setAgeSelectedModified(true);
+                    }
                     if (!nameModified) {
                         setStateName(author.name);
                         setNameModified(true);
@@ -209,13 +214,39 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         return author.photo_path != null && author.photo_path.length > 0;
     }
 
+    const [agePick, setAgePick] = React.useState(false);
+    const [ageSelected, setAgeSelected] = React.useState();
+    const [ageSelectedModified, setAgeSelectedModified] = React.useState(false);
+
+    const [bookPick, setBookPick] = React.useState(false);
+    const [bookSelected, setBookSelected] = React.useState();
+
+    function onAgeSelect(res) {
+        setAgePick(false);
+        let evt = {
+            target: {
+                value: '' + new Date(res).getFullYear(),
+            },
+        };
+        handleAgeChange(evt);
+        setAgeSelectedModified(false);
+    }
+
+    function onAuthorAgeToogle() {
+        setAgePick(!agePick);
+    }
+
+    function onAuthorBookToogle() {
+        setBookPick(!bookPick);
+    }
+
     function getImage(author) {
         if (author.photo_data != null && author.photo_data.length > 20)
             return author.photo_data;
         else if (author.photo_path != null && author.photo_path.length > 0) {
-            if(author.photo_path.indexOf('/author1.gif') > -1) return AuthorImage1; else
-            if(author.photo_path.indexOf('/author2.gif') > -1) return AuthorImage2; else
-            if(author.photo_path.indexOf('/author3.gif') > -1) return AuthorImage3; 
+            if (author.photo_path.indexOf('/author1.gif') > -1) return AuthorImage1; else
+                if (author.photo_path.indexOf('/author2.gif') > -1) return AuthorImage2; else
+                    if (author.photo_path.indexOf('/author3.gif') > -1) return AuthorImage3;
         }
     }
 
@@ -256,17 +287,36 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : author.name}</span>
                         </span>
                         <span className="author-info">
+                            <span className={agePick ? "aboveCtrl" : "ctrlHidden"}>
+                                <DatePicker
+                                    label="Year of birth picker"
+                                    format="y"
+                                    value={ageSelected}
+                                    onChange={(newValue) => onAgeSelect(newValue)}
+                                />
+                            </span>
                             <span className="author-info-label">Born</span>
-                            <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="Born in"
-                                className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={ageModified ? stateAge : author.age} onChange={handleAgeChange} />
+                            <span className={create || edit ? "bookSelector withContextBtn" : "bookSelector ctrlHidden"}>
+                                <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="Born in"
+                                    className={!edit ? "ctrlHidden" : "fieldCurrent"}
+                                    value={ageModified ? stateAge : author.age} onChange={handleAgeChange}
+                                />
+                                <span className={!edit ? "ctrlHidden" : "contextBtn"}>
+                                    <Button type="button" onClick={onAuthorAgeToogle}><strong>&lt;..&gt;</strong></Button>
+                                </span>
+                            </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{ageModified ? stateAge : author.age}</span>
                         </span>
-                        <span className="author-info">
+                        <span className="author-info high">
                             <span className="author-info-label">Publications</span>
-                            <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
-                                className={!edit ? "ctrlHidden" : "fieldCurrent"}
-                                value={booksModified ? stateBooks : author.books} onChange={handleBooksChange} />
+                            <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
+                                <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
+                                    className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
+                                    value={booksModified ? stateBooks : author.books} onChange={handleBooksChange} />
+                                <span className='contextBtn'>
+                                    <Button type="button" onClick={onAuthorBookToogle}><strong>&lt;..&gt;</strong></Button>
+                                </span>
+                            </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{booksModified ? stateBooks : author.books}</span>
                         </span>
                     </span>

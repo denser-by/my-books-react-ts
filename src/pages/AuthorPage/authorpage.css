@@ -4,6 +4,7 @@
     padding: 20px;
     display: inline-flex;
     flex-direction: column;
+    background-color: #f8f4e4;
 }
 
 .authorShapeHeader {
@@ -11,19 +12,14 @@
     flex-direction: row;
 }
 
-input {
-    background-color: white;
-    color: black;
+.bookSelector {
+    display: inline-flex;
+    flex-direction: row;
 }
 
 .textInput {
     background-color: white;
     color: black;
-}
-
-.icons-right {
-    display: inline-flex;
-    flex-direction: column;
 }
 
 .author-info {
@@ -35,6 +31,10 @@ input {
     flex-direction: column;
     color: #eeee0b;
     min-width: 400px;
+}
+
+.highBooks {
+    min-height: 150px;
 }
 
 .author-info-label {

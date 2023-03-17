@@ -354,7 +354,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                     className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                     value={yearModified ? stateYear : book.year} onChange={handleYearChange}
                                 />
-                                <span className='contextBtn'>
+                                <span className={!edit ? "ctrlHidden" : "contextBtn"} >
                                     <Button type="button" onClick={onBookYearToogle}><strong>&lt;..&gt;</strong></Button>
                                 </span>
                             </span>

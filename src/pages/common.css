@@ -6,6 +6,16 @@
     margin: 3px;
 }
 
+input {
+    background-color: white;
+    color: black;
+}
+
+.icons-right {
+    display: inline-flex;
+    flex-direction: column;
+}
+
 .pictureSrc {
     width: 100%;
     height: 100%;

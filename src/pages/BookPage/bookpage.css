@@ -27,11 +27,6 @@ input {
     color: black;
 }
 
-.icons-right {
-    display: inline-flex;
-    flex-direction: column;
-}
-
 .book-info {
     background-color: #027077;
     border: 4px #027077 solid;
