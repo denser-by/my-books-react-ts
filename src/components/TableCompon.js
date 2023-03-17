@@ -1,4 +1,5 @@
-import { useTable, usePagination } from 'react-table';
+import React from 'react';
+import { useTable, useSortBy, usePagination } from 'react-table';
 import './tablecompon.css';
 
 function TablePageSeqence({ canPreviousPage, canNextPage, pageCount, pageIndex, pageOptions, previousPage, nextPage, gotoPage }) {
@@ -55,7 +56,15 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()} className={cssRowH}>
                         {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()} className={cssCellH}>
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())}
+                                className={
+                                    column.isSorted
+                                        ? column.isSortedDesc
+                                            ? cssCellH + ' ' + "desc"
+                                            : cssCellH + ' ' + "asc"
+                                        : cssCellH + ""
+                                }
+                            >
                                 {column.render('Header')}
                             </th>
                         ))}
@@ -107,6 +116,7 @@ function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRow
             data,
             initialState: { pageIndex: curPageIndex, pageSize: curPageSize },
         },
+        useSortBy,
         usePagination
     )
 

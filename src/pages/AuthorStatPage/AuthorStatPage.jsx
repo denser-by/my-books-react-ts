@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './authorstatpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
@@ -9,9 +9,24 @@ import { getAuthorsCaption, getAuthorsData } from './../BookStatPage/chartData.j
 const AuthorStatPage = ({ pr, kind }) => {
   if (pr.indexOf("authorStat") < 1) return;
 
+  const [data, setData] = useState([]);
   kind = 'author-age';
   const options = getAuthorsCaption(kind);
-  const data = getAuthorsData(kind);
+  const [authorStatPageKind, setAuthorStatPageKind] = useState(kind);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/authors')
+      .then((response) => response.json())
+      .then(entireBody => {
+        var authorRecords = [];
+        entireBody.map(author => {
+          authorRecords.push({
+            age: author.age,
+          });
+        })
+        setData(getAuthorsData(kind, authorRecords))
+      });
+  }, [authorStatPageKind]);
 
   return (
     <span className="authorsStatShape">

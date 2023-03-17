@@ -74,23 +74,23 @@ export class BookService {
         return null;
     }
 
-    async getOne(id: number) {
+    async getOne(id: number): Promise<CreateBookDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
         var bookRef = rows[0];
-        var result = {
-            id: bookRef.id,
-            name: bookRef.name,
-            info: bookRef.info,
-            year: bookRef.year,
-            authors: [],
-            cover_img_path: '',
-            access_key: bookRef.access_key,
-            cover_img_data: ''
-        };
+        let result = new CreateBookDto();
+        result.id = bookRef.id;
+        result.name = bookRef.name;
+        result.info = bookRef.info;
+        result.year = bookRef.year;
+        result.authors = [];
+        result.cover_img_path = '';
+        result.access_key = bookRef.access_key;
+        result.cover_img_data = '';
+        result.updatedAt = bookRef.updatedAt;
         if (bookRef.cover_img != null && bookRef.cover_img > 0) {
             var imageRef = this.imageService.getOne(bookRef.cover_img);
             result.cover_img_data = (await imageRef).mini_copy;

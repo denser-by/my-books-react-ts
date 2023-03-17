@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './bookslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
+import { fineDate } from './../common.js';
 
 const BooksListPage = ({ setPageRef, pr }) => {
     if (pr.indexOf("BooksAll") < 1) return;
@@ -49,6 +50,7 @@ const BooksListPage = ({ setPageRef, pr }) => {
                         seq_num: seq_num,
                         name: bookItem.name,
                         year: bookItem.year,
+                        modified: fineDate(new Date(bookItem.updatedAt)),
                         view: "/viewBook?id=" + bookItem.id,
                         edit: "/editBook?id=" + bookItem.id,
                         delete: "/deleteBook?id=" + bookItem.id
@@ -64,6 +66,7 @@ const BooksListPage = ({ setPageRef, pr }) => {
             {
                 Header: '№',
                 accessor: 'seq_num',
+                sortType: 'basic',
                 Cell: (row: CellProps<any>) => {
                     return <center><strong>{row.cell.value}.</strong></center>;
                 },
@@ -71,10 +74,12 @@ const BooksListPage = ({ setPageRef, pr }) => {
             {
                 Header: 'Name',
                 accessor: 'name',
+                sortType: 'basic',
             },
             {
-                Header: 'Published',
+                Header: 'Year',
                 accessor: 'year',
+                sortType: 'basic',
             },
             {
                 Header: 'View',
@@ -96,6 +101,14 @@ const BooksListPage = ({ setPageRef, pr }) => {
                         className={aboveBookId === obj ? "contextBookOp above" : "contextBookOp"}
                         onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
                     >Edit</span>;
+                },
+            },
+            {
+                Header: 'Updated',
+                accessor: 'modified',
+                sortType: 'datetime',
+                Cell: (row: CellProps<any>) => {
+                    return <nobr>{row.cell.value}</nobr>;
                 },
             },
             {

@@ -1,6 +1,4 @@
 import React from 'react';
-import BooksProvider from "../../model/BooksProvider";
-import AuthorsProvider from '../../model/AuthorsProvider';
 
 export const data = [
   ["Task", "Hours per Day"],
@@ -32,8 +30,7 @@ export const optionsAuthorAge = {
 //   ["2003","4"],["2004","5"],["2010","4"],["1992","4"],["2011","4"]]
 
 
-function getBookYearData() {
-  let bookItems = BooksProvider.all();
+function getBookYearData(bookItems) {
   let years = [];
   let amount = [];
   bookItems.map(book => {
@@ -59,8 +56,8 @@ function getBookYearData() {
   return data;
 }
 
-function getAuthorAgeData() {
-  let authorItems = AuthorsProvider.all();
+function getAuthorAgeData(authorRecords) {
+  let authorItems = authorRecords;
   let ages = [];
   let amount = [];
   authorItems.map(author => {
@@ -84,9 +81,9 @@ function getAuthorAgeData() {
   return data;
 }
 
-function getBooksData(kind) {
+function getBooksData(kind, bookItems) {
   if (kind && kind === "book-year") {
-    return getBookYearData();
+    return getBookYearData(bookItems);
   }
   return data;
 }
@@ -97,9 +94,9 @@ function getBooksCaption(kind) {
   return options;
 }
 
-function getAuthorsData(kind) {
+function getAuthorsData(kind, authorRecords) {
   if (kind && kind === "author-age") {
-    return getAuthorAgeData();
+    return getAuthorAgeData(authorRecords);
   }
   return data;
 }

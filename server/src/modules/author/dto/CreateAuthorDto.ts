@@ -42,4 +42,9 @@ export class CreateAuthorDto {
     @IsOptional()
     @ApiProperty({ required: false })
     photo_data: string;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    updatedAt: string;
 }

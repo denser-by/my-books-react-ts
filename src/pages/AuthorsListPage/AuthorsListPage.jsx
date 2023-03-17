@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './authorslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
+import { fineDate } from './../common.js';
 
 const AuthorsListPage = ({ setPageRef, pr }) => {
     if (pr.indexOf("AuthorsAll") < 1) return;
@@ -48,6 +49,7 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                         seq_num: seq_num,
                         name: authorItem.name,
                         age: authorItem.age,
+                        modified: fineDate(new Date(authorItem.updatedAt)),
                         numOfBooks: authorItem.numOfBooks,
                         view: "/viewAuthor?id=" + authorItem.id,
                         edit: "/editAuthor?id=" + authorItem.id,
@@ -71,14 +73,20 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
             {
                 Header: 'Name',
                 accessor: 'name',
+                sortType: 'basic',
+
             },
             {
                 Header: 'Since',
                 accessor: 'age',
+                sortType: 'basic',
+
             },
             {
                 Header: 'Books',
                 accessor: 'numOfBooks',
+                sortType: 'basic',
+
             },
             {
                 Header: 'View',
@@ -100,6 +108,14 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                         className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
                         onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
                     >Edit</span>;
+                },
+            },
+            {
+                Header: 'Updated',
+                accessor: 'modified',
+                sortType: 'datetime',
+                Cell: (row: CellProps<any>) => {
+                    return <nobr>{row.cell.value}</nobr>;
                 },
             },
             {

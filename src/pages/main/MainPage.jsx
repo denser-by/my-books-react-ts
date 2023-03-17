@@ -94,6 +94,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                     return message;
                 }
             });
+            let message = "Are you sure? Delete book item.";
+            return message;
         }
     }
 
@@ -111,6 +113,8 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                     return message;
                 }
             });
+            let message = "Are you sure? Delete author record.";
+            return message;
         }
     }
 

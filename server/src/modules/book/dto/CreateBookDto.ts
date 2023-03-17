@@ -42,4 +42,9 @@ export class CreateBookDto {
     @IsOptional()
     @ApiProperty({ required: false })
     cover_img_data: string;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    updatedAt: string;
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './bookstatpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
@@ -9,9 +9,24 @@ import { getBooksCaption, getBooksData } from './chartData';
 const BookStatPage = ({ pr, kind }) => {
   if (pr.indexOf("bookStat") < 1) return;
 
+  const [data, setData] = useState([]);
   kind = 'book-year';
   const options = getBooksCaption(kind);
-  const data = getBooksData(kind);
+  const [bookStatPageKind, setBookStatPageKind] = useState(kind);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/books')
+      .then((response) => response.json())
+      .then(entireBody => {
+        var bookItems = [];
+        entireBody.map(bookItem => {
+          bookItems.push({
+            year: bookItem.year,
+          });
+        })
+        setData(getBooksData(kind, bookItems))
+      });
+  }, [bookStatPageKind]);
 
   return (
     <span className="statShape">
