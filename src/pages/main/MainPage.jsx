@@ -36,14 +36,14 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
         { icon: "anchor", key: "k41", href: "/viewBooksAll", name: "All Books" },
         { icon: "anchor", key: "k42", href: "/createBook?", name: "Create Book" },
         { icon: "anchor", key: "k43", href: "/eraseAllBooks", name: "Erase All" },
-        { icon: "anchor", key: "k45", href: "/bookStat", name: "Analytics" }
+        { icon: "anchor", key: "k45", href: "/bookStat", name: "Analytics Online" }
     ]
 
     const contextOpsAuthors = [
         { icon: "anchor", key: "k11", href: "/viewAuthorsAll", name: "All Authors" },
         { icon: "anchor", key: "k12", href: "/createAuthor?", name: "Create Author" },
         { icon: "anchor", key: "k15", href: "/eraseAllAuthors", name: "Erase All" },
-        { icon: "anchor", key: "k14", href: "/authorStat", name: "Analytics" }
+        { icon: "anchor", key: "k14", href: "/authorStat", name: "Analytics Online" }
     ]
 
     const contextOpsSearch = [
