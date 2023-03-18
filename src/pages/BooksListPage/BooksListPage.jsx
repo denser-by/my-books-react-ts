@@ -45,7 +45,7 @@ const BooksListPage = ({ setPageRef, pr }) => {
     return (
         <div className='booksList' id="idBooksListPage" name="idBooksListPage">
             <TableCompon columnItems={columnItems} dataItems={listBookItems} curPageSize={bookPageState.pageSize} curPageIndex={bookPageState.pageNumber}
-                cssRowH={'booksListHeader'} cssCellH={'booksInfoHeader'} cssRow={'booksListItem'} cssCell={'booksInfoItem'} />
+                cssRowH={'booksListHeader'} cssCellH={'booksListHeaderItem'} cssRow={'booksListItem'} cssCell={'booksInfoItem'} cssFooter={'booksListFooter'} />
         </div>
     );
 };

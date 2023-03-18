@@ -20,15 +20,25 @@
     text-align: center;
     align-items: center;
     color: white;
+    cursor: pointer;
 }
 
-.booksInfoHeader {
+.booksListHeaderItem {
     background-color: #027077;
     border: solid 3px #fefaef;
     border-radius: 10px;
     text-align: center;
     align-items: center;
     color: white;
+}
+
+.booksListFooter {
+    background-color: #027077;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    color: white;
+    margin-top: 2px;
 }
 
 .booksInfoItem {

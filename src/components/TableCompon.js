@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTable, useSortBy, usePagination } from 'react-table';
+import { useTable, useSortBy, usePagination, useFilters } from 'react-table';
 import './tablecompon.css';
 
 function TablePageSeqence({ canPreviousPage, canNextPage, pageCount, pageIndex, pageOptions, previousPage, nextPage, gotoPage }) {
@@ -64,16 +64,15 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()} className={cssRowH}>
                         {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps(column.getSortByToggleProps())}
-                                className={
-                                    column.isSorted
-                                        ? column.isSortedDesc
-                                            ? cssCellH + ' ' + "desc"
-                                            : cssCellH + ' ' + "asc"
-                                        : cssCellH + ""
-                                }
-                            >
-                                {column.render('Header')}
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())} className={cssCellH || ''}
+                                style={{
+                                    padding: '4px',
+                                    margin: '4px',
+                                    color: 'white',
+                                    fontWeight: '800'
+                                }}
+                            >{column.canFilter ? column.render('Filter') : null}
+                                <div className={column.isSorted ? column.isSortedDesc ? "desc" : "asc" : ""}>{column.render('Header')}</div>
                             </th>
                         ))}
                     </tr>
@@ -100,7 +99,7 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
     );
 }
 
-function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRowH, cssCellH, cssRow, cssCell }) {
+function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRowH, cssCellH, cssRow, cssCell, cssFooter }) {
     const numOfTableItems = dataItems.length;
     let columns = columnItems;
     let data = dataItems;
@@ -125,6 +124,7 @@ function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRow
             data,
             initialState: { pageIndex: curPageIndex, pageSize: curPageSize },
         },
+        useFilters,
         useSortBy,
         usePagination
     )
@@ -135,7 +135,7 @@ function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRow
                 <TableItem getTableProps={getTableProps} headerGroups={headerGroups} getTableBodyProps={getTableBodyProps}
                     page={page} prepareRow={prepareRow} cssRowH={cssRowH} cssCellH={cssCellH} cssRow={cssRow} cssCell={cssCell} />
             </span>
-            <span className="tableFooter">
+            <span className={(cssFooter || '') + " tableFooter"}>
                 <TablePages pageSizeCurrent={pageSize} setPageSizeCurrent={setPageSize} />
                 <TablePageSeqence canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageCount={pageCount} pageIndex={pageIndex}
                     pageOptions={pageOptions} previousPage={previousPage} nextPage={nextPage} gotoPage={gotoPage} />

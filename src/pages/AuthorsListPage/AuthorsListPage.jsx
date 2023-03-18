@@ -46,7 +46,7 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
     return (
         <div className='authorsList' id="idAuthorListPage" name="idAuthorListPage">
             <TableCompon columnItems={columnItems} dataItems={listAuthorItems} curPageSize={authorPageState.pageSize} curPageIndex={authorPageState.pageNumber}
-                cssRowH={'authorsListHeader'} cssCellH={'authorsInfoHeader'} cssRow={'authorsListItem'} cssCell={'authorsInfoItem'} />
+                cssRowH={'authorsListHeader'} cssCellH={'authorsListHeaderItem'} cssRow={'authorsListItem'} cssCell={'authorsInfoItem'} cssFooter={'authorsListFooter'} />
         </div>
     );
 };

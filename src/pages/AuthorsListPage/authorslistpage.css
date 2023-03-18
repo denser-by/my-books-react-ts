@@ -20,15 +20,25 @@
     text-align: center;
     align-items: center;
     color: white;
+    cursor: pointer;
 }
 
-.authorsInfoHeader {
+.authorsListHeaderItem {
     background-color: #bc4404;
     border: solid 3px #fefaef;
     border-radius: 10px;
     text-align: center;
     align-items: center;
     color: white;
+}
+
+.authorsListFooter {
+    background-color: #bc4404;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    color: white;
+    margin-top: 2px;
 }
 
 .authorsInfoItem {

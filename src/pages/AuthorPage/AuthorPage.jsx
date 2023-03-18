@@ -23,12 +23,12 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     };
     if (!create) {
         const request = 'http://localhost:3001/authors/' + authorId;
-        console.log('AP=' + request);
+        // console.log('AP=' + request);
         fetch(request)
             .then((response) => response.json())
             .then(entireBody => {
                 if (authorId == entireBody.id) {
-                    console.log('entAuthor=' + JSON.stringify(entireBody));
+                    // console.log('entAuthor=' + JSON.stringify(entireBody));
                     author = {
                         id: entireBody.id,
                         name: entireBody.name,

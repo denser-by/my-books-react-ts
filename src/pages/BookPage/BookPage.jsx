@@ -22,12 +22,12 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     };
     if (!create) {
         const apiUrl = 'http://localhost:3001/books/' + bookId;
-        console.log('BP=' + apiUrl);
+        // console.log('BP=' + apiUrl);
         fetch(apiUrl)
             .then((response) => response.json())
             .then(entireBody => {
                 if (bookId == entireBody.id) {
-                    console.log('ENTIRE=' + JSON.stringify(entireBody));
+                    // console.log('ENTIRE=' + JSON.stringify(entireBody));
                     book = {
                         id: entireBody.id,
                         name: entireBody.name,

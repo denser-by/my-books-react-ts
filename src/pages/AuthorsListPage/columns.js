@@ -1,4 +1,5 @@
 import { Cell, CellProps } from 'react-table';
+import { TableColumnFilter } from '../../components/TableColumnFilter.js';
 
 var aboveAuthorId = '';
 var aboveAuthorTarget = null;
@@ -24,6 +25,8 @@ export function getColumns(mouseClickAuthor) {
         {
             Header: '№',
             accessor: 'seq_num',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 return <center><strong>{row.cell.value}.</strong></center>;
             },
@@ -31,12 +34,13 @@ export function getColumns(mouseClickAuthor) {
         {
             Header: 'Name',
             accessor: 'name',
+            Filter: TableColumnFilter,
             sortType: 'basic',
-
         },
         {
             Header: 'Age',
             accessor: 'age',
+            Filter: TableColumnFilter,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 return <nobr>{row.cell.value}</nobr>;
@@ -45,11 +49,14 @@ export function getColumns(mouseClickAuthor) {
         {
             Header: 'Books',
             accessor: 'numOfBooks',
+            Filter: TableColumnFilter,
             sortType: 'basic',
         },
         {
             Header: 'View',
             accessor: 'view',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
                 return <span id={obj}
@@ -61,6 +68,8 @@ export function getColumns(mouseClickAuthor) {
         {
             Header: 'Edit',
             accessor: 'edit',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
                 return <span id={obj}
@@ -72,7 +81,8 @@ export function getColumns(mouseClickAuthor) {
         {
             Header: 'Updated',
             accessor: 'modified',
-            sortType: 'datetime',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 return <nobr>{row.cell.value}</nobr>;
             },
@@ -80,6 +90,8 @@ export function getColumns(mouseClickAuthor) {
         {
             Header: 'Delete',
             accessor: 'delete',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
                 return <span id={obj}

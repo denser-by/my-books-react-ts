@@ -1,26 +1,38 @@
 .entireTable {
-    display: inline-flex;
     flex-direction: column;
+    position: absolute;
+    display: inline-flex;
+    left: 15%;
+    top: 0%;
+    padding: 3px;
+}
+
+.headerFilterItem {
+    background-color: white;
+}
+
+.headerFilterCtrl {
+    font-weight: 700;
 }
 
 .tableHeaderBody {
-    position: relative;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .tableFooter {
-    position: relative;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     display: inline-flex;
     flex-direction: row;
+    width: 100%;
 }
 
 .pageSeq {
     display: inline-flex;
     flex-direction: row;
+    cursor: pointer;
 }
 
 .pageIndex {
@@ -35,6 +47,7 @@
     margin-bottom: 3px;
     font-weight: 800;
     color: #027077;
+    cursor: pointer;
 }
 
 .pageIndexCenter {
@@ -45,9 +58,9 @@
 }
 
 .pageSize {
-    background-color: white;
     width: 120px;
     padding-right: 5px;
     margin-left: 3px;
     margin-bottom: 3px;
+    cursor: pointer;
 }

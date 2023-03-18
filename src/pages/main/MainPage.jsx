@@ -85,6 +85,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             let first = {
                 name: ''
             };
+            /*
             console.log(' book to GET ' + bookId);
             axios.get('http://localhost:3001/books/' + bookId).then(res => {
                 console.log(' book GET complete ' + JSON.stringify(res));
@@ -94,6 +95,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                     return message;
                 }
             });
+            */
             let message = "Are you sure? Delete book item.";
             return message;
         }
@@ -104,6 +106,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
             let first = {
                 name: ''
             };
+            /*
             console.log(' author to GET ' + authorId);
             axios.get('http://localhost:3001/authors/' + authorId).then(res => {
                 console.log(' author GET complete ' + JSON.stringify(res));
@@ -113,6 +116,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                     return message;
                 }
             });
+            */
             let message = "Are you sure? Delete author record.";
             return message;
         }
