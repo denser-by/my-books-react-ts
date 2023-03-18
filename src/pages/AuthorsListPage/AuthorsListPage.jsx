@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './authorslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
-import { fineDate } from './../common.js';
+import { fineDate, fineDateShort } from './../common.js';
 
 const AuthorsListPage = ({ setPageRef, pr }) => {
     if (pr.indexOf("AuthorsAll") < 1) return;
@@ -48,7 +48,7 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                     authorItems.push({
                         seq_num: seq_num,
                         name: authorItem.name,
-                        age: authorItem.age,
+                        age: fineDateShort(new Date(authorItem.age)),
                         modified: fineDate(new Date(authorItem.updatedAt)),
                         numOfBooks: authorItem.numOfBooks,
                         view: "/viewAuthor?id=" + authorItem.id,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './authorpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
@@ -35,12 +35,16 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                     author = {
                         id: entireBody.id,
                         name: entireBody.name,
-                        age: entireBody.age != null ? entireBody.age : '',
+                        age: entireBody.age != null ? fineDateShort(new Date(entireBody.age)) : '',
                         books: entireBody.books,
                         info: entireBody.info,
                         photo_path: entireBody.photo_path,
                         photo_data: entireBody.photo_data
                     };
+                    if (!ageSelectedModified) {
+                        setAgeSelected(new Date(author.age).toString());
+                        setAgeSelectedModified(true);
+                    }
                     if (!nameModified) {
                         setStateName(author.name);
                         setNameModified(true);

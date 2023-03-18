@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       age: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DATE
       },
       photo: {
         type: Sequelize.INTEGER

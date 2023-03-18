@@ -143,7 +143,7 @@ export class ServiceData {
             let dto = new CreateAuthorDto();
             dto.name = name;
             dto.info = info;
-            dto.age = age;
+            dto.age = new Date('' + age + '-01-01');
             dto.photo_path = photo_path;
             dto.access_key = access_key;
             author = await this.svcAuthor.create(dto);
