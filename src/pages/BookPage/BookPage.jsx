@@ -4,7 +4,7 @@ import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import ImageUploading from 'react-images-uploading';
 import axios from 'axios';
-import DateCompon from '../../components/SelectDate/DateCompon.js';
+import { YearCompon, MonthCompon } from '../../components/SelectDate/DateCompon.js';
 import { getImageBook } from './../pictureSupport.js';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
@@ -248,6 +248,14 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setAuthorPick(!authorPick);
     }
 
+    function yearSelectedNotify(selYear) {
+        console.log('selected year: ' + selYear);
+    }
+
+    function monthSelectedNotify(selMonth) {
+        console.log('selected month: ' + selMonth);
+    }
+
     return (
         <Form onSubmit={handleSubmit}>
             <span className="bookShape" id="idBookPage" name="idBookPage">
@@ -286,7 +294,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : book.name}</span>
                         </span>
                         <span className="book-info">
-                            <DateCompon dateSelected={dateSelected} onDateSelect={onDateSelect}
+                            <YearCompon
+                                notifyYearChosen={yearSelectedNotify}
+                                dateSelected={dateSelected}
+                                onDateSelect={onDateSelect}
                                 caption={'Choose year of publication'} datePick={datePick}
                             />
                             <span className="book-info-label">Year</span>
