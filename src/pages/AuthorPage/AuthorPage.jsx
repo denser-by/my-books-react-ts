@@ -154,10 +154,10 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
             author.photo_data = myImage;
         }
 
-        if (book.id != null && ('' + book.id).length > 0)
-            book.id = Number.parseInt('' + book.id);
+        if (author.id != null && ('' + author.id).length > 0)
+            author.id = Number.parseInt('' + author.id);
         else
-            book.id = '';
+            author.id = '';
 
         if (create) {
             console.log(' author to POST ' + JSON.stringify(author));
@@ -195,7 +195,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     const [myImage, setMyImage] = React.useState("");
     const [imageUploaded, setImageUploaded] = React.useState(false);
 
-    const onAuthorsphoto_pathChange = (imageList, addUpdateIndex) => {
+    const onAuthorsPhotoPathChange = (imageList, addUpdateIndex) => {
         // console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
@@ -204,7 +204,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         });
     };
 
-    function isphoto_pathDefined() {
+    function isPhotoPathDefined() {
         return author.photo_path != null && author.photo_path.length > 0;
     }
 
@@ -241,7 +241,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                     <span className="picture">
                         <ImageUploading
                             multiple
-                            onChange={onAuthorsphoto_pathChange}
+                            onChange={onAuthorsPhotoPathChange}
                             value={images}
                             maxNumber={1}
                             dataURLKey="data_url"
@@ -258,7 +258,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for author's photo_path..."
-                                    src={imageUploaded ? myImage : (isphoto_pathDefined() ? getImageAuthor(author) : myImage)} />
+                                    src={imageUploaded ? myImage : (isPhotoPathDefined() ? getImageAuthor(author) : myImage)} />
                             )}
                         </ImageUploading>
                     </span>
