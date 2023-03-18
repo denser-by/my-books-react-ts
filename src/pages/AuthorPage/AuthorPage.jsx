@@ -3,12 +3,10 @@ import './authorpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
 import ImageUploading from 'react-images-uploading';
-import AuthorImage1 from './../../images/author1.gif';
-import AuthorImage2 from './../../images/author2.gif';
-import AuthorImage3 from './../../images/author3.gif';
 import axios from 'axios';
 import DateCompon from '../../components/SelectDate/DateCompon.js';
 import { fineDateShort } from './../common.js';
+import { getImageAuthor } from './../pictureSupport.js';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
@@ -61,7 +59,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         setInfoModified(true);
                     }
                     if (!imageUploaded) {
-                        setMyImage(getImage(author));
+                        setMyImage(getImageAuthor(author));
                         setImageUploaded(true);
                     }
                 }
@@ -156,6 +154,11 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
             author.photo_data = myImage;
         }
 
+        if (book.id != null && ('' + book.id).length > 0)
+            book.id = Number.parseInt('' + book.id);
+        else
+            book.id = '';
+
         if (create) {
             console.log(' author to POST ' + JSON.stringify(author));
             axios.post('http://localhost:3001/authors', author).then(res => {
@@ -231,16 +234,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setBookPick(!bookPick);
     }
 
-    function getImage(author) {
-        if (author.photo_data != null && author.photo_data.length > 20)
-            return author.photo_data;
-        else if (author.photo_path != null && author.photo_path.length > 0) {
-            if (author.photo_path.indexOf('/author1.gif') > -1) return AuthorImage1; else
-                if (author.photo_path.indexOf('/author2.gif') > -1) return AuthorImage2; else
-                    if (author.photo_path.indexOf('/author3.gif') > -1) return AuthorImage3;
-        }
-    }
-
     return (
         <Form onSubmit={handleSubmit}>
             <span className="authorShape" id="idAuthorPage" name="idAuthorPage">
@@ -265,7 +258,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
                                     alt="Place for author's photo_path..."
-                                    src={imageUploaded ? myImage : (isphoto_pathDefined() ? getImage(author) : myImage)} />
+                                    src={imageUploaded ? myImage : (isphoto_pathDefined() ? getImageAuthor(author) : myImage)} />
                             )}
                         </ImageUploading>
                     </span>
