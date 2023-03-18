@@ -1,0 +1,37 @@
+.date-compon-dialog {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.date-compon-dialog.hidden {
+    display: none;
+}
+
+.date-compon-dialog.above {
+    position: absolute;
+    top: 130;
+    left: 130;
+    border: solid 5px #ffdf8c;
+    border-radius: 15px;
+    padding: 2px;
+    display: inline-flex;
+    background-color: #ffdf8c;
+    color: black;
+    min-width: 300px;
+    min-height: 100px;
+}
+
+.date-compon-caption {
+    background-color: #027077;
+    border: 4px #027077 solid;
+    border-radius: 10px;
+    margin: 2px;
+    display: inline-flex;
+    flex-direction: column;
+    color: white;
+    min-width: 270px;
+    text-align: center;
+    align-items: center;
+    margin: 2px;
+    font-weight: 700;
+}

@@ -24,7 +24,7 @@ import BookImage18 from './../../images/18.jpg';
 import BookImage19 from './../../images/19.jpg';
 import BookImage20 from './../../images/20.jpg';
 import axios from 'axios';
-import DatePicker from 'react-date-picker';
+import DateCompon from '../../components/SelectDate/DateCompon.js';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -332,17 +332,9 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : book.name}</span>
                         </span>
                         <span className="book-info">
-                            <span className={(datePick ? "aboveCtrl" : "ctrlHidden") + " icons-right"}>
-                                <span className="book-info short">
-                                    <span className="book-info-label">Choose year of publication</span>
-                                </span>
-                                <DatePicker
-                                    label="Publishing year"
-                                    format="y"
-                                    value={dateSelected}
-                                    onChange={(newValue) => onDateSelect(newValue)}
-                                />
-                            </span>
+                            <DateCompon dateSelected={dateSelected} onDateSelect={onDateSelect}
+                                caption={'Choose year of publication'} datePick={datePick}
+                            />
                             <span className="book-info-label">Year</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
                                 <Input type="textarea" id="bookYear" name="bookYear" readOnly={!edit} placeholder="Year of publication"
