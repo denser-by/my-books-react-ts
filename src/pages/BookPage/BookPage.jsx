@@ -24,8 +24,7 @@ import BookImage18 from './../../images/18.jpg';
 import BookImage19 from './../../images/19.jpg';
 import BookImage20 from './../../images/20.jpg';
 import axios from 'axios';
-import { DayPicker, useInput } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
+import DatePicker from 'react-date-picker';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -57,6 +56,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         cover_img_path: entireBody.cover_img_path,
                         cover_img_data: entireBody.cover_img_data
                     };
+                    if (!dateSelectedModified) {
+                        setDateSelected(new Date('' + book.year + '-01-01'));
+                        setDateSelectedModified(true);
+                    }
                     if (!nameModified) {
                         setStateName(book.name);
                         setNameModified(true);
@@ -241,6 +244,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
 
     const [datePick, setDatePick] = React.useState(false);
     const [dateSelected, setDateSelected] = React.useState();
+    const [dateSelectedModified, setDateSelectedModified] = React.useState(false);
 
     const [authorPick, setAuthorPick] = React.useState(false);
     const [authorSelected, setAuthorSelected] = React.useState();
@@ -267,36 +271,28 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         if (book.cover_img_data != null && book.cover_img_data.length > 20)
             return book.cover_img_data;
         else if (book.cover_img_path != null && book.cover_img_path.length > 0) {
-            if (book.cover_img_path.indexOf('/1.jpg') > -1) return BookImage1; else
-                if (book.cover_img_path.indexOf('/2.jpg') > -1) return BookImage2; else
-                    if (book.cover_img_path.indexOf('/3.jpg') > -1) return BookImage3; else
-                        if (book.cover_img_path.indexOf('/4.jpg') > -1) return BookImage4; else
-                            if (book.cover_img_path.indexOf('/5.jpg') > -1) return BookImage5; else
-                                if (book.cover_img_path.indexOf('/6.jpg') > -1) return BookImage6; else
-                                    if (book.cover_img_path.indexOf('/7.jpg') > -1) return BookImage7; else
-                                        if (book.cover_img_path.indexOf('/8.jpg') > -1) return BookImage8; else
-                                            if (book.cover_img_path.indexOf('/9.jpg') > -1) return BookImage9; else
-                                                if (book.cover_img_path.indexOf('/10.jpg') > -1) return BookImage10; else
-                                                    if (book.cover_img_path.indexOf('/11.jpg') > -1) return BookImage11; else
-                                                        if (book.cover_img_path.indexOf('/12.jpg') > -1) return BookImage12; else
-                                                            if (book.cover_img_path.indexOf('/13.jpg') > -1) return BookImage13; else
-                                                                if (book.cover_img_path.indexOf('/14.jpg') > -1) return BookImage14; else
-                                                                    if (book.cover_img_path.indexOf('/15.jpg') > -1) return BookImage15; else
-                                                                        if (book.cover_img_path.indexOf('/16.jpg') > -1) return BookImage16; else
-                                                                            if (book.cover_img_path.indexOf('/17.jpg') > -1) return BookImage17; else
-                                                                                if (book.cover_img_path.indexOf('/18.jpg') > -1) return BookImage18; else
-                                                                                    if (book.cover_img_path.indexOf('/19.jpg') > -1) return BookImage19; else
-                                                                                        if (book.cover_img_path.indexOf('/20.jpg') > -1) return BookImage20;
+            if (book.cover_img_path.indexOf('/1.jpg') > -1) return BookImage1;
+            if (book.cover_img_path.indexOf('/2.jpg') > -1) return BookImage2;
+            if (book.cover_img_path.indexOf('/3.jpg') > -1) return BookImage3;
+            if (book.cover_img_path.indexOf('/4.jpg') > -1) return BookImage4;
+            if (book.cover_img_path.indexOf('/5.jpg') > -1) return BookImage5;
+            if (book.cover_img_path.indexOf('/6.jpg') > -1) return BookImage6;
+            if (book.cover_img_path.indexOf('/7.jpg') > -1) return BookImage7;
+            if (book.cover_img_path.indexOf('/8.jpg') > -1) return BookImage8;
+            if (book.cover_img_path.indexOf('/9.jpg') > -1) return BookImage9;
+            if (book.cover_img_path.indexOf('/10.jpg') > -1) return BookImage10;
+            if (book.cover_img_path.indexOf('/11.jpg') > -1) return BookImage11;
+            if (book.cover_img_path.indexOf('/12.jpg') > -1) return BookImage12;
+            if (book.cover_img_path.indexOf('/13.jpg') > -1) return BookImage13;
+            if (book.cover_img_path.indexOf('/14.jpg') > -1) return BookImage14;
+            if (book.cover_img_path.indexOf('/15.jpg') > -1) return BookImage15;
+            if (book.cover_img_path.indexOf('/16.jpg') > -1) return BookImage16;
+            if (book.cover_img_path.indexOf('/17.jpg') > -1) return BookImage17;
+            if (book.cover_img_path.indexOf('/18.jpg') > -1) return BookImage18;
+            if (book.cover_img_path.indexOf('/19.jpg') > -1) return BookImage19;
+            if (book.cover_img_path.indexOf('/20.jpg') > -1) return BookImage20;
         }
     }
-
-    const { inputProps, dayPickerProps } = useInput({
-        defaultSelected: new Date(),
-        fromYear: 1950,
-        toYear: 2050,
-        format: 'PP',
-        required: true
-    });
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -336,16 +332,15 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : book.name}</span>
                         </span>
                         <span className="book-info">
-                            <span className={datePick ? "aboveCtrl" : "ctrlHidden"}>
-                                <DayPicker
-                                    mode='single' selected={dateSelected} onSelect={onDateSelect}
-                                    footer={'How old are you?'}
-                                    {...dayPickerProps}
-                                    pagedNavigation
-                                    showOutsideDays
-                                    fixedWeeks
-                                    showWeekNumber
-                                    required
+                            <span className={(datePick ? "aboveCtrl" : "ctrlHidden") + " icons-right"}>
+                                <span className="book-info short">
+                                    <span className="book-info-label">Choose year of publication</span>
+                                </span>
+                                <DatePicker
+                                    label="Publishing year"
+                                    format="y"
+                                    value={dateSelected}
+                                    onChange={(newValue) => onDateSelect(newValue)}
                                 />
                             </span>
                             <span className="book-info-label">Year</span>
@@ -360,7 +355,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{yearModified ? stateYear : book.year}</span>
                         </span>
-                        <span className="book-info high">
+                        <span className={create || edit ? "book-info high" : "book-info"}>
                             <span className="book-info-label">Authors</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
                                 <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"

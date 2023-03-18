@@ -50,12 +50,14 @@ input {
     position: absolute;
     top: 130;
     left: 130;
-    border: solid 5px #eeee0b;
+    border: solid 5px #ffdf8c;
     border-radius: 15px;
-    padding: 20px;
+    padding: 2px;
     display: inline-flex;
-    background-color: #f8f4e4;
+    background-color: #ffdf8c;
     color: black;
+    min-width: 300px;
+    min-height: 100px;
 }
 
 .fieldSubmit {

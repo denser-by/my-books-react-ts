@@ -77,10 +77,12 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
 
             },
             {
-                Header: 'Since',
+                Header: 'Age',
                 accessor: 'age',
                 sortType: 'basic',
-
+                Cell: (row: CellProps<any>) => {
+                    return <nobr>{row.cell.value}</nobr>;
+                },
             },
             {
                 Header: 'Books',

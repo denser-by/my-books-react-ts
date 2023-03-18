@@ -7,7 +7,9 @@ import AuthorImage1 from './../../images/author1.gif';
 import AuthorImage2 from './../../images/author2.gif';
 import AuthorImage3 from './../../images/author3.gif';
 import axios from 'axios';
-import DatePicker from 'react-date-picker';
+import { DayPicker, useInput } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { fineDateShort } from './../common.js';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
@@ -39,10 +41,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         photo_path: entireBody.photo_path,
                         photo_data: entireBody.photo_data
                     };
-                    if (!ageSelectedModified) {
-                        setAgeSelected(new Date('' + author.age + '-01-01'));
-                        setAgeSelectedModified(true);
-                    }
                     if (!nameModified) {
                         setStateName(author.name);
                         setNameModified(true);
@@ -155,16 +153,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
             author.photo_data = myImage;
         }
 
-        if (author.id != null && ('' + author.id).length > 0)
-            author.id = Number.parseInt('' + author.id);
-        else
-            author.id = '';
-
-        if (author.age != null && ('' + author.age).length > 0)
-            author.age = Number.parseInt('' + author.age);
-        else
-            author.age = null;
-
         if (create) {
             console.log(' author to POST ' + JSON.stringify(author));
             axios.post('http://localhost:3001/authors', author).then(res => {
@@ -225,7 +213,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setAgePick(false);
         let evt = {
             target: {
-                value: '' + new Date(res).getFullYear(),
+                value: '' + fineDateShort(new Date(res)),
             },
         };
         handleAgeChange(evt);
@@ -249,6 +237,14 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                     if (author.photo_path.indexOf('/author3.gif') > -1) return AuthorImage3;
         }
     }
+
+    const { inputProps, dayPickerProps } = useInput({
+        defaultSelected: new Date(),
+        fromYear: 1950,
+        toYear: 2050,
+        format: 'PP',
+        required: true
+    });
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -288,11 +284,15 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         </span>
                         <span className="author-info">
                             <span className={agePick ? "aboveCtrl" : "ctrlHidden"}>
-                                <DatePicker
-                                    label="Year of birth picker"
-                                    format="y"
-                                    value={ageSelected}
-                                    onChange={(newValue) => onAgeSelect(newValue)}
+                                <DayPicker
+                                    mode='single' selected={ageSelected} onSelect={onAgeSelect}
+                                    footer={'How old are you?'}
+                                    {...dayPickerProps}
+                                    pagedNavigation
+                                    showOutsideDays
+                                    fixedWeeks
+                                    showWeekNumber
+                                    required
                                 />
                             </span>
                             <span className="author-info-label">Born</span>
@@ -307,7 +307,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{ageModified ? stateAge : author.age}</span>
                         </span>
-                        <span className="author-info high">
+                        <span className={create || edit ? "author-info high" : "author-info"}>
                             <span className="author-info-label">Publications</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
                                 <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"

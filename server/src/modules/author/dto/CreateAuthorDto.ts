@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
+import { IsArray, IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateAuthorDto {
     @IsNumber()
@@ -18,10 +18,10 @@ export class CreateAuthorDto {
     @ApiProperty({ required: false })
     info: string;
 
-    @IsNumber()
+    @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    age: number;
+    age: Date;
 
     @IsArray()
     @IsOptional()

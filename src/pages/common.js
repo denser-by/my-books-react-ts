@@ -3,5 +3,9 @@ export function up2(param) {
 }
 
 export function fineDate(date) {
-    return '' + date.getFullYear() + '-' + up2(date.getMonth()) + '-' + up2(date.getDay()) + ' ' + up2(date.getHours()) + ':' + up2(date.getMinutes()) + ':' + up2(date.getSeconds());
+    return fineDateShort(date) + ' ' + up2(date.getHours()) + ':' + up2(date.getMinutes()) + ':' + up2(date.getSeconds());
+}
+
+export function fineDateShort(date) {
+    return '' + date.getFullYear() + '-' + up2(date.getMonth() + 1) + '-' + up2(date.getDate());
 }

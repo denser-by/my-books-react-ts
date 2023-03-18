@@ -38,6 +38,13 @@ input {
     min-width: 400px;
 }
 
+.book-info.short {
+    color: white;
+    min-width: 270px;
+    text-align: center;
+    align-items: center;
+}
+
 .high {
     min-height: 150px;
 }
