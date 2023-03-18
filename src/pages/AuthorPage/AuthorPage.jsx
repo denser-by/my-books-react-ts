@@ -7,8 +7,7 @@ import AuthorImage1 from './../../images/author1.gif';
 import AuthorImage2 from './../../images/author2.gif';
 import AuthorImage3 from './../../images/author3.gif';
 import axios from 'axios';
-import { DayPicker, useInput } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
+import DateCompon from '../../components/SelectDate/DateCompon.js';
 import { fineDateShort } from './../common.js';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
@@ -42,7 +41,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         photo_data: entireBody.photo_data
                     };
                     if (!ageSelectedModified) {
-                        setAgeSelected(new Date(author.age).toString());
+                        setAgeSelected(new Date(author.age));
                         setAgeSelectedModified(true);
                     }
                     if (!nameModified) {
@@ -242,14 +241,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         }
     }
 
-    const { inputProps, dayPickerProps } = useInput({
-        defaultSelected: new Date(),
-        fromYear: 1950,
-        toYear: 2050,
-        format: 'PP',
-        required: true
-    });
-
     return (
         <Form onSubmit={handleSubmit}>
             <span className="authorShape" id="idAuthorPage" name="idAuthorPage">
@@ -287,18 +278,9 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : author.name}</span>
                         </span>
                         <span className="author-info">
-                            <span className={agePick ? "aboveCtrl" : "ctrlHidden"}>
-                                <DayPicker
-                                    mode='single' selected={ageSelected} onSelect={onAgeSelect}
-                                    footer={'How old are you?'}
-                                    {...dayPickerProps}
-                                    pagedNavigation
-                                    showOutsideDays
-                                    fixedWeeks
-                                    showWeekNumber
-                                    required
-                                />
-                            </span>
+                            <DateCompon dateSelected={ageSelected} onDateSelect={onAgeSelect}
+                                caption={"Select author's birthday"} datePick={agePick}
+                            />
                             <span className="author-info-label">Born</span>
                             <span className={create || edit ? "bookSelector withContextBtn" : "bookSelector ctrlHidden"}>
                                 <Input type="textarea" id="authorAge" name="authorAge" readOnly={!edit} placeholder="Born in"
