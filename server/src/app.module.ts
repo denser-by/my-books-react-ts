@@ -17,10 +17,10 @@ import { CityController } from './modules/city/city.controller';
 import { AppointmentController } from './modules/appointment/appointment.controller';
 import { DataController } from './modules/data/data.controller';
 import { ServiceData } from './modules/data/DataService';
-import { AuthorbookService } from './authorbook/authorbook.service';
-import { AuthorbookController } from './authorbook/authorbook.controller';
-import { RoleuserService } from './roleuser/roleuser.service';
-import { RoleuserController } from './roleuser/roleuser.controller';
+import { AuthorbookService } from './modules/authorbook/authorbook.service';
+import { AuthorbookController } from './modules/authorbook/authorbook.controller';
+import { RoleuserService } from './modules/roleuser/roleuser.service';
+import { RoleuserController } from './modules/roleuser/roleuser.controller';
 
 @Module({
   imports: [],
