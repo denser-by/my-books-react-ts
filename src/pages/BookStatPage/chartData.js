@@ -15,33 +15,39 @@ export const options = {
 
 
 export const optionsBookYear = {
-  title: "Distribution: book-year",
+  title: "Publishing Proportion",
   chartArea: { width: '73%' },
 };
 
 export const optionsAlphabet = {
-  title: "Alpha sector",
+  title: "Catalog Proportion",
   chartArea: { width: '73%' },
 };
 
 export const optionsAuthorAge = {
-  title: "Distribution: author-age",
+  title: "Ages Proportion",
+  chartArea: { width: '73%' },
+};
+
+export const optionsBooksByAuthor = {
+  title: "Books Proportion",
+  chartArea: { width: '73%' },
 };
 
 export const optionsBarChartBookYear = {
-  title: "Distribution: book-year",
+  title: "Average Publishing Index",
   chartArea: { width: '73%' },
   hAxis: {
     title: "Total number for each period",
     minValue: 0,
   },
   vAxis: {
-    title: "Books in a year",
+    title: "Books' publishing years",
   }
 };
 
 export const optionsBarChartAlphabet = {
-  title: "Catalogue dencity",
+  title: "Catalog Index",
   chartArea: { width: '73%' },
   hAxis: {
     title: "Total number in each group",
@@ -49,6 +55,30 @@ export const optionsBarChartAlphabet = {
   },
   vAxis: {
     title: "A-z А-я Books' groups",
+  }
+};
+
+export const optionsBarChartAuthorAge = {
+  title: "Age Index",
+  chartArea: { width: '73%' },
+  hAxis: {
+    title: "Number of representatives same age",
+    minValue: 0,
+  },
+  vAxis: {
+    title: "Distribution of adultness",
+  }
+};
+
+export const optionsBarChartBooksByAuthor = {
+  title: "Average Publishing Index",
+  chartArea: { width: '73%' },
+  hAxis: {
+    title: "Authors with same books number",
+    minValue: 0,
+  },
+  vAxis: {
+    title: "Total number of books in a group",
   }
 };
 
@@ -90,7 +120,7 @@ function getAlphaBookData(bookItems) {
   let az = [];
   let amount = [];
   bookItems.map(book => {
-    const alpha = (""+book.name.charAt(0)).toUpperCase();
+    const alpha = ("" + book.name.charAt(0)).toUpperCase();
     let findAlpha = az.filter(yy => yy == alpha)[0];
     if (findAlpha) {
       const findAlphaIdx = az.indexOf(alpha);
@@ -112,8 +142,6 @@ function getAlphaBookData(bookItems) {
   return data;
 }
 
-
-
 function getAuthorAgeData(authorRecords) {
   let authorItems = authorRecords;
   let ages = [];
@@ -130,10 +158,35 @@ function getAuthorAgeData(authorRecords) {
     }
   });
   let data = [
-    ["Task", "Hours per Day"],
+    ["Age groups", "participants"],
   ];
   for (let i = 0; i < ages.length; i++) {
     const entry = ["" + ages[i], amount[i]];
+    data.push(entry);
+  }
+  return data;
+}
+
+function getBooksByAuthorData(authorRecords) {
+  let authorItems = authorRecords;
+  let bnCategory = [];
+  let amount = [];
+  authorItems.map(author => {
+    const numberOfBooks = author.numberOfBooks;
+    let findIdx = bnCategory.filter(aa => aa == numberOfBooks)[0];
+    if (findIdx) {
+      const findAgeIdx = bnCategory.indexOf(numberOfBooks);
+      amount[findAgeIdx] += 1;
+    } else {
+      bnCategory.push(numberOfBooks);
+      amount.push(1);
+    }
+  });
+  let data = [
+    ["Books number", "Authors in this group"],
+  ];
+  for (let i = 0; i < bnCategory.length; i++) {
+    const entry = ["" + bnCategory[i], amount[i]];
     data.push(entry);
   }
   return data;
@@ -164,16 +217,27 @@ export function getBooksBarChartOptions(kind) {
   return options;
 }
 
+export function getAuthorsBarChartOptions(kind) {
+  if (kind && kind === "author-age")
+    return optionsBarChartAuthorAge;
+  if (kind && kind === "books-by-author")
+    return optionsBarChartBooksByAuthor;
+  return options;
+}
+
 function getAuthorsData(kind, authorRecords) {
-  if (kind && kind === "author-age") {
+  if (kind && kind === "author-age")
     return getAuthorAgeData(authorRecords);
-  }
+  if (kind && kind === "books-by-author")
+    return getBooksByAuthorData(authorRecords);
   return data;
 }
 
 function getAuthorsCaption(kind) {
   if (kind && kind === "author-age")
     return optionsAuthorAge;
+  if (kind && kind === "books-by-author")
+    return optionsBooksByAuthor;
   return options;
 }
 
