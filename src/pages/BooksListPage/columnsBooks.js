@@ -43,31 +43,43 @@ export function getColumns(mouseClickBook) {
             accessor: 'year',
             Filter: TableColumnFilter,
             sortType: 'basic',
+            Cell: (row: CellProps<any>) => {
+                return <center>{row.cell.value}</center>;
+            },
         },
         {
-            Header: 'View',
+            Header: 'Num.',
+            accessor: 'numOfAuthors',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
+            Cell: (row: CellProps<any>) => {
+                return <center>{row.cell.value} authors</center>;
+            },
+        },
+        {
+            Header: '</>',
             accessor: 'view',
             Filter: TableColumnNotFilterable,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
-                return <span id={obj}
+                return <center id={obj}
                     className={aboveBookId === obj ? "contextBookOp above" : "contextBookOp"}
                     onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
-                >View</span>;
+                >View</center>;
             },
         },
         {
-            Header: 'Edit',
+            Header: '</>',
             accessor: 'edit',
             Filter: TableColumnNotFilterable,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
-                return <span id={obj}
+                return <center id={obj}
                     className={aboveBookId === obj ? "contextBookOp above" : "contextBookOp"}
                     onMouseOver={mouseOverBook} onMouseOut={mouseOutBook} onClick={mouseClickBook}
-                >Edit</span>;
+                >Edit</center>;
             },
         },
         {
@@ -80,7 +92,7 @@ export function getColumns(mouseClickBook) {
             },
         },
         {
-            Header: 'Delete',
+            Header: '</>',
             accessor: 'delete',
             Filter: TableColumnNotFilterable,
             sortType: 'basic',

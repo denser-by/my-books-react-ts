@@ -3,6 +3,7 @@ import { AppointmentService } from "../appointment/appointment.service";
 import { CreateAppointmentDto } from "../appointment/dto/CreateAppointmentDto";
 import { AuthorService } from "../author/author.service";
 import { CreateAuthorDto } from "../author/dto/CreateAuthorDto";
+import { AuthorbookService } from "../authorbook/authorbook.service";
 import { BookService } from "../book/book.service";
 import { CreateBookDto } from "../book/dto/CreateBookDto";
 import { CityService } from "../city/city.service";
@@ -314,9 +315,10 @@ export class ServiceData {
 function basePoint() {
     let ims = new ImageService();
     let aus = new AuthorService(ims);
+    let auboos = new AuthorbookService();
     let sd = new ServiceData(
         aus,
-        new BookService(ims, aus),
+        new BookService(ims, auboos, aus),
         ims,
         new AppointmentService(ims),
         new CityService(ims),

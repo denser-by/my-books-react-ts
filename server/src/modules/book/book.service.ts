@@ -1,20 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { AuthorService } from '../author/author.service';
+import { AuthorbookService } from '../authorbook/authorbook.service';
 import { CreateImageDto } from '../image/dto/CreateImageDto';
 import { ImageService } from '../image/image.service';
 import { CreateBookDto } from './dto/CreateBookDto';
 const book = require('../../../models/index.js').Book;
+const authorbook = require('../../../models/index.js').AuthorBook;
+const author = require('../../../models/index.js').Author;
 
 @Injectable()
 export class BookService {
 
     constructor(
         private readonly imageService: ImageService,
+        private readonly authorbookService: AuthorbookService,
         private readonly authorService: AuthorService
     ) { }
 
     async create(bookCreate: CreateBookDto): Promise<CreateBookDto> {
-        // console.log('CREATE - ' + JSON.stringify(bookCreate));
         try {
             var cover_img_id = -1;
             if (bookCreate.cover_img_data != null && bookCreate.cover_img_data.length > 0) {
@@ -44,11 +47,12 @@ export class BookService {
                 cover_img: cover_img_id,
                 access_key: bookCreate.access_key
             });
-
             if (bookCreate.authors != null && bookCreate.authors.length > 0) {
                 for (let i = 0; i < bookCreate.authors.length; i++) {
-                    const authorRef = await this.authorService.getOne(Number("" + bookCreate.authors[i]));
-                    // console.log('AUTHOR ref - ' + JSON.stringify(authorRef));   
+                    const authorbookRel = await authorbook.create({
+                        book: createdBook.id,
+                        author: bookCreate.authors[i]
+                    });
                 }
             }
             return createdBook;
@@ -59,8 +63,12 @@ export class BookService {
 
     async getAll(): Promise<CreateBookDto[]> {
         var { count, rows } = await book.findAndCountAll({});
-        if (count >= 1)
-            return rows;
+        if (count >= 1) {
+            let result = [];
+            for (let i = 0; i < rows.length; i++)
+                result.push(await this.prepareDtoFromEntity(rows[i], false));
+            return result;
+        }
         return [];
     }
 
@@ -90,7 +98,7 @@ export class BookService {
         if (name != null && name != undefined && name.length > 0) {
             var { count, rows } = await book.findAndCountAll({ where: { name: name } });
             if (count > 0)
-                return await this.prepareDtoFromEntity(rows[0]);
+                return await this.prepareDtoFromEntity(rows[0], true);
         }
         return null;
     }
@@ -101,21 +109,29 @@ export class BookService {
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
-        return await this.prepareDtoFromEntity(rows[0]);
+        return await this.prepareDtoFromEntity(rows[0], true);
     }
 
-    private async prepareDtoFromEntity(bookRef: any): Promise<CreateBookDto> {
+    private async prepareDtoFromEntity(bookRef: any, withImages: boolean): Promise<CreateBookDto> {
         let result = new CreateBookDto();
         result.id = bookRef.id;
         result.name = bookRef.name;
         result.info = bookRef.info;
         result.year = bookRef.year;
-        result.authors = [];
+        result.authors = await this.authorbookService.getAllByBookArrayId(bookRef.id);
+        result.authorNames = [];
+        for (let i = 0; i < result.authors.length; i++) {
+            let authorId = Number(result.authors[i]);
+            var { count, rows } = await author.findAndCountAll({ where: { id: authorId } });
+            if (count != 1)
+                throw new Error('Object not found, ID=' + authorId);
+            result.authorNames.push(rows[0].name);
+        }
         result.cover_img_path = '';
         result.access_key = bookRef.access_key;
         result.cover_img_data = '';
         result.updatedAt = bookRef.updatedAt;
-        if (bookRef.cover_img != null && bookRef.cover_img > 0) {
+        if (withImages && bookRef.cover_img != null && bookRef.cover_img > 0) {
             var imageRef = this.imageService.getOne(bookRef.cover_img);
             result.cover_img_data = (await imageRef).mini_copy;
             result.cover_img_path = (await imageRef).path;
