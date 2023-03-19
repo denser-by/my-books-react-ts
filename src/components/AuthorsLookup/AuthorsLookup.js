@@ -41,7 +41,7 @@ export function AuthorsLookup({ authorsSelected, onAuthorsSelected, caption, aut
             </span>
             <span className='authorLookupTable'>
                 <TableCompon columnItems={columnItems} dataItems={listAuthorItems} curPageSize={authorPageState.pageSize} curPageIndex={authorPageState.pageNumber}
-                    cssRowH='booksListHeader' cssCellH='booksListHeaderItem' cssRow='booksListItem' cssCell='booksInfoItem' cssTable='importTable' />
+                    cssRowH='booksListHeader' cssCellH='booksListHeaderItem' cssRow='booksListItem' cssCell='booksInfoItem' cssTable='importLookupAuthorsTable' />
             </span>
         </span>
     )

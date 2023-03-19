@@ -1,12 +1,10 @@
 .authorLookupTable {
     width: 321px;
-    /* height: 400px; */
-    /* background-color: blue; */
     position: relative;
     display: inline;
 }
 
-.importTable {
+.importLookupAuthorsTable {
     flex-direction: column;
     position: flex;
     display: inline-block;

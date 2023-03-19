@@ -7,6 +7,7 @@ import axios from 'axios';
 import DateCompon from '../../components/SelectDate/DateCompon.js';
 import { fineDateShort } from './../common.js';
 import { getImageAuthor } from './../pictureSupport.js';
+import { BookLookup } from '../../components/BookLookup/BookLookup.js';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
@@ -17,6 +18,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         name: '',
         age: '',
         books: [],
+        bookNames: [],
         info: '',
         photo_path: '',
         photo_data: ''
@@ -97,11 +99,20 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setAgeModified(true);
     }
 
-    function handleBooksChange(event) {
-        let newBooks = [event.target.value];
-        console.log('books change ' + newBooks);
-        setStateBooks(newBooks);
-        setState({ books: newBooks });
+    function handleBooksChange(newBookId, newBookName) {
+        author.books.push(newBookId);
+        author.bookNames.push(newBookName);
+
+        var text = "";
+        author.bookNames.map(name => {
+            if (text.length < 1)
+                text += name;
+            else
+                text += '\n' + name;
+        });
+
+        setStateBooks(text);
+        setState({ books: author.books });
         setBooksModified(true);
     }
 
@@ -213,7 +224,8 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     const [ageSelectedModified, setAgeSelectedModified] = React.useState(false);
 
     const [bookPick, setBookPick] = React.useState(false);
-    const [bookSelected, setBookSelected] = React.useState();
+    const [bookSelected, setBookSelected] = React.useState([]);
+    const [bookSelectedModified, setBookSelectedModified] = React.useState(false);
 
     function onAgeSelect(res) {
         setAgePick(false);
@@ -226,11 +238,20 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setAgeSelectedModified(false);
     }
 
+    function onBookSelected(bookId, bookName) {
+        setBookPick(false);
+        handleBooksChange(bookId, bookName);
+    }
+
     function onAuthorAgeToogle() {
+        if (bookPick)
+            setBookPick(false);
         setAgePick(!agePick);
     }
 
     function onAuthorBookToogle() {
+        if (agePick)
+            setAgePick(false);
         setBookPick(!bookPick);
     }
 
@@ -257,7 +278,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             }) => (
                                 <img className="pictureSrc"
                                     onClick={!edit ? onImageUploadViewMode : onImageUpload}
-                                    alt="Place for author's photo_path..."
+                                    alt="Place for author's photo..."
                                     src={imageUploaded ? myImage : (isPhotoPathDefined() ? getImageAuthor(author) : myImage)} />
                             )}
                         </ImageUploading>
@@ -287,6 +308,12 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{ageModified ? stateAge : author.age}</span>
                         </span>
                         <span className={create || edit ? "author-info high" : "author-info"}>
+                            <BookLookup
+                                bookSelected={bookSelected}
+                                onBookSelected={onBookSelected}
+                                caption={"Looking for this author's book"}
+                                bookPick={bookPick}
+                            />
                             <span className="author-info-label">Publications</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
                                 <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"

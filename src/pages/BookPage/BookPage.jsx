@@ -258,10 +258,14 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     }
 
     function onBookYearToogle() {
+        if (authorPick)
+            setAuthorPick(false);
         setDatePick(!datePick);
     }
 
     function onBookAuthorToogle() {
+        if (datePick)
+            setDatePick(false);
         setAuthorPick(!authorPick);
     }
 
