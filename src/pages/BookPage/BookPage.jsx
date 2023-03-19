@@ -35,7 +35,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         name: entireBody.name,
                         year: entireBody.year != null ? entireBody.year : '',
                         authors: entireBody.authors,
-                        authorNames: [],
+                        authorNames: entireBody.authorNames,
                         info: entireBody.info,
                         cover_img_path: entireBody.cover_img_path,
                         cover_img_data: entireBody.cover_img_data
@@ -156,6 +156,11 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         console.log('no editing');
     }
 
+    function transferAuthorsState() {
+        book.authors = state.authors;
+        book.authorNames = ("" + stateAuthors).split("\n");
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
         // book.name = state.name;
@@ -168,7 +173,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         if (yearModified)
             book.year = stateYear;
         if (authorsModified)
-            book.authors = stateAuthors;
+            transferAuthorsState();
         if (infoModified)
             book.info = stateInfo;
         if (imageUploaded) {

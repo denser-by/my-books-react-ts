@@ -28,6 +28,11 @@ export class CreateBookDto {
     @ApiProperty({ required: false })
     authors: string[];
 
+    @IsArray()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    authorNames: string[];
+
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })

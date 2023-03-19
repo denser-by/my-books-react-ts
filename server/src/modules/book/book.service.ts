@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AuthorService } from '../author/author.service';
 import { CreateImageDto } from '../image/dto/CreateImageDto';
 import { ImageService } from '../image/image.service';
 import { CreateBookDto } from './dto/CreateBookDto';
@@ -7,9 +8,13 @@ const book = require('../../../models/index.js').Book;
 @Injectable()
 export class BookService {
 
-    constructor(private readonly imageService: ImageService) { }
+    constructor(
+        private readonly imageService: ImageService,
+        private readonly authorService: AuthorService
+    ) { }
 
     async create(bookCreate: CreateBookDto): Promise<CreateBookDto> {
+        // console.log('CREATE - ' + JSON.stringify(bookCreate));
         try {
             var cover_img_id = -1;
             if (bookCreate.cover_img_data != null && bookCreate.cover_img_data.length > 0) {
@@ -32,14 +37,21 @@ export class BookService {
                     let imageResult = await this.imageService.create(imageDto3);
                     cover_img_id = imageResult.id;
                 }
-            let value = await book.create({
+            let createdBook = await book.create({
                 name: bookCreate.name,
                 info: bookCreate.info,
                 year: bookCreate.year,
                 cover_img: cover_img_id,
                 access_key: bookCreate.access_key
             });
-            return value;
+
+            if (bookCreate.authors != null && bookCreate.authors.length > 0) {
+                for (let i = 0; i < bookCreate.authors.length; i++) {
+                    const authorRef = await this.authorService.getOne(Number("" + bookCreate.authors[i]));
+                    // console.log('AUTHOR ref - ' + JSON.stringify(authorRef));   
+                }
+            }
+            return createdBook;
         } catch (e) {
             throw new Error('Can not create Book, ' + e);
         }
