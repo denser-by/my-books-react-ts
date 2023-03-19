@@ -35,6 +35,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         name: entireBody.name,
                         year: entireBody.year != null ? entireBody.year : '',
                         authors: entireBody.authors,
+                        authorNames: [],
                         info: entireBody.info,
                         cover_img_path: entireBody.cover_img_path,
                         cover_img_data: entireBody.cover_img_data

@@ -74,13 +74,25 @@ export class AuthorService {
         return null;
     }
 
+    async getOneByName(name: string): Promise<CreateAuthorDto> {
+        if (name != null && name != undefined && name.length > 0) {
+            var { count, rows } = await author.findAndCountAll({ where: { name: name } });
+            if (count > 0)
+                return await this.prepareDtoFromEntity(rows[0]);
+        }
+        return null;
+    }
+
     async getOne(id: number): Promise<CreateAuthorDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
-        var authorRef = rows[0];
+        return await this.prepareDtoFromEntity(rows[0]);
+    }
+
+    private async prepareDtoFromEntity(authorRef: any): Promise<CreateAuthorDto> {
         let result = new CreateAuthorDto();
         result.id = authorRef.id;
         result.name = authorRef.name;

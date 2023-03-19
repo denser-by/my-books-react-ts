@@ -36,6 +36,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         name: entireBody.name,
                         age: entireBody.age != null ? fineDateShort(new Date(entireBody.age)) : '',
                         books: entireBody.books,
+                        bookNames: [],
                         info: entireBody.info,
                         photo_path: entireBody.photo_path,
                         photo_data: entireBody.photo_data
