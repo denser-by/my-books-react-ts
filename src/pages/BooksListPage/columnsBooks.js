@@ -1,26 +1,27 @@
 import { Cell, CellProps } from 'react-table';
 import { TableColumnFilter } from '../../components/TableColumnFilter.js';
 
-var aboveBookId = '';
-var aboveBookTarget = null;
-function setAboveBook(param, target) {
-    aboveBookId = param;
-    if (aboveBookTarget != null)
-        aboveBookTarget.className = 'contextBookOp';
-    aboveBookTarget = target;
-}
-
-function mouseOverBook(e) {
-    setAboveBook(e.target.id, e.target);
-    e.target.className = 'contextBookOp above';
-}
-
-function mouseOutBook(e) {
-    setAboveBook('', e.target);
-    e.target.className = 'contextBookOp';
-}
-
 export function getColumns(mouseClickBook) {
+
+    var aboveBookId = '';
+    var aboveBookTarget = null;
+    function setAboveBook(param, target) {
+        aboveBookId = param;
+        if (aboveBookTarget != null)
+            aboveBookTarget.className = 'contextBookOp';
+        aboveBookTarget = target;
+    }
+
+    function mouseOverBook(e) {
+        setAboveBook(e.target.id, e.target);
+        e.target.className = 'contextBookOp above';
+    }
+
+    function mouseOutBook(e) {
+        setAboveBook('', e.target);
+        e.target.className = 'contextBookOp';
+    }
+
     const COLUMNS = [
         {
             Header: '№',

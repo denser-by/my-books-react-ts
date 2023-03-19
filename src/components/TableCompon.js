@@ -99,7 +99,21 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
     );
 }
 
-function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRowH, cssCellH, cssRow, cssCell, cssFooter }) {
+function TableComponFooter({ pageSize, setPageSize, canPreviousPage, canNextPage, pageCount, pageIndex, pageOptions, previousPage, nextPage, gotoPage, cssFooter, numOfTableItems }) {
+    return (
+        cssFooter ?
+            <span className={(cssFooter || '') + " tableFooter"}>
+                <TablePages pageSizeCurrent={pageSize} setPageSizeCurrent={setPageSize} />
+                <TablePageSeqence canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageCount={pageCount} pageIndex={pageIndex}
+                    pageOptions={pageOptions} previousPage={previousPage} nextPage={nextPage} gotoPage={gotoPage} />
+                <TableRecordCount pageSizeCurrent={pageSize} pageCount={pageCount} justCount={numOfTableItems} />
+            </span>
+            :
+            <span></span>
+    );
+}
+
+function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRowH, cssCellH, cssRow, cssCell, cssFooter, cssTable }) {
     const numOfTableItems = dataItems.length;
     let columns = columnItems;
     let data = dataItems;
@@ -130,19 +144,15 @@ function TableCompon({ columnItems, dataItems, curPageSize, curPageIndex, cssRow
     )
 
     return (
-        <span className="entireTable">
+        <span className={cssTable ? cssTable : "entireTable"}>
             <span className="tableHeaderBody">
                 <TableItem getTableProps={getTableProps} headerGroups={headerGroups} getTableBodyProps={getTableBodyProps}
                     page={page} prepareRow={prepareRow} cssRowH={cssRowH} cssCellH={cssCellH} cssRow={cssRow} cssCell={cssCell} />
             </span>
-            <span className={(cssFooter || '') + " tableFooter"}>
-                <TablePages pageSizeCurrent={pageSize} setPageSizeCurrent={setPageSize} />
-                <TablePageSeqence canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageCount={pageCount} pageIndex={pageIndex}
-                    pageOptions={pageOptions} previousPage={previousPage} nextPage={nextPage} gotoPage={gotoPage} />
-                <TableRecordCount pageSizeCurrent={pageSize} pageCount={pageCount} justCount={numOfTableItems} />
-            </span>
+            <TableComponFooter pageSize={pageSize} setPageSize={setPageSize} canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageCount={pageCount} pageIndex={pageIndex}
+                pageOptions={pageOptions} previousPage={previousPage} nextPage={nextPage} gotoPage={gotoPage} cssFooter={cssFooter} numOfTableItems={numOfTableItems} />
         </span>
-    )
+    );
 }
 
 export default TableCompon;

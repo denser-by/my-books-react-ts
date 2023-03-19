@@ -6,6 +6,7 @@ import ImageUploading from 'react-images-uploading';
 import axios from 'axios';
 import { YearCompon, MonthCompon } from '../../components/SelectDate/DateCompon.js';
 import { getImageBook } from './../pictureSupport.js';
+import { AuthorsLookup } from '../../components/AuthorsLookup/AuthorsLookup.js';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -16,6 +17,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         name: '',
         year: '',
         authors: [],
+        authorNames: [],
         info: '',
         cover_img_path: '',
         cover_img_data: ''
@@ -97,11 +99,20 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setYearModified(true);
     }
 
-    function handleAuthorsChange(event) {
-        // book2.authors = event.target.value;
-        let newAuthors = [event.target.value];
-        setStateAuthors(newAuthors);
-        setState({ authors: newAuthors });
+    function handleAuthorsChange(newAuthorId, newAuthorName) {
+        book.authors.push(newAuthorId);
+        book.authorNames.push(newAuthorName);
+
+        var text = "";
+        book.authorNames.map(name => {
+            if (text.length < 1)
+                text += name;
+            else
+                text += '\n' + name;
+        });
+
+        setStateAuthors(text);
+        setState({ authors: book.authors });
         setAuthorsModified(true);
     }
 
@@ -228,7 +239,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     const [dateSelectedModified, setDateSelectedModified] = React.useState(false);
 
     const [authorPick, setAuthorPick] = React.useState(false);
-    const [authorSelected, setAuthorSelected] = React.useState();
+    const [authorsSelected, setAuthorsSelected] = React.useState([]);
+    const [authorsSelectedModified, setAuthorsSelectedModified] = React.useState(false);
 
     function onDateSelect(res) {
         setDatePick(false);
@@ -238,6 +250,11 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             },
         };
         handleYearChange(evt);
+    }
+
+    function onAuthorsSelected(authorId, authorName) {
+        setAuthorPick(false);
+        handleAuthorsChange(authorId, authorName);
     }
 
     function onBookYearToogle() {
@@ -313,6 +330,12 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{yearModified ? stateYear : book.year}</span>
                         </span>
                         <span className={create || edit ? "book-info high" : "book-info"}>
+                            <AuthorsLookup
+                                authorsSelected={authorsSelected}
+                                onAuthorsSelected={onAuthorsSelected}
+                                caption={"Looking for this book's authors"}
+                                authorPick={authorPick}
+                            />
                             <span className="book-info-label">Authors</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
                                 <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
