@@ -35,9 +35,9 @@ const BookStatPage = ({ pr, kind }) => {
   return (
     <span className="statPage">
       <span className='statFrame0'>
-        <span className='statMode'><nobr><strong>book-year</strong></nobr></span>
+        <span className='statMode'><nobr><strong>Publishing</strong></nobr></span>
         <Slider defaultValue={0} step={1} marks min={0} max={1} onChangeCommitted={(a, b) => { sliderMoves(a, b) }} />
-        <span className='statMode'><nobr><strong>alpha-book</strong></nobr></span>
+        <span className='statMode'><nobr><strong>Catalog</strong></nobr></span>
       </span>
       <table width="100%">
         <tr>

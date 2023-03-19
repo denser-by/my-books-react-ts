@@ -20,8 +20,9 @@ const AuthorStatPage = ({ pr, kind }) => {
         var authorItems = [];
         entireBody.map(authorItem => {
           authorItems.push({
-            year: authorItem.year,
+            age: "" + new Date(authorItem.age).getFullYear(),
             name: authorItem.name,
+            numberOfBooks: (1 + (authorItems.length % 5)),
           });
         })
         setData(getAuthorsData(authorStatPageKind, authorItems))
@@ -35,9 +36,9 @@ const AuthorStatPage = ({ pr, kind }) => {
   return (
     <span className="statPageAuthors">
       <span className='statAuthorsFrame0'>
-        <span className='statModeAuthors'><nobr><strong>author-age</strong></nobr></span>
+        <span className='statModeAuthors'><nobr><strong>Ages</strong></nobr></span>
         <Slider defaultValue={0} step={1} marks min={0} max={1} onChangeCommitted={(a, b) => { sliderMoves(a, b) }} />
-        <span className='statModeAuthors'><nobr><strong>books-by-author</strong></nobr></span>
+        <span className='statModeAuthors'><nobr><strong>Books</strong></nobr></span>
       </span>
       <table width="100%">
         <tr>
