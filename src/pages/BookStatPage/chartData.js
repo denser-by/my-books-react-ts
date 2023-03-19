@@ -52,6 +52,30 @@ export const optionsBarChartAlphabet = {
   }
 };
 
+export const optionsBarChartAuthorAge = {
+  title: "Adult category",
+  chartArea: { width: '73%' },
+  hAxis: {
+    title: "Same age representatives",
+    minValue: 0,
+  },
+  vAxis: {
+    title: "Authors ages",
+  }
+};
+
+export const optionsBarChartBooksByAuthor = {
+  title: "Publishing success",
+  chartArea: { width: '73%' },
+  hAxis: {
+    title: "Authors with same books number",
+    minValue: 0,
+  },
+  vAxis: {
+    title: "Total number of books in a group",
+  }
+};
+
 // [
 //   ["Task","Hours per Day"],
 //   ["1999","3"],
@@ -90,7 +114,7 @@ function getAlphaBookData(bookItems) {
   let az = [];
   let amount = [];
   bookItems.map(book => {
-    const alpha = (""+book.name.charAt(0)).toUpperCase();
+    const alpha = ("" + book.name.charAt(0)).toUpperCase();
     let findAlpha = az.filter(yy => yy == alpha)[0];
     if (findAlpha) {
       const findAlphaIdx = az.indexOf(alpha);
@@ -139,6 +163,14 @@ function getAuthorAgeData(authorRecords) {
   return data;
 }
 
+function getBooksByAuthorData(authorRecords) {
+  let data = [
+    ["Books number", "Authors in this group"],
+  ];
+
+  return data;
+}
+
 function getBooksData(kind, bookItems) {
   if (kind && kind === "book-year") {
     return getBookYearData(bookItems);
@@ -164,10 +196,19 @@ export function getBooksBarChartOptions(kind) {
   return options;
 }
 
+export function getAuthorsBarChartOptions(kind) {
+  if (kind && kind === "author-age")
+    return optionsBarChartAuthorAge;
+  if (kind && kind === "books-by-author")
+    return optionsBarChartBooksByAuthor;
+  return options;
+}
+
 function getAuthorsData(kind, authorRecords) {
-  if (kind && kind === "author-age") {
+  if (kind && kind === "author-age")
     return getAuthorAgeData(authorRecords);
-  }
+  if (kind && kind === "books-by-author")
+    return getBooksByAuthorData(authorRecords);
   return data;
 }
 

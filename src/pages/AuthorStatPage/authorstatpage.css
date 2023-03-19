@@ -1,14 +1,56 @@
 .authorsStatShape {
-    /* padding: 20px; */
     display: inline-flex;
     flex-direction: column;
-    background-color: #f8f4e4;
+    background-color: #fefaef;
 }
 
 .pcAuthors {
-    background-color: #33ff99;padding: 2px;
-    /* color: red; margin: 2px; */
+    background-color: #fefaef;
     font-weight: 700;
-    
+    border: 2px #f8f4e4 solid;
+    display: inline-table;
+    position: relative;
+}
 
+.statPageAuthors {
+    position: absolute;
+    left: 15%;
+    display: inline-flex;
+    flex-direction: column;
+    z-index: 1;
+    padding: 1px;
+    width: 85%;
+    align-items: center;
+    justify-content: center;
+}
+
+.statAuthorsFrame {
+    align-items: center;
+    position: absolute;
+    display: inline-flexbox;
+    width: 49%;
+    justify-content: center;
+}
+
+.statAuthorsFrame2 {
+    align-items: center;
+    position: relative;
+    display: inline-flexbox;
+    width: 49%;
+    justify-content: center;
+}
+
+.statAuthorsFrame0 {
+    width: 96%;
+    padding: 4px;
+    justify-content: center;
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.statModeAuthors {
+    padding-left: 30px;
+    padding-right: 30px;
+    align-items: center;
+    text-align: center;
 }
