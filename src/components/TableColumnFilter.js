@@ -14,3 +14,11 @@ export const TableColumnFilter = ({ column }) => {
         </span>
     );
 };
+
+export const TableColumnNotFilterable = ({ column }) => {
+    const { filterValue, setFilter } = column;
+
+    return (
+        <span></span>
+    );
+}

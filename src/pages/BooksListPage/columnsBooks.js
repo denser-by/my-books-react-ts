@@ -1,5 +1,5 @@
 import { Cell, CellProps } from 'react-table';
-import { TableColumnFilter } from '../../components/TableColumnFilter.js';
+import { TableColumnFilter, TableColumnNotFilterable } from '../../components/TableColumnFilter.js';
 
 export function getColumns(mouseClickBook) {
 
@@ -47,7 +47,7 @@ export function getColumns(mouseClickBook) {
         {
             Header: 'View',
             accessor: 'view',
-            Filter: TableColumnFilter,
+            Filter: TableColumnNotFilterable,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
@@ -60,7 +60,7 @@ export function getColumns(mouseClickBook) {
         {
             Header: 'Edit',
             accessor: 'edit',
-            Filter: TableColumnFilter,
+            Filter: TableColumnNotFilterable,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
@@ -82,7 +82,7 @@ export function getColumns(mouseClickBook) {
         {
             Header: 'Delete',
             accessor: 'delete',
-            Filter: TableColumnFilter,
+            Filter: TableColumnNotFilterable,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
@@ -94,4 +94,4 @@ export function getColumns(mouseClickBook) {
         },
     ];
     return COLUMNS;
-};
+}

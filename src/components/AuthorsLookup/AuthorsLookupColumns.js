@@ -1,5 +1,5 @@
 import { Cell, CellProps } from 'react-table';
-import { TableColumnFilter } from '../TableColumnFilter.js';
+import { TableColumnFilter, TableColumnNotFilterable } from '../TableColumnFilter.js';
 
 export function getAuthorLookupColumns(mouseClickAuthor) {
 
@@ -32,7 +32,7 @@ export function getAuthorLookupColumns(mouseClickAuthor) {
         {
             Header: 'Select',
             accessor: 'select',
-            Filter: TableColumnFilter,
+            Filter: TableColumnNotFilterable,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const rcv = "" + row.cell.value;
