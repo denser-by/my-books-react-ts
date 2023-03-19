@@ -47,13 +47,16 @@ export function getColumns(mouseClickAuthor) {
             },
         },
         {
-            Header: 'Books',
+            Header: 'Num.',
             accessor: 'numOfBooks',
             Filter: TableColumnFilter,
             sortType: 'basic',
+            Cell: (row: CellProps<any>) => {
+                return <center>{row.cell.value} books</center>;
+            },
         },
         {
-            Header: 'View',
+            Header: '</>',
             accessor: 'view',
             Filter: TableColumnNotFilterable,
             sortType: 'basic',
@@ -66,7 +69,7 @@ export function getColumns(mouseClickAuthor) {
             },
         },
         {
-            Header: 'Edit',
+            Header: '</>',
             accessor: 'edit',
             Filter: TableColumnNotFilterable,
             sortType: 'basic',
@@ -88,7 +91,7 @@ export function getColumns(mouseClickAuthor) {
             },
         },
         {
-            Header: 'Delete',
+            Header: '</>',
             accessor: 'delete',
             Filter: TableColumnNotFilterable,
             sortType: 'basic',

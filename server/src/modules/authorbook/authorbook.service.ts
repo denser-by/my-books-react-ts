@@ -40,7 +40,17 @@ export class AuthorbookService {
         var { count, rows } = await authorbook.findAndCountAll({ where: { book: book } });
         if (count >= 1) {
             let result = [];
-            rows.map(item => {result.push(""+item.author);});
+            rows.map(item => { result.push("" + item.author); });
+            return result;
+        }
+        return [];
+    }
+
+    async getAllByAuthorArrayId(author: number): Promise<string[]> {
+        var { count, rows } = await authorbook.findAndCountAll({ where: { author: author } });
+        if (count >= 1) {
+            let result = [];
+            rows.map(item => { result.push("" + item.book); });
             return result;
         }
         return [];

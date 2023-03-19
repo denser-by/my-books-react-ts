@@ -314,8 +314,8 @@ export class ServiceData {
 
 function basePoint() {
     let ims = new ImageService();
-    let aus = new AuthorService(ims);
     let auboos = new AuthorbookService();
+    let aus = new AuthorService(ims, auboos);
     let sd = new ServiceData(
         aus,
         new BookService(ims, auboos, aus),

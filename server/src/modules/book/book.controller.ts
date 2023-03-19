@@ -2,6 +2,8 @@ import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, Param, Parse
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateBookDto } from './dto/CreateBookDto';
 import { BookService } from './book.service';
+import { GetOneBookDto } from './dto/GetOneBookDto';
+import { GetManyBookDto } from './dto/GetManyBookDto';
 
 @Controller('books')
 export class BookController {
@@ -18,18 +20,18 @@ export class BookController {
     @Get()
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateBookDto, isArray: true })
+    @ApiOkResponse({ type: GetManyBookDto, isArray: true })
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
-    ): Promise<CreateBookDto[]> {
+    ): Promise<GetManyBookDto[]> {
         return this.bookService.getAll();
     }
 
     @Get(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateBookDto })
-    async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateBookDto> {
+    @ApiOkResponse({ type: GetOneBookDto })
+    async getOne(@Param('id', ParseIntPipe) id: number): Promise<GetOneBookDto> {
         return this.bookService.getOne(id);
     }
 
@@ -44,8 +46,8 @@ export class BookController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateBookDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateBookDto> {
+    @ApiOkResponse({ type: GetOneBookDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneBookDto> {
         return this.bookService.delete(id);
     }
 }

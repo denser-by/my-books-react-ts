@@ -4,6 +4,8 @@ import { AuthorbookService } from '../authorbook/authorbook.service';
 import { CreateImageDto } from '../image/dto/CreateImageDto';
 import { ImageService } from '../image/image.service';
 import { CreateBookDto } from './dto/CreateBookDto';
+import { GetManyBookDto } from './dto/GetManyBookDto';
+import { GetOneBookDto } from './dto/GetOneBookDto';
 const book = require('../../../models/index.js').Book;
 const authorbook = require('../../../models/index.js').AuthorBook;
 const author = require('../../../models/index.js').Author;
@@ -61,7 +63,7 @@ export class BookService {
         }
     }
 
-    async getAll(): Promise<CreateBookDto[]> {
+    async getAll(): Promise<GetManyBookDto[]> {
         var { count, rows } = await book.findAndCountAll({});
         if (count >= 1) {
             let result = [];
@@ -72,11 +74,11 @@ export class BookService {
         return [];
     }
 
-    async size() {
+    async size(): Promise<number> {
         return await book.count();
     }
 
-    async hasOne(id: number) {
+    async hasOne(id: number): Promise<boolean> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
@@ -94,7 +96,7 @@ export class BookService {
         return null;
     }
 
-    async getOneByName(name: string): Promise<CreateBookDto> {
+    async getOneByName(name: string): Promise<GetOneBookDto> {
         if (name != null && name != undefined && name.length > 0) {
             var { count, rows } = await book.findAndCountAll({ where: { name: name } });
             if (count > 0)
@@ -103,7 +105,7 @@ export class BookService {
         return null;
     }
 
-    async getOne(id: number): Promise<CreateBookDto> {
+    async getOne(id: number): Promise<GetOneBookDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
@@ -112,8 +114,8 @@ export class BookService {
         return await this.prepareDtoFromEntity(rows[0], true);
     }
 
-    private async prepareDtoFromEntity(bookRef: any, withImages: boolean): Promise<CreateBookDto> {
-        let result = new CreateBookDto();
+    private async prepareDtoFromEntity(bookRef: any, withImages: boolean): Promise<GetOneBookDto> {
+        let result = new GetOneBookDto();
         result.id = bookRef.id;
         result.name = bookRef.name;
         result.info = bookRef.info;
@@ -130,7 +132,6 @@ export class BookService {
         result.cover_img_path = '';
         result.access_key = bookRef.access_key;
         result.cover_img_data = '';
-        result.updatedAt = bookRef.updatedAt;
         if (withImages && bookRef.cover_img != null && bookRef.cover_img > 0) {
             var imageRef = this.imageService.getOne(bookRef.cover_img);
             result.cover_img_data = (await imageRef).mini_copy;
@@ -179,7 +180,7 @@ export class BookService {
         return rows[0];
     }
 
-    async delete(id: number): Promise<CreateBookDto> {
+    async delete(id: number): Promise<GetOneBookDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });

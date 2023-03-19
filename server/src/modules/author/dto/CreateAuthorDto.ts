@@ -26,7 +26,7 @@ export class CreateAuthorDto {
     @IsArray()
     @IsOptional()
     @ApiProperty({ required: false })
-    books: number[];
+    books: string[];
 
     @IsString()
     @IsOptional()

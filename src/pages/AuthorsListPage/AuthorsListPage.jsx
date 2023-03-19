@@ -30,7 +30,7 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                         name: authorItem.name,
                         age: fineDateShort(new Date(authorItem.age)),
                         modified: fineDate(new Date(authorItem.updatedAt)),
-                        numOfBooks: authorItem.numOfBooks,
+                        numOfBooks: authorItem.books.length,
                         view: "/viewAuthor?id=" + authorItem.id,
                         edit: "/editAuthor?id=" + authorItem.id,
                         delete: "/deleteAuthor?id=" + authorItem.id

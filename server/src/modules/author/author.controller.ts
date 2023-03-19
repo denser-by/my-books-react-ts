@@ -2,6 +2,8 @@ import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, Param, Parse
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateAuthorDto } from './dto/CreateAuthorDto';
 import { AuthorService } from './author.service';
+import { GetOneAuthorDto } from './dto/GetOneAuthorDto';
+import { GetManyAuthorDto } from './dto/GetManyAuthorDto';
 
 @Controller('authors')
 export class AuthorController {
@@ -18,18 +20,18 @@ export class AuthorController {
     @Get()
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateAuthorDto, isArray: true })
+    @ApiOkResponse({ type: GetManyAuthorDto, isArray: true })
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
-    ): Promise<CreateAuthorDto[]> {
+    ): Promise<GetManyAuthorDto[]> {
         return this.authorService.getAll();
     }
 
     @Get(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateAuthorDto })
-    async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateAuthorDto> {
+    @ApiOkResponse({ type: GetOneAuthorDto })
+    async getOne(@Param('id', ParseIntPipe) id: number): Promise<GetOneAuthorDto> {
         return this.authorService.getOne(id);
     }
 
@@ -44,8 +46,8 @@ export class AuthorController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateAuthorDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateAuthorDto> {
+    @ApiOkResponse({ type: GetOneAuthorDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneAuthorDto> {
         return this.authorService.delete(id);
     }
 }

@@ -1,15 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
-export class CreateBookDto {
+export class GetManyBookDto {
     @IsNumber()
     @IsOptional()
     id: number;
 
     @IsString()
     @IsOptional()
-    // @IsNotEmpty({ message: 'This book ought to have name' })
-    // @Length(0, 255)
     @ApiProperty()
     name: string;
 

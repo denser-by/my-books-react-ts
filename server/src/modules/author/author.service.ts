@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { AuthorbookService } from '../authorbook/authorbook.service';
 import { CreateImageDto } from '../image/dto/CreateImageDto';
 import { ImageService } from '../image/image.service';
 import { CreateAuthorDto } from './dto/CreateAuthorDto';
+import { GetManyAuthorDto } from './dto/GetManyAuthorDto';
+import { GetOneAuthorDto } from './dto/GetOneAuthorDto';
 const author = require('../../../models/index.js').Author;
 
 @Injectable()
 export class AuthorService {
 
-    constructor(private readonly imageService: ImageService) { }
+    constructor(
+        private readonly imageService: ImageService,
+        private readonly authorbookService: AuthorbookService
+    ) { }
 
     async create(authorCreate: CreateAuthorDto): Promise<CreateAuthorDto> {
         try {
@@ -45,18 +51,22 @@ export class AuthorService {
         }
     }
 
-    async getAll(): Promise<CreateAuthorDto[]> {
+    async getAll(): Promise<GetManyAuthorDto[]> {
         var { count, rows } = await author.findAndCountAll({});
-        if (count >= 1)
-            return rows;
+        if (count >= 1) {
+            let result = [];
+            for (let i = 0; i < rows.length; i++)
+                result.push(await this.prepareDtoFromEntity(rows[i], false));
+            return result;
+        }
         return [];
     }
 
-    async size() {
+    async size(): Promise<number> {
         return await author.count();
     }
 
-    async hasOne(id: number) {
+    async hasOne(id: number): Promise<boolean> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
@@ -74,36 +84,43 @@ export class AuthorService {
         return null;
     }
 
-    async getOneByName(name: string): Promise<CreateAuthorDto> {
+    async getOneByName(name: string): Promise<GetOneAuthorDto> {
         if (name != null && name != undefined && name.length > 0) {
             var { count, rows } = await author.findAndCountAll({ where: { name: name } });
             if (count > 0)
-                return await this.prepareDtoFromEntity(rows[0]);
+                return await this.prepareDtoFromEntity(rows[0], true);
         }
         return null;
     }
 
-    async getOne(id: number): Promise<CreateAuthorDto> {
+    async getOne(id: number): Promise<GetOneAuthorDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
-        return await this.prepareDtoFromEntity(rows[0]);
+        return await this.prepareDtoFromEntity(rows[0], true);
     }
 
-    private async prepareDtoFromEntity(authorRef: any): Promise<CreateAuthorDto> {
-        let result = new CreateAuthorDto();
+    private async prepareDtoFromEntity(authorRef: any, withImages: boolean): Promise<GetOneAuthorDto> {
+        let result = new GetOneAuthorDto();
         result.id = authorRef.id;
         result.name = authorRef.name;
         result.info = authorRef.info;
         result.age = authorRef.age;
-        result.books = [];
+        result.books = await this.authorbookService.getAllByAuthorArrayId(authorRef.id);
+        result.bookNames = [];
+        for (let i = 0; i < result.books.length; i++) {
+            let bookId = Number(result.books[i]);
+            var { count, rows } = await author.findAndCountAll({ where: { id: bookId } });
+            if (count != 1)
+                throw new Error('Object not found, ID=' + bookId);
+            result.bookNames.push(rows[0].name);
+        }
         result.photo_path = '';
         result.access_key = authorRef.access_key;
         result.photo_data = '';
-        result.updatedAt = authorRef.updatedAt;
-        if (authorRef.photo != null && authorRef.photo > 0) {
+        if (withImages && authorRef.photo != null && authorRef.photo > 0) {
             var imageRef = this.imageService.getOne(authorRef.photo);
             result.photo_data = (await imageRef).mini_copy;
             result.photo_path = (await imageRef).path;
@@ -151,7 +168,7 @@ export class AuthorService {
         return rows[0];
     }
 
-    async delete(id: number): Promise<CreateAuthorDto> {
+    async delete(id: number): Promise<GetOneAuthorDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });

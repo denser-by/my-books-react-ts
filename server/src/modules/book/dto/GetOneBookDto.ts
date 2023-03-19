@@ -1,15 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
-export class CreateBookDto {
+export class GetOneBookDto {
     @IsNumber()
     @IsOptional()
     id: number;
 
     @IsString()
     @IsOptional()
-    // @IsNotEmpty({ message: 'This book ought to have name' })
-    // @Length(0, 255)
     @ApiProperty()
     name: string;
 
@@ -28,6 +26,11 @@ export class CreateBookDto {
     @ApiProperty({ required: false })
     authors: string[];
 
+    @IsArray()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    authorNames: string[];
+
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
@@ -42,9 +45,4 @@ export class CreateBookDto {
     @IsOptional()
     @ApiProperty({ required: false })
     cover_img_data: string;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ required: false })
-    updatedAt: string;
 }
