@@ -37,16 +37,13 @@ input {
 .contextBtnsColumn {
     display: inline-flex;
     flex-direction: column;
-    margin: 3px;
     background-color: white;
     height: 50%;
     padding-bottom: 5px;
-    padding-right: 5px;
 }
 
 .contextSameBtn {
     margin: 3px;
-    width: 100%;
 }
 
 .contextBtn {

@@ -8,7 +8,7 @@ import DateCompon from '../../components/SelectDate/DateCompon.js';
 import { fineDateShort } from './../common.js';
 import { getImageAuthor } from './../pictureSupport.js';
 import { BookLookup } from '../../components/BookLookup/BookLookup.js';
-import { TextListView } from '../../components/TextList/TextListCompon.js';
+import { TextListEdit, TextListView } from '../../components/TextList/TextListCompon.js';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
@@ -352,9 +352,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             />
                             <span className="author-info-label">Publications</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
-                                <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
-                                    className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
-                                    value={booksModified ? stateBooks : author.booksText} onChange={handleBooksChange} />
+                                <TextListEdit text={"" + (booksModified ? stateBooks : author.booksText)} className={!edit ? "ctrlHidden hight" : "fieldCurrent"} />
                                 <span className='contextBtnsColumn'>
                                     <Button type="button" className='contextSameBtn' onClick={onAuthorBookToogle}><strong>&lt;..&gt;</strong></Button>
                                     <Button type="button" className='contextSameBtn' onClick={onAuthorBookClear}>Clear</Button>

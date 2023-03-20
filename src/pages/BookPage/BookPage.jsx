@@ -7,7 +7,7 @@ import axios from 'axios';
 import { YearCompon, MonthCompon } from '../../components/SelectDate/DateCompon.js';
 import { getImageBook } from './../pictureSupport.js';
 import { AuthorsLookup } from '../../components/AuthorsLookup/AuthorsLookup.js';
-import { TextListView } from '../../components/TextList/TextListCompon.js';
+import { TextListEdit, TextListView } from '../../components/TextList/TextListCompon.js';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -378,9 +378,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             />
                             <span className="book-info-label">Authors</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
-                                <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
-                                    className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
-                                    value={authorsModified ? stateAuthors : book.authorsText} onChange={handleAuthorsChange} />
+                                <TextListEdit text={"" + (authorsModified ? stateAuthors : book.authorsText)} className={!edit ? "ctrlHidden hight" : "fieldCurrent"} />
                                 <span className='contextBtnsColumn'>
                                     <Button type="button" className='contextSameBtn' onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
                                     <Button type="button" className='contextSameBtn' onClick={onBookAuthorClear}>Clear</Button>
