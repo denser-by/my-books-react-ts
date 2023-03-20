@@ -68,7 +68,7 @@ export class BookService {
         if (count >= 1) {
             let result = [];
             for (let i = 0; i < rows.length; i++)
-                result.push(await this.prepareDtoFromEntity(rows[i], false));
+                result.push(await this.prepareDtoManyFromEntity(rows[i], false));
             return result;
         }
         return [];
@@ -112,6 +112,25 @@ export class BookService {
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
         return await this.prepareDtoFromEntity(rows[0], true);
+    }
+
+    private async prepareDtoManyFromEntity(bookRef: any, withImages: boolean): Promise<GetManyBookDto> {
+        let result = new GetManyBookDto();
+        result.id = bookRef.id;
+        result.name = bookRef.name;
+        result.info = bookRef.info;
+        result.year = bookRef.year;
+        result.authors = await this.authorbookService.getAllByBookArrayId(bookRef.id);
+        result.cover_img_path = '';
+        result.access_key = bookRef.access_key;
+        result.cover_img_data = '';
+        result.updatedAt = bookRef.updatedAt;
+        if (withImages && bookRef.cover_img != null && bookRef.cover_img > 0) {
+            var imageRef = this.imageService.getOne(bookRef.cover_img);
+            result.cover_img_data = (await imageRef).mini_copy;
+            result.cover_img_path = (await imageRef).path;
+        }
+        return result;
     }
 
     private async prepareDtoFromEntity(bookRef: any, withImages: boolean): Promise<GetOneBookDto> {

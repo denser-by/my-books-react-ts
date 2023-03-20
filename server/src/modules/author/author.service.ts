@@ -56,7 +56,7 @@ export class AuthorService {
         if (count >= 1) {
             let result = [];
             for (let i = 0; i < rows.length; i++)
-                result.push(await this.prepareDtoFromEntity(rows[i], false));
+                result.push(await this.prepareDtoManyFromEntity(rows[i], false));
             return result;
         }
         return [];
@@ -100,6 +100,25 @@ export class AuthorService {
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
         return await this.prepareDtoFromEntity(rows[0], true);
+    }
+
+    private async prepareDtoManyFromEntity(authorRef: any, withImages: boolean): Promise<GetManyAuthorDto> {
+        let result = new GetManyAuthorDto();
+        result.id = authorRef.id;
+        result.name = authorRef.name;
+        result.info = authorRef.info;
+        result.age = authorRef.age;
+        result.books = await this.authorbookService.getAllByAuthorArrayId(authorRef.id);
+        result.photo_path = '';
+        result.access_key = authorRef.access_key;
+        result.photo_data = '';
+        result.updatedAt = authorRef.updatedAt;
+        if (withImages && authorRef.photo != null && authorRef.photo > 0) {
+            var imageRef = this.imageService.getOne(authorRef.photo);
+            result.photo_data = (await imageRef).mini_copy;
+            result.photo_path = (await imageRef).path;
+        }
+        return result;
     }
 
     private async prepareDtoFromEntity(authorRef: any, withImages: boolean): Promise<GetOneAuthorDto> {
