@@ -8,6 +8,7 @@ import DateCompon from '../../components/SelectDate/DateCompon.js';
 import { fineDateShort } from './../common.js';
 import { getImageAuthor } from './../pictureSupport.js';
 import { BookLookup } from '../../components/BookLookup/BookLookup.js';
+import { TextListView } from '../../components/TextList/TextListCompon.js';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
@@ -26,6 +27,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         age: '',
         books: [],
         bookNames: [],
+        booksText: '',
         info: '',
         photo_path: '',
         photo_data: ''
@@ -46,10 +48,12 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             age: entireBody.age != null ? fineDateShort(new Date(entireBody.age)) : '',
                             books: entireBody.books,
                             bookNames: entireBody.bookNames,
+                            booksText: makeBooksText(entireBody.bookNames),
                             info: entireBody.info,
                             photo_path: entireBody.photo_path,
                             photo_data: entireBody.photo_data
                         };
+                        // console.log('authorObj =' + JSON.stringify(author));
                         if (!ageSelectedModified) {
                             setAgeSelected(new Date(author.age));
                             setAgeSelectedModified(true);
@@ -63,7 +67,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             setAgeModified(true);
                         }
                         if (!stateBooks) {
-                            setStateBooks(author.books);
+                            setStateBooks(author.booksText);
                             setBooksModified(true);
                         }
                         if (!stateInfo) {
@@ -82,7 +86,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
 
     const [stateName, setStateName] = useState('');
     const [stateAge, setStateAge] = useState('');
-    const [stateBooks, setStateBooks] = useState([]);
+    const [stateBooks, setStateBooks] = useState('');
     const [stateInfo, setStateInfo] = useState('');
 
     const [nameModified, setNameModified] = React.useState(false);
@@ -111,19 +115,22 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setAgeModified(true);
     }
 
-    function handleBooksChange(newBookId, newBookName) {
-        author.books.push(newBookId);
-        author.bookNames.push(newBookName);
-
+    function makeBooksText(bookNames) {
         var text = "";
-        author.bookNames.map(name => {
+        bookNames.map(name => {
             if (text.length < 1)
                 text += name;
             else
                 text += '\n' + name;
         });
+        return text;
+    }
 
-        setStateBooks(text);
+    function handleBooksChange(newBookId, newBookName) {
+        author.books.push(newBookId);
+        author.bookNames.push(newBookName);
+
+        setStateBooks(makeBooksText(author.bookNames));
         setState({ books: author.books });
         setBooksModified(true);
     }
@@ -202,7 +209,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setStateAge('');
         setState({ age: '' });
         setAgeModified(false);
-        setStateBooks([]);
+        setStateBooks('');
         setState({ books: [] });
         setBooksModified(false);
         setStateInfo('');
@@ -332,12 +339,14 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
                                 <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
                                     className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
-                                    value={booksModified ? stateBooks : author.books} onChange={handleBooksChange} />
+                                    value={booksModified ? stateBooks : author.booksText} onChange={handleBooksChange} />
                                 <span className='contextBtn'>
                                     <Button type="button" onClick={onAuthorBookToogle}><strong>&lt;..&gt;</strong></Button>
                                 </span>
                             </span>
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{booksModified ? stateBooks : author.books}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>
+                                <TextListView text={"" + (booksModified ? stateBooks : author.booksText)} />
+                            </span>
                         </span>
                     </span>
                 </span>
