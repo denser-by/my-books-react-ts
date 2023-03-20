@@ -326,6 +326,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 dateSelected={dateSelected}
                                 onDateSelect={onDateSelect}
                                 caption={'Choose year of publication'} datePick={datePick}
+                                setDatePick={setDatePick}
                             />
                             <span className="book-info-label">Year</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
@@ -345,6 +346,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 onAuthorsSelected={onAuthorsSelected}
                                 caption={"Looking for this book's authors"}
                                 authorPick={authorPick}
+                                setAuthorPick={setAuthorPick}
                             />
                             <span className="book-info-label">Authors</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>

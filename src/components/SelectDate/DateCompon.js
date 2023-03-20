@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import './DateCompon.css'
 import 'react-calendar/dist/Calendar.css';
 
-export function YearCompon({ dateSelected, onDateSelect, caption, datePick, notifyYearChosen }) {
+export function YearCompon({ dateSelected, onDateSelect, caption, datePick, setDatePick, notifyYearChosen }) {
 
     const [clickNum, setClickNum] = React.useState(0);
     const [clickStory, setClickStory] = React.useState([]);
@@ -29,7 +29,7 @@ export function YearCompon({ dateSelected, onDateSelect, caption, datePick, noti
     return (
         <span className={(datePick ? "above" : "hidden") + " date-compon-dialog"}>
             <span className="date-compon-caption">
-                {caption}
+                <span className="cap-text">{caption}</span><span className="cap-exit" onClick={() => { setDatePick(false); }}>X</span>
             </span>
             <Calendar
                 defaultView='decade'
@@ -45,7 +45,7 @@ export function YearCompon({ dateSelected, onDateSelect, caption, datePick, noti
     )
 }
 
-export function MonthCompon({ dateSelected, onDateSelect, caption, datePick, notifyMonthChosen }) {
+export function MonthCompon({ dateSelected, onDateSelect, caption, datePick, setDatePick, notifyMonthChosen }) {
 
     const [clickNum, setClickNum] = React.useState(0);
     const [clickStory, setClickStory] = React.useState([]);
@@ -71,7 +71,7 @@ export function MonthCompon({ dateSelected, onDateSelect, caption, datePick, not
     return (
         <span className={(datePick ? "above" : "hidden") + " date-compon-dialog"}>
             <span className="date-compon-caption">
-                {caption}
+                <span className="cap-text">{caption}</span><span className="cap-exit" onClick={() => { setDatePick(false); }}>X</span>
             </span>
             <Calendar
                 defaultView='year'
@@ -87,12 +87,12 @@ export function MonthCompon({ dateSelected, onDateSelect, caption, datePick, not
     )
 }
 
-function DateCompon({ dateSelected, onDateSelect, caption, datePick }) {
+function DateCompon({ dateSelected, onDateSelect, caption, datePick, setDatePick }) {
 
     return (
         <span className={(datePick ? "above" : "hidden") + " date-compon-dialog"}>
             <span className="date-compon-caption">
-                {caption}
+                <span className="cap-text">{caption}</span><span className="cap-exit" onClick={() => { setDatePick(false); }}>X</span>
             </span>
             <Calendar onChange={onDateSelect} value={dateSelected} />
         </span>

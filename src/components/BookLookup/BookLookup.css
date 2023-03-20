@@ -18,11 +18,23 @@
     border-radius: 10px;
     margin: 2px;
     display: inline-flex;
-    flex-direction: column;
+    flex-direction: row;
     color: white;
     min-width: 270px;
     text-align: center;
     align-items: center;
     margin: 2px;
     font-weight: 700;
+}
+
+.cap-text-books {
+    text-align: center;
+    width: 91%;
+}
+
+.cap-exit-books {
+    color: white;
+    width: 9%;
+    cursor: pointer;
+    border-left: 2px white dotted;
 }

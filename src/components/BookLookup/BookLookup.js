@@ -4,7 +4,7 @@ import './../SelectDate/DateCompon.css';
 import TableCompon from '../TableCompon.js';
 import { getBookLookupColumns } from './columnsBookLookup.js';
 
-export function BookLookup({ bookSelected, onBookSelected, caption, bookPick }) {
+export function BookLookup({ bookSelected, onBookSelected, caption, bookPick, setBookPick }) {
 
     function clickChooseBook(id, name) {
         console.log('book selected ' + id + ' ' + name);
@@ -37,7 +37,7 @@ export function BookLookup({ bookSelected, onBookSelected, caption, bookPick }) 
     return (
         <span className={(bookPick ? "above" : "hidden") + " date-compon-dialog"}>
             <span className="book-lookup-compon-caption">
-                {caption}
+                <span className="cap-text-books">{caption}</span><span className="cap-exit-books" onClick={() => { setBookPick(false); }}>X</span>
             </span>
             <span className='bookLookupTable'>
                 <TableCompon columnItems={columnItems} dataItems={listBookItems} curPageSize={bookPageState.pageSize} curPageIndex={bookPageState.pageNumber}

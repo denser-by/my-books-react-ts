@@ -295,6 +295,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         <span className="author-info">
                             <DateCompon dateSelected={ageSelected} onDateSelect={onAgeSelect}
                                 caption={"Select author's birthday"} datePick={agePick}
+                                setDatePick={setAgePick}
                             />
                             <span className="author-info-label">Born</span>
                             <span className={create || edit ? "bookSelector withContextBtn" : "bookSelector ctrlHidden"}>
@@ -314,6 +315,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                                 onBookSelected={onBookSelected}
                                 caption={"Looking for this author's book"}
                                 bookPick={bookPick}
+                                setBookPick={setBookPick}
                             />
                             <span className="author-info-label">Publications</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>

@@ -4,7 +4,7 @@ import './../SelectDate/DateCompon.css';
 import TableCompon from '../TableCompon.js';
 import { getAuthorLookupColumns } from './AuthorsLookupColumns.js';
 
-export function AuthorsLookup({ authorsSelected, onAuthorsSelected, caption, authorPick }) {
+export function AuthorsLookup({ authorsSelected, onAuthorsSelected, caption, authorPick, setAuthorPick }) {
 
     function clickChooseAuthor(id, name) {
         console.log('author selected ' + id + ' ' + name);
@@ -37,7 +37,7 @@ export function AuthorsLookup({ authorsSelected, onAuthorsSelected, caption, aut
     return (
         <span className={(authorPick ? "above" : "hidden") + " date-compon-dialog"}>
             <span className="date-compon-caption">
-                {caption}
+                <span className="cap-text-authors">{caption}</span><span className="cap-exit-authors" onClick={() => { setAuthorPick(false); }}>X</span>
             </span>
             <span className='authorLookupTable'>
                 <TableCompon columnItems={columnItems} dataItems={listAuthorItems} curPageSize={authorPageState.pageSize} curPageIndex={authorPageState.pageNumber}

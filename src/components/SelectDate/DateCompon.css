@@ -34,4 +34,18 @@
     align-items: center;
     margin: 2px;
     font-weight: 700;
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.cap-text {
+    text-align: center;
+    width: 91%;
+}
+
+.cap-exit {
+    color: white;
+    width: 9%;
+    cursor: pointer;
+    border-left: 2px white dotted;
 }
