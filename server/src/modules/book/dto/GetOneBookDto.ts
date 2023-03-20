@@ -39,10 +39,5 @@ export class GetOneBookDto {
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    access_key: string;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ required: false })
     cover_img_data: string;
 }

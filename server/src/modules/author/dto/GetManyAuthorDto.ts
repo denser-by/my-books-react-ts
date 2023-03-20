@@ -34,11 +34,6 @@ export class GetManyAuthorDto {
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    access_key: string;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ required: false })
     photo_data: string;
 
     @IsString()

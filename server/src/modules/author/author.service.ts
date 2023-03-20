@@ -110,7 +110,6 @@ export class AuthorService {
         result.age = authorRef.age;
         result.books = await this.authorbookService.getAllByAuthorArrayId(authorRef.id);
         result.photo_path = '';
-        result.access_key = authorRef.access_key;
         result.photo_data = '';
         result.updatedAt = authorRef.updatedAt;
         if (withImages && authorRef.photo != null && authorRef.photo > 0) {
@@ -137,7 +136,6 @@ export class AuthorService {
             result.bookNames.push(rows[0].name);
         }
         result.photo_path = '';
-        result.access_key = authorRef.access_key;
         result.photo_data = '';
         if (withImages && authorRef.photo != null && authorRef.photo > 0) {
             var imageRef = this.imageService.getOne(authorRef.photo);

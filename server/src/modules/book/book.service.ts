@@ -122,7 +122,6 @@ export class BookService {
         result.year = bookRef.year;
         result.authors = await this.authorbookService.getAllByBookArrayId(bookRef.id);
         result.cover_img_path = '';
-        result.access_key = bookRef.access_key;
         result.cover_img_data = '';
         result.updatedAt = bookRef.updatedAt;
         if (withImages && bookRef.cover_img != null && bookRef.cover_img > 0) {
@@ -149,7 +148,6 @@ export class BookService {
             result.authorNames.push(rows[0].name);
         }
         result.cover_img_path = '';
-        result.access_key = bookRef.access_key;
         result.cover_img_data = '';
         if (withImages && bookRef.cover_img != null && bookRef.cover_img > 0) {
             var imageRef = this.imageService.getOne(bookRef.cover_img);
