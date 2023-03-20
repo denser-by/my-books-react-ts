@@ -308,7 +308,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             <Input type="textarea" id="authorName" name="authorName" readOnly={!edit} placeholder="Author name"
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={nameModified ? stateName : author.name} onChange={handleNameChange} />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : author.name}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent authorRead"}>{nameModified ? stateName : author.name}</span>
                         </span>
                         <span className="author-info">
                             <DateCompon dateSelected={ageSelected} onDateSelect={onAgeSelect}
@@ -325,7 +325,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                                     <Button type="button" onClick={onAuthorAgeToogle}><strong>&lt;..&gt;</strong></Button>
                                 </span>
                             </span>
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{ageModified ? stateAge : author.age}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent authorRead"}>{ageModified ? stateAge : author.age}</span>
                         </span>
                         <span className={create || edit ? "author-info high" : "author-info"}>
                             <BookLookup
@@ -355,7 +355,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                     <Input type="textarea" id="authorInfo" name="authorInfo" readOnly={!edit} placeholder="Short books related description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={infoModified ? stateInfo : author.info} onChange={handleInfoChange} />
-                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{infoModified ? stateInfo : author.info}</div>
+                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent authorRead"}>{infoModified ? stateInfo : author.info}</div>
                 </div>
                 <div className="buttonRow">
                     <span className={edit && !create ? "featureButton" : "ctrlHidden"}>

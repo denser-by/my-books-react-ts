@@ -59,3 +59,7 @@ input {
     background-color: white;
     color: black;
 }
+
+.bookRead {
+    padding-left: 5px;
+}

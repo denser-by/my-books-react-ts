@@ -336,7 +336,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                 value={nameModified ? stateName : book.name} onChange={handleNameChange}
                             />
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{nameModified ? stateName : book.name}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>{nameModified ? stateName : book.name}</span>
                         </span>
                         <span className="book-info">
                             <YearCompon
@@ -356,7 +356,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                     <Button type="button" onClick={onBookYearToogle}><strong>&lt;..&gt;</strong></Button>
                                 </span>
                             </span>
-                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{yearModified ? stateYear : book.year}</span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>{yearModified ? stateYear : book.year}</span>
                         </span>
                         <span className={create || edit ? "book-info high" : "book-info"}>
                             <AuthorsLookup
@@ -386,7 +386,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Short content description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={infoModified ? stateInfo : book.info} onChange={handleInfoChange} />
-                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent"}>{infoModified ? stateInfo : book.info}</div>
+                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>{infoModified ? stateInfo : book.info}</div>
                 </div>
                 <div className="buttonRow">
                     <span className={edit && !create ? "featureButton" : "ctrlHidden"}>
