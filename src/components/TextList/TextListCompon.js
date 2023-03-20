@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './TextListCompon.css'
 
 
-export function TextListEditItem({ item, selectionsList, setSelectionsList }) {
+export function TextListEditItem({ item, selectionsList, setSelectionsList, notifySelectUpdated }) {
 
     const [stateActive, setStateActive] = React.useState(false);
 
@@ -20,6 +20,8 @@ export function TextListEditItem({ item, selectionsList, setSelectionsList }) {
         }
         setSelectionsList(newArr);
         setStateActive(!stateActive);
+        if (notifySelectUpdated != null)
+            notifySelectUpdated(newArr);
     };
 
     return (
@@ -31,7 +33,7 @@ export function TextListEditItem({ item, selectionsList, setSelectionsList }) {
     );
 };
 
-export function TextListEdit({ text, className }) {
+export function TextListEdit({ text, className, notifySelectUpdated }) {
 
     var listItems = [].concat(text.split("\n"));
 
@@ -43,7 +45,8 @@ export function TextListEdit({ text, className }) {
                 {
                     listItems.map(item => {
                         return (
-                            <TextListEditItem item={item} selectionsList={selectionsList} setSelectionsList={setSelectionsList} />
+                            <TextListEditItem item={item} selectionsList={selectionsList} setSelectionsList={setSelectionsList}
+                                notifySelectUpdated={notifySelectUpdated} />
                         );
                     })
                 }

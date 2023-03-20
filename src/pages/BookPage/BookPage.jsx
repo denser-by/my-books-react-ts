@@ -315,6 +315,12 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         console.log('selected month: ' + selMonth);
     }
 
+    const [deleteDisabled, setDeleteDisabled] = React.useState(true);
+
+    function relatedAuthorsSelectionUpdated(selectedItems) {
+        setDeleteDisabled(!(selectedItems != null && selectedItems.length > 0));
+    }
+
     return (
         <Form onSubmit={handleSubmit}>
             <span className="bookShape" id="idBookPage" name="idBookPage">
@@ -382,11 +388,14 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             />
                             <span className="book-info-label">Authors</span>
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
-                                <TextListEdit text={"" + (authorsModified ? stateAuthors : book.authorsText)} className={!edit ? "ctrlHidden hight" : "fieldCurrent"} />
+                                <TextListEdit text={"" + (authorsModified ? stateAuthors : book.authorsText)} className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
+                                    notifySelectUpdated={relatedAuthorsSelectionUpdated} />
                                 <span className='contextBtnsColumn'>
                                     <Button type="button" className='contextSameBtn' onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
-                                    <Button type="button" className='contextSameBtn' onClick={onBookAuthorClear}>Clear</Button>
-                                    <Button type="button" className='contextSameBtn disabled' onClick={onBookAuthorDelete}>Delete</Button>
+                                    <Button type="button"
+                                        className={"contextSameBtn" + (("" + (authorsModified ? stateAuthors : book.authorsText)).length < 1 ? " disabled" : "")}
+                                        onClick={onBookAuthorClear}>Clear</Button>
+                                    <Button type="button" className={"contextSameBtn" + (deleteDisabled ? " disabled" : "")} onClick={onBookAuthorDelete}>Delete</Button>
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>
