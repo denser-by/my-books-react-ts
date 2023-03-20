@@ -145,6 +145,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setAuthorsModified(true);
     }
 
+    function onBookAuthorDelete(itemIds) {
+        console.log('delete authors rel ' + itemIds);
+    }
+
     function handleInfoChange(event) {
         // book2.info = event.target.value;
         setStateInfo(event.target.value);
@@ -362,8 +366,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                     className={!edit ? "ctrlHidden" : "fieldCurrent"}
                                     value={yearModified ? stateYear : book.year} onChange={handleYearChange}
                                 />
-                                <span className={!edit ? "ctrlHidden" : "contextBtn"} >
-                                    <Button type="button" onClick={onBookYearToogle}><strong>&lt;..&gt;</strong></Button>
+                                <span className={!edit ? "ctrlHidden" : "contextBtnsColumn"}>
+                                    <Button type="button" className='contextSameBtn' onClick={onBookYearToogle}><strong>&lt;..&gt;</strong></Button>
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>{yearModified ? stateYear : book.year}</span>
@@ -382,6 +386,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 <span className='contextBtnsColumn'>
                                     <Button type="button" className='contextSameBtn' onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
                                     <Button type="button" className='contextSameBtn' onClick={onBookAuthorClear}>Clear</Button>
+                                    <Button type="button" className='contextSameBtn disabled' onClick={onBookAuthorDelete}>Delete</Button>
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>

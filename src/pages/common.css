@@ -1,7 +1,7 @@
 .picture {
     display: inline-flex;
-    width: 240px;
-    height: 320px;
+    width: 264px;
+    height: 352px;
     border: #ffdf8c 2px dashed;
     margin: 3px;
 }
@@ -44,6 +44,7 @@ input {
 
 .contextSameBtn {
     margin: 3px;
+    min-width: 85px;
 }
 
 .contextBtn {
