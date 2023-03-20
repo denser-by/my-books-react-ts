@@ -15,8 +15,9 @@
     width: 100%;
 }
 
-.textListEditItem.active {
-    background-color: yellow;
+.textListEditItem.selected {
+    background-color: #103755;
+    color: white;
 }
 
 .textListEdit {
