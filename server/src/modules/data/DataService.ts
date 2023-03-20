@@ -4,6 +4,7 @@ import { CreateAppointmentDto } from "../appointment/dto/CreateAppointmentDto";
 import { AuthorService } from "../author/author.service";
 import { CreateAuthorDto } from "../author/dto/CreateAuthorDto";
 import { AuthorbookService } from "../authorbook/authorbook.service";
+import { CreateAuthorBookDto } from "../authorbook/dto/CreateAuthorBookDto";
 import { BookService } from "../book/book.service";
 import { CreateBookDto } from "../book/dto/CreateBookDto";
 import { CityService } from "../city/city.service";
@@ -21,6 +22,7 @@ export class ServiceData {
     constructor(
         private readonly svcAuthor: AuthorService,
         private readonly svcBook: BookService,
+        private readonly svcAuthorBook: AuthorbookService,
         private readonly svcImage: ImageService,
         private readonly svcAppointment: AppointmentService,
         private readonly svcCity: CityService,
@@ -156,6 +158,30 @@ export class ServiceData {
         }
     }
 
+    async recreateBookAuthor(book_access_key, author_access_key) {
+        console.log(' book='+book_access_key + ' author=' + author_access_key);
+        var book = await this.svcBook.findOneByAccessKey(book_access_key);
+        console.log(' book='+JSON.stringify(book));
+        var author = await this.svcAuthor.findOneByAccessKey(author_access_key);
+        console.log(' author='+JSON.stringify(author));
+        if (book != null && author != null) {
+            let has = await this.svcAuthorBook.hasOne(author.id, book.id);
+            console.log(' HAS='+has);
+            if(!has) {                
+                let dto = new CreateAuthorBookDto();
+                dto.book = book.id;
+                dto.author = author.id;
+                let bookauthor = await this.svcAuthorBook.create(dto);
+                console.log('after create ' + JSON.stringify(bookauthor));
+            } else {
+                let bookauthor = await this.svcAuthorBook.getOne(author.id, book.id);
+                console.log('after load ' + JSON.stringify(bookauthor));
+            }
+        }
+        else
+            console.log(' WRONG book' + JSON.stringify(book) + ' or author' + JSON.stringify(author));
+    }
+
     async lunchImages(covers20, authors3) {
         console.log('...service check images...');
         await this.recreateImage('../../images/1.jpg', 1, 60693, covers20);
@@ -182,6 +208,31 @@ export class ServiceData {
         await this.recreateImage('../../images/author2.gif', 2, 16135, authors3);
         await this.recreateImage('../../images/author3.gif', 2, 19966, authors3);
         console.log('...service check images complete...' + (await this.svcImage.size()));
+    }
+
+    async lunchBookAuthorRelations() {
+        console.log('...service check relations of books and authors...');
+        const BOOK_NUM = 41;
+        const AUTHOR_NUM = 31;
+        let bookAccessKeys = [];
+        for (let i = 1; i <= BOOK_NUM; i++)
+            bookAccessKeys.push('book_key_' + i);
+        let authorAccessKeys = [];
+        for (let j = 1; j <= AUTHOR_NUM; j++)
+            authorAccessKeys.push('auth_key_' + j);
+        let authIdx = 0 - 1;
+        for (let k = 0; k < bookAccessKeys.length; k++) {
+            let curBookKey = bookAccessKeys[k];
+            let authNum1234 = ((k + authorAccessKeys.length) % 4) + 1;
+            for (let m = 0; m < authNum1234; m++) {
+                authIdx += 1;
+                if (authIdx >= authorAccessKeys.length)
+                    authIdx = 0;
+                let curAuthorKey = authorAccessKeys[authIdx];
+                await this.recreateBookAuthor(curBookKey, curAuthorKey);
+            }
+        }
+        console.log('...service check relations of books and authors complete...authorbookRelations=' + (await this.svcAuthorBook.size()));
     }
 
     async lunchBooksAuthors(covers20, authors3) {
@@ -304,6 +355,7 @@ export class ServiceData {
         console.log('...service check start...');
         await this.lunchImages(covers20, authors3);
         await this.lunchBooksAuthors(covers20, authors3)
+        await this.lunchBookAuthorRelations();
         await this.lunchRoles();
         await this.lunchUsers();
         await this.lunchCities();
@@ -319,6 +371,7 @@ function basePoint() {
     let sd = new ServiceData(
         aus,
         new BookService(ims, auboos, aus),
+        auboos,
         ims,
         new AppointmentService(ims),
         new CityService(ims),
