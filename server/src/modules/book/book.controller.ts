@@ -50,4 +50,12 @@ export class BookController {
     async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneBookDto> {
         return this.bookService.delete(id);
     }
+
+    @Delete()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
+    @ApiOkResponse({ type: GetManyBookDto, isArray: true })
+    async deleteAll(): Promise<GetManyBookDto[]> {
+        return this.bookService.deleteAll();
+    }
 }

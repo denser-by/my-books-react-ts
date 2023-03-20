@@ -158,10 +158,20 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     }
 
     function deleteAllBooksOk() {
+        console.log('All Books delete start');
+        axios.delete('http://localhost:3001/books').then(res => {
+            console.log('All Books delete complete ' + JSON.stringify(res));
+        });
+        console.log('All Books delete After start');
         setPageRef(contextOpsBooks[0].href);
     }
 
     function deleteAllAuthorsOk() {
+        console.log('All Authors delete start');
+        axios.delete('http://localhost:3001/authors').then(res => {
+            console.log('All Authors delete complete ' + JSON.stringify(res));
+        });
+        console.log('All Authors delete After start');
         setPageRef(contextOpsAuthors[0].href);
     }
 

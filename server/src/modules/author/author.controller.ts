@@ -50,4 +50,12 @@ export class AuthorController {
     async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneAuthorDto> {
         return this.authorService.delete(id);
     }
+
+    @Delete()
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
+    @ApiOkResponse({ type: GetManyAuthorDto, isArray: true })
+    async deleteAll(): Promise<GetManyAuthorDto[]> {
+        return this.authorService.deleteAll();
+    }
 }

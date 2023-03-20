@@ -192,17 +192,21 @@ export class AuthorService {
         var { count, rows } = await author.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
+        await this.authorbookService.deleteAllByAuthor(rows[0].id);
         await rows[0].destroy({ force: true, truncate: true });
         return rows[0];
     }
 
-    async deleteAll() {
+    async deleteAll(): Promise<GetManyAuthorDto[]> {
         var { count, rows } = await author.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);
-        rows.map(img => async function () {
-            await img.destroy({ force: true, truncate: true });
-        });
-        return count;
+        let result = [];
+        for (let i = 0; i < rows.length; i++) {
+            result.push(await this.prepareDtoManyFromEntity(rows[i], false));
+            await this.authorbookService.deleteAllByAuthor(rows[i].id);
+            await rows[i].destroy({ force: true, truncate: true });
+        }
+        return result;
     }
 }
