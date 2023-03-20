@@ -6,6 +6,7 @@ import { CreateAuthorDto } from './dto/CreateAuthorDto';
 import { GetManyAuthorDto } from './dto/GetManyAuthorDto';
 import { GetOneAuthorDto } from './dto/GetOneAuthorDto';
 const author = require('../../../models/index.js').Author;
+const book = require('../../../models/index.js').Book;
 
 @Injectable()
 export class AuthorService {
@@ -130,7 +131,7 @@ export class AuthorService {
         result.bookNames = [];
         for (let i = 0; i < result.books.length; i++) {
             let bookId = Number(result.books[i]);
-            var { count, rows } = await author.findAndCountAll({ where: { id: bookId } });
+            var { count, rows } = await book.findAndCountAll({ where: { id: bookId } });
             if (count != 1)
                 throw new Error('Object not found, ID=' + bookId);
             result.bookNames.push(rows[0].name);

@@ -13,6 +13,13 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
         if (pr2.indexOf("Author") < 1 || pr2.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
 
+    const [pageAuthorState, setPageAuthorState] = useState({
+        authorId: authorId,
+        create: create,
+        edit: edit
+    });
+    const [pageAuthorItem, setPageAuthorItem] = useState();
+
     var author = {
         id: '1',
         name: '',
@@ -23,51 +30,55 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         photo_path: '',
         photo_data: ''
     };
-    if (!create) {
-        const request = 'http://localhost:3001/authors/' + authorId;
-        // console.log('AP=' + request);
-        fetch(request)
-            .then((response) => response.json())
-            .then(entireBody => {
-                if (authorId == entireBody.id) {
-                    // console.log('entAuthor=' + JSON.stringify(entireBody));
-                    author = {
-                        id: entireBody.id,
-                        name: entireBody.name,
-                        age: entireBody.age != null ? fineDateShort(new Date(entireBody.age)) : '',
-                        books: entireBody.books,
-                        bookNames: [],
-                        info: entireBody.info,
-                        photo_path: entireBody.photo_path,
-                        photo_data: entireBody.photo_data
-                    };
-                    if (!ageSelectedModified) {
-                        setAgeSelected(new Date(author.age));
-                        setAgeSelectedModified(true);
+
+    useEffect(() => {
+        if (!create) {
+            const request = 'http://localhost:3001/authors/' + authorId;
+            // console.log('AP=' + request);
+            fetch(request)
+                .then((response) => response.json())
+                .then(entireBody => {
+                    if (authorId == entireBody.id) {
+                        // console.log('entAuthor=' + JSON.stringify(entireBody));
+                        author = {
+                            id: entireBody.id,
+                            name: entireBody.name,
+                            age: entireBody.age != null ? fineDateShort(new Date(entireBody.age)) : '',
+                            books: entireBody.books,
+                            bookNames: entireBody.bookNames,
+                            info: entireBody.info,
+                            photo_path: entireBody.photo_path,
+                            photo_data: entireBody.photo_data
+                        };
+                        if (!ageSelectedModified) {
+                            setAgeSelected(new Date(author.age));
+                            setAgeSelectedModified(true);
+                        }
+                        if (!nameModified) {
+                            setStateName(author.name);
+                            setNameModified(true);
+                        }
+                        if (!ageModified) {
+                            setStateAge(author.age);
+                            setAgeModified(true);
+                        }
+                        if (!stateBooks) {
+                            setStateBooks(author.books);
+                            setBooksModified(true);
+                        }
+                        if (!stateInfo) {
+                            setStateInfo(author.info);
+                            setInfoModified(true);
+                        }
+                        if (!imageUploaded) {
+                            setMyImage(getImageAuthor(author));
+                            setImageUploaded(true);
+                        }
                     }
-                    if (!nameModified) {
-                        setStateName(author.name);
-                        setNameModified(true);
-                    }
-                    if (!ageModified) {
-                        setStateAge(author.age);
-                        setAgeModified(true);
-                    }
-                    if (!stateBooks) {
-                        setStateBooks(author.books);
-                        setBooksModified(true);
-                    }
-                    if (!stateInfo) {
-                        setStateInfo(author.info);
-                        setInfoModified(true);
-                    }
-                    if (!imageUploaded) {
-                        setMyImage(getImageAuthor(author));
-                        setImageUploaded(true);
-                    }
-                }
-            });
-    }
+                });
+        }
+        setPageAuthorItem(author);
+    }, [pageAuthorState]);
 
     const [stateName, setStateName] = useState('');
     const [stateAge, setStateAge] = useState('');

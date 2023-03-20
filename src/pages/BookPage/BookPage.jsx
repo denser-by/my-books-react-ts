@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './bookpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
@@ -12,6 +12,13 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
         if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0 || bookId == undefined || bookId == null || ("" + bookId).length < 1) return;
 
+    const [pageBookState, setPageBookState] = useState({
+        bookId: bookId,
+        create: create,
+        edit: edit
+    });
+    const [pageBookItem, setPageBookItem] = useState();
+
     var book = {
         id: '1',
         name: '',
@@ -22,51 +29,55 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         cover_img_path: '',
         cover_img_data: ''
     };
-    if (!create) {
-        const apiUrl = 'http://localhost:3001/books/' + bookId;
-        // console.log('BP=' + apiUrl);
-        fetch(apiUrl)
-            .then((response) => response.json())
-            .then(entireBody => {
-                if (bookId == entireBody.id) {
-                    // console.log('ENTIRE=' + JSON.stringify(entireBody));
-                    book = {
-                        id: entireBody.id,
-                        name: entireBody.name,
-                        year: entireBody.year != null ? entireBody.year : '',
-                        authors: entireBody.authors,
-                        authorNames: entireBody.authorNames,
-                        info: entireBody.info,
-                        cover_img_path: entireBody.cover_img_path,
-                        cover_img_data: entireBody.cover_img_data
-                    };
-                    if (!dateSelectedModified) {
-                        setDateSelected(new Date('' + book.year + '-01-01'));
-                        setDateSelectedModified(true);
+
+    useEffect(() => {
+        if (!create) {
+            const apiUrl = 'http://localhost:3001/books/' + bookId;
+            // console.log('BP=' + apiUrl);
+            fetch(apiUrl)
+                .then((response) => response.json())
+                .then(entireBody => {
+                    if (bookId == entireBody.id) {
+                        // console.log('ENTIRE=' + JSON.stringify(entireBody));
+                        book = {
+                            id: entireBody.id,
+                            name: entireBody.name,
+                            year: entireBody.year != null ? entireBody.year : '',
+                            authors: entireBody.authors,
+                            authorNames: entireBody.authorNames,
+                            info: entireBody.info,
+                            cover_img_path: entireBody.cover_img_path,
+                            cover_img_data: entireBody.cover_img_data
+                        };
+                        if (!dateSelectedModified) {
+                            setDateSelected(new Date('' + book.year + '-01-01'));
+                            setDateSelectedModified(true);
+                        }
+                        if (!nameModified) {
+                            setStateName(book.name);
+                            setNameModified(true);
+                        }
+                        if (!yearModified) {
+                            setStateYear(book.year);
+                            setYearModified(true);
+                        }
+                        if (!authorsModified) {
+                            setStateAuthors(book.authors);
+                            setAuthorsModified(true);
+                        }
+                        if (!infoModified) {
+                            setStateInfo(book.info);
+                            setInfoModified(true);
+                        }
+                        if (!imageUploaded) {
+                            setMyImage(getImageBook(book));
+                            setImageUploaded(true);
+                        }
                     }
-                    if (!nameModified) {
-                        setStateName(book.name);
-                        setNameModified(true);
-                    }
-                    if (!yearModified) {
-                        setStateYear(book.year);
-                        setYearModified(true);
-                    }
-                    if (!authorsModified) {
-                        setStateAuthors(book.authors);
-                        setAuthorsModified(true);
-                    }
-                    if (!infoModified) {
-                        setStateInfo(book.info);
-                        setInfoModified(true);
-                    }
-                    if (!imageUploaded) {
-                        setMyImage(getImageBook(book));
-                        setImageUploaded(true);
-                    }
-                }
-            });
-    }
+                });
+        }
+        setPageBookItem(book);
+    }, [pageBookState]);
 
     const [stateName, setStateName] = useState('');
     const [stateYear, setStateYear] = useState('');
