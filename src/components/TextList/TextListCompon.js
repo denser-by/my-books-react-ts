@@ -65,7 +65,7 @@ export function TextListView({ text }) {
             {
                 listItems.map(item => {
                     return (
-                        <li className='textListItem'>{idx++})&nbsp;<strong>{item}</strong></li>
+                        <li className='textListItem' key={'listKey' + idx}>{idx++})&nbsp;<strong>{item}</strong></li>
                     );
                 })
             }

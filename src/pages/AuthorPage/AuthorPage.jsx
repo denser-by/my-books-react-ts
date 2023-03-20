@@ -129,6 +129,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     function handleBooksChange(newBookId, newBookName) {
         author.books.push(newBookId);
         author.bookNames.push(newBookName);
+        author.booksText = makeBooksText(author.bookNames);
 
         setStateBooks(makeBooksText(author.bookNames));
         setState({ books: author.books });
@@ -143,10 +144,25 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setStateBooks('');
         setState({ books: [] });
         setBooksModified(true);
+        console.log('clear books rel ');
+        setSelectedBooksUpdate([]);
     }
 
-    function onAuthorBookDelete(itemIds) {
+    function onAuthorBookDelete() {
+        let itemIds = selectedBooksUpdate;
         console.log('delete books rel ' + itemIds);
+        
+        itemIds.map(item => {
+            let idx = author.bookNames.indexOf(item);
+            author.bookNames.splice(idx, 1);
+            author.books.splice(idx, 1);
+        });
+        author.booksText = makeBooksText(author.bookNames);
+
+        setStateBooks(makeBooksText(author.bookNames));
+        setState({ books: author.books });
+        setBooksModified(true);
+        setSelectedBooksUpdate([]);
     }
 
     function handleInfoChange(event) {
@@ -294,9 +310,11 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     }
 
     const [deleteDisabled, setDeleteDisabled] = React.useState(true);
+    const [selectedBooksUpdate, setSelectedBooksUpdate] = React.useState([]);
 
     function relatedBooksSelectionUpdated(selectedItems) {
         setDeleteDisabled(!(selectedItems != null && selectedItems.length > 0));
+        setSelectedBooksUpdate(selectedItems);
     }
 
     return (

@@ -22,7 +22,7 @@ const AuthorStatPage = ({ pr, kind }) => {
           authorItems.push({
             age: "" + new Date(authorItem.age).getFullYear(),
             name: authorItem.name,
-            numberOfBooks: (1 + (authorItems.length % 5)),
+            numberOfBooks: authorItem.books != null ? authorItem.books.length : 0,
           });
         })
         setData(getAuthorsData(authorStatPageKind, authorItems))
