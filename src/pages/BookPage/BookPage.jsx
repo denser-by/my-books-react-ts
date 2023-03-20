@@ -135,6 +135,16 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setAuthorsModified(true);
     }
 
+    function onBookAuthorClear() {
+        book.authors = [];
+        book.authorNames = [];
+        book.authorsText = '';
+
+        setStateAuthors('');
+        setState({ authors: [] });
+        setAuthorsModified(true);
+    }
+
     function handleInfoChange(event) {
         // book2.info = event.target.value;
         setStateInfo(event.target.value);
@@ -371,8 +381,9 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 <Input type="textarea" id="bookAuthors" name="bookAuthors" readOnly={!edit} placeholder="Authors' names"
                                     className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
                                     value={authorsModified ? stateAuthors : book.authorsText} onChange={handleAuthorsChange} />
-                                <span className='contextBtn'>
-                                    <Button type="button" onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
+                                <span className='contextBtnsColumn'>
+                                    <Button type="button" className='contextSameBtn' onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
+                                    <Button type="button" className='contextSameBtn' onClick={onBookAuthorClear}>Clear</Button>
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>

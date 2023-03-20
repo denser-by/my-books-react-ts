@@ -135,6 +135,16 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setBooksModified(true);
     }
 
+    function onAuthorBookClear() {
+        author.books = [];
+        author.bookNames = [];
+        author.booksText = '';
+
+        setStateBooks('');
+        setState({ books: [] });
+        setBooksModified(true);
+    }
+
     function handleInfoChange(event) {
         setStateInfo(event.target.value);
         setState({ info: event.target.value });
@@ -164,6 +174,11 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         console.log('no editing');
     }
 
+    function transferBooksState() {
+        author.books = state.books;
+        author.bookNames = ("" + stateBooks).split("\n");
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
         // author.name = state.name;
@@ -176,7 +191,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         if (ageModified)
             author.age = stateAge;
         if (booksModified)
-            author.books = stateBooks;
+            transferBooksState();
         if (infoModified)
             author.info = stateInfo;
         if (imageUploaded) {
@@ -340,8 +355,9 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                                 <Input type="textarea" id="authorBooks" name="authorBooks" readOnly={!edit} placeholder="List of published books"
                                     className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
                                     value={booksModified ? stateBooks : author.booksText} onChange={handleBooksChange} />
-                                <span className='contextBtn'>
-                                    <Button type="button" onClick={onAuthorBookToogle}><strong>&lt;..&gt;</strong></Button>
+                                <span className='contextBtnsColumn'>
+                                    <Button type="button" className='contextSameBtn' onClick={onAuthorBookToogle}><strong>&lt;..&gt;</strong></Button>
+                                    <Button type="button" className='contextSameBtn' onClick={onAuthorBookClear}>Clear</Button>
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>
