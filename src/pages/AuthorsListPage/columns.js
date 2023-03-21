@@ -43,7 +43,7 @@ export function getColumns(mouseClickAuthor) {
             Filter: TableColumnFilter,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
-                return <nobr>{row.cell.value}</nobr>;
+                return <center><nobr>{row.cell.value}</nobr></center>;
             },
         },
         {
@@ -52,7 +52,7 @@ export function getColumns(mouseClickAuthor) {
             Filter: TableColumnFilter,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
-                return <center>{row.cell.value} books</center>;
+                return <center><nobr>{row.cell.value} books</nobr></center>;
             },
         },
         {
@@ -62,10 +62,10 @@ export function getColumns(mouseClickAuthor) {
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
-                return <span id={obj}
+                return <center id={obj}
                     className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
                     onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
-                >View</span>;
+                >View</center>;
             },
         },
         {
@@ -75,10 +75,10 @@ export function getColumns(mouseClickAuthor) {
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
-                return <span id={obj}
+                return <center id={obj}
                     className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
                     onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
-                >Edit</span>;
+                >Edit</center>;
             },
         },
         {
@@ -97,10 +97,10 @@ export function getColumns(mouseClickAuthor) {
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
                 const obj = "" + row.cell.value;
-                return <span id={obj}
+                return <center id={obj}
                     className={aboveAuthorId === obj ? "contextAuthorOp above" : "contextAuthorOp"}
                     onMouseOver={mouseOverAuthor} onMouseOut={mouseOutAuthor} onClick={mouseClickAuthor}
-                >Delete</span>;
+                >Delete</center>;
             },
         },
     ];

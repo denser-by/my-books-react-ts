@@ -14,6 +14,11 @@
     margin: 2px;
     color: black;
     border-bottom: 1px solid #eeee0b;
+    height: 47px;
+}
+
+.booksListItem.secondary {
+    background-color: white;
 }
 
 .booksListHeader {

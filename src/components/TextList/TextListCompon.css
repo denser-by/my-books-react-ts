@@ -22,7 +22,7 @@
 
 .textListEdit {
     text-align: left;
-    overflow: scroll;
+    overflow: auto;
     cursor: pointer;
     display: inline-flex;
     flex-direction: column;
