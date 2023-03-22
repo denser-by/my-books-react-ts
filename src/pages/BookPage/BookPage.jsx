@@ -18,7 +18,6 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         create: create,
         edit: edit
     });
-    const [pageBookItem, setPageBookItem] = useState();
 
     var book = {
         id: '1',
@@ -80,7 +79,6 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     }
                 });
         }
-        setPageBookItem(book);
     }, [pageBookState]);
 
     const [stateName, setStateName] = useState('');
@@ -127,26 +125,45 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     }
 
     function handleAuthorsChange(newAuthorId, newAuthorName) {
-        book.authors.push(newAuthorId);
-        book.authorNames.push(newAuthorName);
+        if (book.authors.indexOf(newAuthorId) <0) {
+            book.authors.push(newAuthorId);
+            book.authorNames.push(newAuthorName);
+            book.authorsText = makeAuthorsText(book.authorNames);
+        }
 
-        setStateAuthors(makeAuthorsText(book.authorNames));
+        setStateAuthors(book.authorsText);
         setState({ authors: book.authors });
         setAuthorsModified(true);
     }
 
-    function onBookAuthorClear() {
-        book.authors = [];
-        book.authorNames = [];
-        book.authorsText = '';
+    function onBookAuthorDelete() {
+        if(deleteSelection != null && deleteSelection.length > 0) {
+            var delSel = deleteSelection;
+            deleteSelection.map(delItem => {
+                let delIdx = book.authorNames.indexOf(delItem);
+                if (delIdx >-1) {
+                    book.authors.splice(delIdx,1);
+                    book.authorNames.splice(delIdx,1);
+                }
+            });
+            delSel.splice(0, delSel.length);
+            setDeleteSelection(delSel);
+            book.authorsText = makeAuthorsText(book.authorNames);
+        }
 
-        setStateAuthors('');
-        setState({ authors: [] });
+        setStateAuthors(book.authorsText);
+        setState({ authors: book.authors });
         setAuthorsModified(true);
     }
 
-    function onBookAuthorDelete(itemIds) {
-        console.log('delete authors rel ' + itemIds);
+    function onBookAuthorClear(e) {
+        book.authors.splice(0, book.authors.length);
+        book.authorNames.splice(0, book.authorNames.length);
+        book.authorsText = makeAuthorsText(book.authorNames);
+
+        setStateAuthors(book.authorsText);
+        setState({ authors: book.authors });
+        setAuthorsModified(true);
     }
 
     function handleInfoChange(event) {
@@ -315,10 +332,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         console.log('selected month: ' + selMonth);
     }
 
-    const [deleteDisabled, setDeleteDisabled] = React.useState(true);
+    const [deleteSelection, setDeleteSelection] = React.useState([]);
 
     function relatedAuthorsSelectionUpdated(selectedItems) {
-        setDeleteDisabled(!(selectedItems != null && selectedItems.length > 0));
+        setDeleteSelection(selectedItems);
     }
 
     return (
@@ -395,7 +412,9 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                     <Button type="button"
                                         className={"contextSameBtn" + (("" + (authorsModified ? stateAuthors : book.authorsText)).length < 1 ? " disabled" : "")}
                                         onClick={onBookAuthorClear}>Clear</Button>
-                                    <Button type="button" className={"contextSameBtn" + (deleteDisabled ? " disabled" : "")} onClick={onBookAuthorDelete}>Delete</Button>
+                                    <Button type="button" 
+                                        className={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")} 
+                                        onClick={onBookAuthorDelete}>Delete</Button>
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>
