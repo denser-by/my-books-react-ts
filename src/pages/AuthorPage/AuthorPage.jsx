@@ -19,7 +19,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         create: create,
         edit: edit
     });
-    const [pageAuthorItem, setPageAuthorItem] = useState();
 
     var author = {
         id: '1',
@@ -81,7 +80,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                     }
                 });
         }
-        setPageAuthorItem(author);
     }, [pageAuthorState]);
 
     const [stateName, setStateName] = useState('');
@@ -127,42 +125,45 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     }
 
     function handleBooksChange(newBookId, newBookName) {
-        author.books.push(newBookId);
-        author.bookNames.push(newBookName);
-        author.booksText = makeBooksText(author.bookNames);
+        if (author.books.indexOf(newBookId) <0) {
+            author.books.push(newBookId);
+            author.bookNames.push(newBookName);
+            author.booksText = makeBooksText(author.bookNames);
+        }
 
-        setStateBooks(makeBooksText(author.bookNames));
-        setState({ books: author.books });
+        setStateBooks(author.booksText);
+        setState({ authors: author.books });
         setBooksModified(true);
     }
 
-    function onAuthorBookClear() {
-        author.books = [];
-        author.bookNames = [];
-        author.booksText = '';
+    function onAuthorBookDelete(e) {
+        if(deleteSelection != null && deleteSelection.length > 0) {
+            var delSel = deleteSelection;
+            deleteSelection.map(delItem => {
+                let delIdx = author.bookNames.indexOf(delItem);
+                if (delIdx >-1) {
+                    author.books.splice(delIdx,1);
+                    author.bookNames.splice(delIdx,1);
+                }
+            });
+            delSel.splice(0, delSel.length);
+            setDeleteSelection(delSel);
+            author.booksText = makeBooksText(author.bookNames);
+        }
 
-        setStateBooks('');
-        setState({ books: [] });
+        setStateBooks(author.booksText);
+        setState({ authors: author.books });
         setBooksModified(true);
-        console.log('clear books rel ');
-        setSelectedBooksUpdate([]);
     }
 
-    function onAuthorBookDelete() {
-        let itemIds = selectedBooksUpdate;
-        console.log('delete books rel ' + itemIds);
-        
-        itemIds.map(item => {
-            let idx = author.bookNames.indexOf(item);
-            author.bookNames.splice(idx, 1);
-            author.books.splice(idx, 1);
-        });
+    function onAuthorBookClear(e) {
+        author.books.splice(0, author.books.length);
+        author.bookNames.splice(0, author.bookNames.length);
         author.booksText = makeBooksText(author.bookNames);
 
-        setStateBooks(makeBooksText(author.bookNames));
-        setState({ books: author.books });
+        setStateBooks(author.booksText);
+        setState({ authors: author.books });
         setBooksModified(true);
-        setSelectedBooksUpdate([]);
     }
 
     function handleInfoChange(event) {
@@ -279,7 +280,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
 
     const [bookPick, setBookPick] = React.useState(false);
     const [bookSelected, setBookSelected] = React.useState([]);
-    const [bookSelectedModified, setBookSelectedModified] = React.useState(false);
 
     function onAgeSelect(res) {
         setAgePick(false);
@@ -309,12 +309,10 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setBookPick(!bookPick);
     }
 
-    const [deleteDisabled, setDeleteDisabled] = React.useState(true);
-    const [selectedBooksUpdate, setSelectedBooksUpdate] = React.useState([]);
+    const [deleteSelection, setDeleteSelection] = React.useState([]);
 
     function relatedBooksSelectionUpdated(selectedItems) {
-        setDeleteDisabled(!(selectedItems != null && selectedItems.length > 0));
-        setSelectedBooksUpdate(selectedItems);
+        setDeleteSelection(selectedItems);
     }
 
     return (
@@ -387,7 +385,9 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                                     <Button type="button"
                                         className={"contextSameBtn" + (("" + (booksModified ? stateBooks : author.booksText)).length < 1 ? " disabled" : "")}
                                         onClick={onAuthorBookClear}>Clear</Button>
-                                    <Button type="button" className={"contextSameBtn" + (deleteDisabled ? " disabled" : "")} onClick={onAuthorBookDelete}>Delete</Button>
+                                    <Button type="button"
+                                        className={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")} 
+                                        onClick={onAuthorBookDelete}>Delete</Button>
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>

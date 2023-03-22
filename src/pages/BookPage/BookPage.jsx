@@ -136,7 +136,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setAuthorsModified(true);
     }
 
-    function onBookAuthorDelete() {
+    function onBookAuthorDelete(e) {
         if(deleteSelection != null && deleteSelection.length > 0) {
             var delSel = deleteSelection;
             deleteSelection.map(delItem => {
@@ -295,7 +295,6 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
 
     const [authorPick, setAuthorPick] = React.useState(false);
     const [authorsSelected, setAuthorsSelected] = React.useState([]);
-    const [authorsSelectedModified, setAuthorsSelectedModified] = React.useState(false);
 
     function onDateSelect(res) {
         setDatePick(false);

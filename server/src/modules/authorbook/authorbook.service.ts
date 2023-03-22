@@ -136,24 +136,24 @@ export class AuthorbookService {
 
     async deleteAllByAuthor(author: number): Promise<CreateAuthorBookDto[]> {
         var { count, rows } = await authorbook.findAndCountAll({ where: { author: author } });
-        if (count < 1)
-            throw new Error('Objects not found, items ' + count);
         let result = [];
-        for (let i = 0; i < rows.length; i++) {
-            await rows[i].destroy({ force: true, truncate: true });
-            result.push(rows[i]);
+        if (count > 0) {
+            for (let i = 0; i < rows.length; i++) {
+                await rows[i].destroy({ force: true, truncate: true });
+                result.push(rows[i]);
+            }
         }
         return result;
     }
 
     async deleteAllByBook(book: number): Promise<CreateAuthorBookDto[]> {
         var { count, rows } = await authorbook.findAndCountAll({ where: { book: book } });
-        if (count < 1)
-            throw new Error('Objects not found, items ' + count);
         let result = [];
-        for (let i = 0; i < rows.length; i++) {
-            await rows[i].destroy({ force: true, truncate: true });
-            result.push(rows[i]);
+        if (count > 0) {
+            for (let i = 0; i < rows.length; i++) {
+                await rows[i].destroy({ force: true, truncate: true });
+                result.push(rows[i]);
+            }
         }
         return result;
     }
