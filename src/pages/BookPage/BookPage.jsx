@@ -317,6 +317,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setDatePick(!datePick);
     }
 
+    function onBookCreateAuthor() {
+        console.log('oosidijfowfy9u9ew8ufw98uef98ufw988euf98uw9efhwehifuy2982u9fw9e8fu9sd8u98vu98uf9we8u9f8wue9fuw9euf9weuf9uwe9fuweiufbuyw2ewgfuysvsuhweofjouhfiusdh');
+    }
+
     function onBookAuthorToogle() {
         if (datePick)
             setDatePick(false);
@@ -407,6 +411,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 <TextListEdit text={"" + (authorsModified ? stateAuthors : book.authorsText)} className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
                                     notifySelectUpdated={relatedAuthorsSelectionUpdated} />
                                 <span className='contextBtnsColumn'>
+                                    <Button type="button" className='contextSameBtn' onClick={onBookCreateAuthor}>Create</Button>
                                     <Button type="button" className='contextSameBtn' onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
                                     <Button type="button"
                                         className={"contextSameBtn" + (("" + (authorsModified ? stateAuthors : book.authorsText)).length < 1 ? " disabled" : "")}
