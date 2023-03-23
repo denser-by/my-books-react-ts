@@ -1,66 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './userslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
+import { getColumns } from './userColumns.js';
 
 const UsersListPage = ({ setPageRef, pr }) => {
     if (pr.indexOf("UsersAll") < 1) return;
 
-    const [curSelectUser, setCurSelectUser] = useState("");
-    const [curSelectUsersPageSize, setCurSelectUsersPageSize] = useState(12);
+    const [userPageState, setUserPageState] = useState({
+        pageSize: 10,
+        pageNumber: 0
+    });
     const [listUserItems, setListUserItems] = useState([]);
 
-    var aboveUserId = '';
-    var aboveUserTarget = null;
-    function setAboveUser(param, target) {
-        aboveUserId = param;
-        if (aboveUserTarget != null)
-            aboveUserTarget.className = 'contextUserOp';
-        aboveUserTarget = target;
-    }
-
-    function mouseOverUser(e) {
-        setAboveUser(e.target.id, e.target);
-        e.target.className = 'contextUserOp above';
-    }
-
-    function mouseOutUser(e) {
-        setAboveUser('', e.target);
-        e.target.className = 'contextUserOp';
-    }
-
     function mouseClickUser(e) {
-        setCurSelectUser(e.target);
         setPageRef(e.target.id);
     }
 
-    fetch('http://localhost:3001/users')
-        .then((response) => response.json())
-        .then(entireBody => {
-            var userItems = [];
-            entireBody.map(userItem => {
-                userItems.push({
-                    login: userItem.login,
-                    view: "/viewUser?id=" + userItem.id,
-                    edit: "/editUser?id=" + userItem.id
-                });
-            })
-            setListUserItems(userItems);
-        });
+    useEffect(() => {
+        fetch('http://localhost:3001/users')
+            .then((response) => response.json())
+            .then(entireBody => {
+                var userItems = [];
+                var seq_num = 1;
+                entireBody.map(userItem => {
+                    userItems.push({
+                        seq_num: seq_num,
+                        login: userItem.login,
+                        mailbox: userItem.email,
+                        modified: fineDate(new Date(userItem.updatedAt)),
+                        view: "/viewUser?id=" + userItem.id,
+                        edit: "/editUser?id=" + userItem.id,
+                        delete: "/deleteUser?id=" + userItem.id
+                    });
+                    seq_num++;
+                })
+                setListUserItems(userItems);
+            });
+    }, [userPageState]);
 
-    const columnItems = React.useMemo(
-        () => [
-            {
-                Header: 'Username',
-                accessor: 'login',
-            },
-        ],
-        []
-    )
+    const columnItems = React.useMemo(() => getColumns(mouseClickUser), []);
 
     return (
         <div className='usersList' id="idUserListPage" name="idUserListPage">
-            <TableCompon columnItems={columnItems} dataItems={listUserItems} defPage={curSelectUsersPageSize}
+            <TableCompon columnItems={columnItems} dataItems={listUserItems} curPageSize={userPageState.pageSize} curPageIndex={userPageState.pageNumber}
                 cssRowH={'usersListHeader'} cssCellH={'usersInfoHeader'} cssRow={'usersListItem'} cssCell={'usersInfoItem'} />
         </div>
     );

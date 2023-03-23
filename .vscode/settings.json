@@ -16,5 +16,6 @@
             "name": "db.sqlite",
             "database": "${workspaceFolder:my-books-react-ts}/src/db.sqlite"
         }
-    ]
+    ],
+    "sqltools.useNodeRuntime": true
 }
