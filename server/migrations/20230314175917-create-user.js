@@ -36,6 +36,9 @@ module.exports = {
       from_city: {
         type: Sequelize.INTEGER
       },
+      deleted: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

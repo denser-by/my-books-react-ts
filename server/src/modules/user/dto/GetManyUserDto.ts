@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GetManyUserDto {
     @IsNumber()
@@ -34,6 +34,11 @@ export class GetManyUserDto {
     @IsOptional()
     @ApiProperty({ required: false })
     updatedAt: string;
+
+    @IsBoolean()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    deleted: boolean;
 
     @IsNumber()
     @IsOptional()

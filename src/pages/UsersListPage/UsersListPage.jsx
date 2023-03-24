@@ -30,11 +30,10 @@ const UsersListPage = ({ setPageRef, pr }) => {
                         login: userItem.login,
                         first_name: userItem.first_name,
                         last_name: userItem.last_name,
+                        deleted: userItem.deleted,
                         mailbox: userItem.email,
                         modified: fineDate(new Date(userItem.updatedAt)),
                         view: "/viewUser?id=" + userItem.id,
-                        edit: "/editUser?id=" + userItem.id,
-                        delete: "/deleteUser?id=" + userItem.id
                     });
                     seq_num++;
                 })

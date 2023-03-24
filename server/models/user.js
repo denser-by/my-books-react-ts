@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     hash_password: DataTypes.STRING,
     favorite_color: DataTypes.STRING,
     avatar: DataTypes.INTEGER,
-    from_city: DataTypes.INTEGER
+    from_city: DataTypes.INTEGER,
+    deleted: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',

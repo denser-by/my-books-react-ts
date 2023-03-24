@@ -59,29 +59,12 @@ export function getColumns(mouseClickUser) {
             },
         },
         {
-            Header: '</>',
-            accessor: 'view',
-            Filter: TableColumnNotFilterable,
+            Header: 'Deleted',
+            accessor: 'deleted',
+            Filter: TableColumnFilter,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
-                const obj = "" + row.cell.value;
-                return <center id={obj}
-                    className={aboveUserId === obj ? "contextUserOp above" : "contextUserOp"}
-                    onMouseOver={mouseOverUser} onMouseOut={mouseOutUser} onClick={mouseClickUser}
-                >View</center>;
-            },
-        },
-        {
-            Header: '</>',
-            accessor: 'edit',
-            Filter: TableColumnNotFilterable,
-            sortType: 'basic',
-            Cell: (row: CellProps<any>) => {
-                const obj = "" + row.cell.value;
-                return <center id={obj}
-                    className={aboveUserId === obj ? "contextUserOp above" : "contextUserOp"}
-                    onMouseOver={mouseOverUser} onMouseOut={mouseOutUser} onClick={mouseClickUser}
-                >Edit</center>;
+                return <center>{row.cell.value == 1 ? 'true' : ''}</center>;
             },
         },
         {
@@ -95,7 +78,7 @@ export function getColumns(mouseClickUser) {
         },
         {
             Header: '</>',
-            accessor: 'delete',
+            accessor: 'view',
             Filter: TableColumnNotFilterable,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
@@ -103,7 +86,7 @@ export function getColumns(mouseClickUser) {
                 return <center id={obj}
                     className={aboveUserId === obj ? "contextUserOp above" : "contextUserOp"}
                     onMouseOver={mouseOverUser} onMouseOut={mouseOutUser} onClick={mouseClickUser}
-                >Delete</center>;
+                >View</center>;
             },
         },
     ];

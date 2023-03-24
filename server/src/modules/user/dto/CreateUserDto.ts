@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateUserDto {
     @IsNumber()
@@ -47,6 +47,11 @@ export class CreateUserDto {
     @IsOptional()
     @ApiProperty({ required: false })
     avatar: number;
+
+    @IsBoolean()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    deleted: boolean;
 
     @IsNumber()
     @IsOptional()

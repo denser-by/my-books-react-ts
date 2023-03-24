@@ -20,6 +20,7 @@ export class UserService {
                 hash_password: userCreate.hash_password,
                 favorite_color: userCreate.favorite_color,
                 avatar: userCreate.avatar,
+                deleted: userCreate.deleted,
                 from_city: userCreate.from_city
             });
         } catch (e) {
@@ -77,6 +78,7 @@ export class UserService {
         result.phone = userRef.phone;
         result.first_name = userRef.first_name;
         result.last_name = userRef.last_name;
+        result.deleted = userRef.deleted;
         result.updatedAt = userRef.updatedAt;
         return result;
     }

@@ -63,6 +63,10 @@ export class ServiceData {
     }
 
     async recreateUser(login, email, first_name, last_name, phone, from_city, avatar, favorite_color) {
+        return await this.recreateUser2(login, email, first_name, last_name, phone, from_city, avatar, favorite_color, false);
+    }
+
+    async recreateUser2(login, email, first_name, last_name, phone, from_city, avatar, favorite_color, deleted) {
         var user = await this.svcUser.findOneByLogin(login);
         if (!user) {
             let dto = new CreateUserDto();
@@ -74,11 +78,12 @@ export class ServiceData {
             dto.hash_password = 'hash_password';
             dto.favorite_color = favorite_color;
             dto.avatar = avatar;
+            dto.deleted = deleted;
             dto.from_city = from_city;
             user = await this.svcUser.create(dto);
             console.log('after create ' + JSON.stringify(user));
         } else {
-            user.set({ login: login, email: email, first_name: first_name, last_name: last_name, phone: phone, from_city: from_city, avatar: avatar, favorite_color: favorite_color });
+            user.set({ login: login, email: email, first_name: first_name, last_name: last_name, phone: phone, from_city: from_city, avatar: avatar, favorite_color: favorite_color, deleted: deleted });
             user.save();
             console.log('after save ' + JSON.stringify(user));
         }
@@ -330,6 +335,7 @@ export class ServiceData {
         await this.recreateUser('user1', 'user1@company.com', 'Name_1', 'Surname_1', '224-5234-555', 1, 123, 'pink');
         await this.recreateUser('user2', 'user2@company.com', 'Name_2', 'Surname_2', '224-5234-666', 1, 123, 'brown');
         await this.recreateUser('user3', 'user3@company.com', 'Name_3', 'Surname_3', '224-5234-777', 1, 123, 'coldwhite');
+        await this.recreateUser2('user4', 'user4@company4.com', 'Name_4', 'Surname_4', '224-5343-777', 1, 123, 'orange', true);
         console.log('...service check users complete...' + (await this.svcUser.size()));
     }
 
