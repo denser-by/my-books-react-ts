@@ -14,7 +14,7 @@ export class AuthorController {
     @UsePipes(ValidationPipe)
     @ApiCreatedResponse({ type: CreateAuthorDto })
     async create(@Body() createDto: CreateAuthorDto): Promise<CreateAuthorDto> {
-        return this.authorService.create(createDto);
+        return await this.authorService.create(createDto);
     }
 
     @Get()
@@ -24,7 +24,7 @@ export class AuthorController {
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
     ): Promise<GetManyAuthorDto[]> {
-        return this.authorService.getAll();
+        return await this.authorService.getAll();
     }
 
     @Get(':id')
@@ -32,7 +32,7 @@ export class AuthorController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: GetOneAuthorDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<GetOneAuthorDto> {
-        return this.authorService.getOne(id);
+        return await this.authorService.getOne(id);
     }
 
     @Put()
@@ -40,7 +40,7 @@ export class AuthorController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateAuthorDto })
     async update(@Body() createDto: CreateAuthorDto): Promise<CreateAuthorDto> {
-        return this.authorService.update(createDto);
+        return await this.authorService.update(createDto);
     }
 
     @Delete(':id')
@@ -48,7 +48,7 @@ export class AuthorController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: GetOneAuthorDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneAuthorDto> {
-        return this.authorService.delete(id);
+        return await this.authorService.delete(id);
     }
 
     @Delete()
@@ -56,6 +56,6 @@ export class AuthorController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: GetManyAuthorDto, isArray: true })
     async deleteAll(): Promise<GetManyAuthorDto[]> {
-        return this.authorService.deleteAll();
+        return await this.authorService.deleteAll();
     }
 }

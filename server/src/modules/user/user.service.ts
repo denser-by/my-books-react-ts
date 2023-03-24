@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ImageService } from '../image/image.service';
 import { CreateUserDto } from './dto/CreateUserDto';
+import { GetManyUserDto } from './dto/GetManyUserDto';
 const user = require('../../../models/index.js').User;
 
 @Injectable()
@@ -26,10 +27,14 @@ export class UserService {
         }
     }
 
-    async getAll() {
+    async getAll(): Promise<GetManyUserDto[]> {
         var { count, rows } = await user.findAndCountAll({});
-        if (count >= 1)
-            return rows;
+        if (count >= 1) {
+            let result = [];
+            for (let i = 0; i < rows.length; i++)
+                result.push(await this.prepareDtoManyFromEntity(rows[i]));
+            return result;
+        }
         return [];
     }
 
@@ -62,6 +67,17 @@ export class UserService {
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
         return rows[0];
+    }
+
+    private async prepareDtoManyFromEntity(userRef: any): Promise<GetManyUserDto> {
+        let result = new GetManyUserDto();
+        result.id = userRef.id;
+        result.login = userRef.login;
+        result.email = userRef.email;
+        result.phone = userRef.phone;
+        result.first_name = userRef.first_name;
+        result.last_name = userRef.last_name;
+        return result;
     }
 
     async update(userUpdate: CreateUserDto): Promise<CreateUserDto> {

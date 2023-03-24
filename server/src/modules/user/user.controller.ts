@@ -1,6 +1,7 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/CreateUserDto';
+import { GetManyUserDto } from './dto/GetManyUserDto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -12,17 +13,17 @@ export class UserController {
     @UsePipes(ValidationPipe)
     @ApiCreatedResponse({ type: CreateUserDto })
     async create(@Body() createDto: CreateUserDto): Promise<CreateUserDto> {
-        return this.userService.create(createDto);
+        return await this.userService.create(createDto);
     }
 
     @Get()
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateUserDto, isArray: true })
+    @ApiOkResponse({ type: GetManyUserDto, isArray: true })
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
-    ): Promise<CreateUserDto[]> {
-        return this.userService.getAll();
+    ): Promise<GetManyUserDto[]> {
+        return await this.userService.getAll();
     }
 
     @Get(':id')
@@ -30,7 +31,7 @@ export class UserController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateUserDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateUserDto> {
-        return this.userService.getOne(id);
+        return await this.userService.getOne(id);
     }
 
     @Put()
@@ -38,7 +39,7 @@ export class UserController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateUserDto })
     async update(@Body() createDto: CreateUserDto): Promise<CreateUserDto> {
-        return this.userService.update(createDto);
+        return await this.userService.update(createDto);
     }
 
     @Delete(':id')
@@ -46,6 +47,6 @@ export class UserController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateUserDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateUserDto> {
-        return this.userService.delete(id);
+        return await this.userService.delete(id);
     }
 }

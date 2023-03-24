@@ -14,7 +14,7 @@ export class BookController {
     @UsePipes(ValidationPipe)
     @ApiCreatedResponse({ type: CreateBookDto })
     async create(@Body() createDto: CreateBookDto): Promise<CreateBookDto> {
-        return this.bookService.create(createDto);
+        return await this.bookService.create(createDto);
     }
 
     @Get()
@@ -24,7 +24,7 @@ export class BookController {
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
     ): Promise<GetManyBookDto[]> {
-        return this.bookService.getAll();
+        return await this.bookService.getAll();
     }
 
     @Get(':id')
@@ -32,7 +32,7 @@ export class BookController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: GetOneBookDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<GetOneBookDto> {
-        return this.bookService.getOne(id);
+        return await this.bookService.getOne(id);
     }
 
     @Put()
@@ -40,7 +40,7 @@ export class BookController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateBookDto })
     async update(@Body() createDto: CreateBookDto): Promise<CreateBookDto> {
-        return this.bookService.update(createDto);
+        return await this.bookService.update(createDto);
     }
 
     @Delete(':id')
@@ -48,7 +48,7 @@ export class BookController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: GetOneBookDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneBookDto> {
-        return this.bookService.delete(id);
+        return await this.bookService.delete(id);
     }
 
     @Delete()
@@ -56,6 +56,6 @@ export class BookController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: GetManyBookDto, isArray: true })
     async deleteAll(): Promise<GetManyBookDto[]> {
-        return this.bookService.deleteAll();
+        return await this.bookService.deleteAll();
     }
 }
