@@ -152,6 +152,7 @@ export class ServiceData {
             dto.name = name;
             dto.info = info;
             dto.age = new Date('' + age + '-01-01');
+            dto.age.setFullYear(age);
             dto.photo_path = photo_path;
             dto.access_key = access_key;
             author = await this.svcAuthor.create(dto);

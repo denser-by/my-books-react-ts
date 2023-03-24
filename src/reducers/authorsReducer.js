@@ -55,6 +55,6 @@ export default function authorsReducer(state=defaultState, action) {
 }
 
 export const setAuthors = (authors) => ({type: SET_AUTHORS, payload:authors})
-export const setIsFetching = (bool) => ({type: SET_IS_FETCHING, payload:bool})
+export const setIsFetching = (fetching) => ({type: SET_IS_FETCHING, payload:fetching})
 export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE, payload:page})
 export const setCount = (count) => ({type:SET_COUNT, payload:count})
