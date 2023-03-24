@@ -12,7 +12,7 @@ export class AppointmentController {
     @UsePipes(ValidationPipe)
     @ApiCreatedResponse({ type: CreateAppointmentDto })
     async create(@Body() createDto: CreateAppointmentDto): Promise<CreateAppointmentDto> {
-        return this.appointmentService.create(createDto);
+        return await this.appointmentService.create(createDto);
     }
 
     @Get()
@@ -22,7 +22,7 @@ export class AppointmentController {
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
     ): Promise<CreateAppointmentDto[]> {
-        return this.appointmentService.getAll();
+        return await this.appointmentService.getAll();
     }
 
     @Get(':id')
@@ -30,7 +30,7 @@ export class AppointmentController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateAppointmentDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateAppointmentDto> {
-        return this.appointmentService.getOne(id);
+        return await this.appointmentService.getOne(id);
     }
 
     @Put()
@@ -38,7 +38,7 @@ export class AppointmentController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateAppointmentDto })
     async update(@Body() createDto: CreateAppointmentDto): Promise<CreateAppointmentDto> {
-        return this.appointmentService.update(createDto);
+        return await this.appointmentService.update(createDto);
     }
 
     @Delete(':id')
@@ -46,6 +46,6 @@ export class AppointmentController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateAppointmentDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateAppointmentDto> {
-        return this.appointmentService.delete(id);
+        return await this.appointmentService.delete(id);
     }
 }

@@ -12,7 +12,7 @@ export class ImageController {
     @UsePipes(ValidationPipe)
     @ApiCreatedResponse({ type: CreateImageDto })
     async create(@Body() createDto: CreateImageDto): Promise<CreateImageDto> {
-        return this.imageService.create(createDto);
+        return await this.imageService.create(createDto);
     }
 
     @Get()
@@ -22,7 +22,7 @@ export class ImageController {
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
     ): Promise<CreateImageDto[]> {
-        return this.imageService.getAll();
+        return await this.imageService.getAll();
     }
 
     @Get(':id')
@@ -30,7 +30,7 @@ export class ImageController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateImageDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateImageDto> {
-        return this.imageService.getOne(id);
+        return await this.imageService.getOne(id);
     }
 
     @Put()
@@ -38,7 +38,7 @@ export class ImageController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateImageDto })
     async update(@Body() createDto: CreateImageDto): Promise<CreateImageDto> {
-        return this.imageService.update(createDto);
+        return await this.imageService.update(createDto);
     }
 
     @Delete(':id')
@@ -46,6 +46,6 @@ export class ImageController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateImageDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateImageDto> {
-        return this.imageService.delete(id);
+        return await this.imageService.delete(id);
     }
 }

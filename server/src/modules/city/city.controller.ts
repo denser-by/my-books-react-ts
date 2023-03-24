@@ -12,7 +12,7 @@ export class CityController {
     @UsePipes(ValidationPipe)
     @ApiCreatedResponse({ type: CreateCityDto })
     async create(@Body() createDto: CreateCityDto): Promise<CreateCityDto> {
-        return this.cityService.create(createDto);
+        return await this.cityService.create(createDto);
     }
 
     @Get()
@@ -22,7 +22,7 @@ export class CityController {
     async getAll(
         @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
     ): Promise<CreateCityDto[]> {
-        return this.cityService.getAll();
+        return await this.cityService.getAll();
     }
 
     @Get(':id')
@@ -30,7 +30,7 @@ export class CityController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateCityDto })
     async getOne(@Param('id', ParseIntPipe) id: number): Promise<CreateCityDto> {
-        return this.cityService.getOne(id);
+        return await this.cityService.getOne(id);
     }
 
     @Put()
@@ -38,7 +38,7 @@ export class CityController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateCityDto })
     async update(@Body() createDto: CreateCityDto): Promise<CreateCityDto> {
-        return this.cityService.update(createDto);
+        return await this.cityService.update(createDto);
     }
 
     @Delete(':id')
@@ -46,6 +46,6 @@ export class CityController {
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ type: CreateCityDto })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateCityDto> {
-        return this.cityService.delete(id);
+        return await this.cityService.delete(id);
     }
 }

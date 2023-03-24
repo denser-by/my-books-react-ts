@@ -10,6 +10,6 @@ export class DataController {
     @Get()
     @ApiOkResponse()
     async createBaseData() {
-        return this.serviceData.lunchStart();
+        return await this.serviceData.lunchStart();
     }
 }
