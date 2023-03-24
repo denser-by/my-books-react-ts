@@ -38,6 +38,18 @@ export function getColumns(mouseClickUser) {
             sortType: 'basic',
         },
         {
+            Header: 'Name',
+            accessor: 'first_name',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
+        },
+        {
+            Header: 'Surname',
+            accessor: 'last_name',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
+        },
+        {
             Header: 'e-mail',
             accessor: 'mailbox',
             Filter: TableColumnFilter,

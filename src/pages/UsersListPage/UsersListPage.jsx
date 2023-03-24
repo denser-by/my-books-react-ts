@@ -3,6 +3,7 @@ import './userslistpage.css';
 import './../../components/ContextMenu/contextmenu.css';
 import TableCompon from '../../components/TableCompon.js';
 import { getColumns } from './userColumns.js';
+import { fineDate } from './../common.js';
 
 const UsersListPage = ({ setPageRef, pr }) => {
     if (pr.indexOf("UsersAll") < 1) return;
@@ -27,6 +28,8 @@ const UsersListPage = ({ setPageRef, pr }) => {
                     userItems.push({
                         seq_num: seq_num,
                         login: userItem.login,
+                        first_name: userItem.first_name,
+                        last_name: userItem.last_name,
                         mailbox: userItem.email,
                         modified: fineDate(new Date(userItem.updatedAt)),
                         view: "/viewUser?id=" + userItem.id,

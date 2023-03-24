@@ -411,7 +411,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 <TextListEdit text={"" + (authorsModified ? stateAuthors : book.authorsText)} className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
                                     notifySelectUpdated={relatedAuthorsSelectionUpdated} />
                                 <span className='contextBtnsColumn'>
-                                    <Button type="button" className='contextSameBtn' onClick={onBookCreateAuthor}>Create</Button>
+                                    <Button type="button" className='contextSameBtn ctrlHidden' onClick={onBookCreateAuthor}>Create</Button>
                                     <Button type="button" className='contextSameBtn' onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
                                     <Button type="button"
                                         className={"contextSameBtn" + (("" + (authorsModified ? stateAuthors : book.authorsText)).length < 1 ? " disabled" : "")}

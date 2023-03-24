@@ -30,6 +30,11 @@ export class GetManyUserDto {
     @ApiProperty({ required: false })
     login: string;
 
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    updatedAt: string;
+
     @IsNumber()
     @IsOptional()
     @ApiProperty({ required: false })

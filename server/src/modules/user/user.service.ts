@@ -77,6 +77,7 @@ export class UserService {
         result.phone = userRef.phone;
         result.first_name = userRef.first_name;
         result.last_name = userRef.last_name;
+        result.updatedAt = userRef.updatedAt;
         return result;
     }
 
