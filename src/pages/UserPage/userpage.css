@@ -1,0 +1,53 @@
+.userShape {
+    border: solid 5px #bc4404;
+    border-radius: 15px;
+    padding: 20px;
+    display: inline-flex;
+    flex-direction: column;
+    background-color: #f8f4e4;
+}
+
+.userShapeHeader {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.bookSelector {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.textInput {
+    background-color: white;
+    color: black;
+}
+
+.user-info {
+    background-color: #bc4404;
+    border: 4px #bc4404 solid;
+    border-radius: 10px;
+    margin: 2px;
+    display: inline-flex;
+    flex-direction: column;
+    color: #eeee0b;
+    min-width: 400px;
+}
+
+.highBooks {
+    min-height: 150px;
+}
+
+.user-info-label {
+    margin: 2px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.user-year-label {
+    background-color: white;
+    color: black;
+}
+
+.userRead {
+    padding-left: 5px;
+}

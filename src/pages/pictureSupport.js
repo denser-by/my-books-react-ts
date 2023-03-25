@@ -49,6 +49,10 @@ export function getImageBook(book) {
     }
 }
 
+export function getImageUser(user) {
+    return null;
+}
+
 export function getImageAuthor(author) {
     if (author.photo_data != null && author.photo_data.length > 20)
         return author.photo_data;
