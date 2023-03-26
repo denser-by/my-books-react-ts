@@ -10,11 +10,13 @@ import { AuthorsLookup } from '../../components/AuthorsLookup/AuthorsLookup.js';
 import { TextListEdit, TextListView } from '../../components/TextList/TextListCompon.js';
 import ListEditController from '../../components/TextList/ListEditController.tsx';
 import '../../components/TextList/TextListCompon.css';
+import ImageCompon from '../../components/ImageCompon/ImageCompon.tsx';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
         if (pr.indexOf("Book") < 1 || pr.indexOf("Books") >= 0 || bookId == undefined || bookId == null || ("" + bookId).length < 1) return;
 
+    const viewOnly = pr.indexOf("viewBook") >= 0;
     const [pageBookState, setPageBookState] = useState({
         bookId: bookId,
         create: create,
@@ -202,10 +204,6 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setPageRef("/viewBooksAll");
     }
 
-    function onImageUploadViewMode() {
-        console.log('no editing');
-    }
-
     function transferAuthorsState() {
         book.authors = state.authors;
         book.authorNames = ("" + stateAuthors).split("\n");
@@ -271,12 +269,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         closeProc();
     }
 
-    const [images, setImages] = React.useState([]);
     const [myImage, setMyImage] = React.useState("");
     const [imageUploaded, setImageUploaded] = React.useState(false);
 
     const onBooksImageChange = (imageList, addUpdateIndex) => {
-        console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
             setImageUploaded(true);
@@ -316,10 +312,6 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setDatePick(!datePick);
     }
 
-    function onBookCreateAuthor() {
-        console.log('oosidijfowfy9u9ew8ufw98uef98ufw988euf98uw9efhwehifuy2982u9fw9e8fu9sd8u98vu98uf9we8u9f8wue9fuw9euf9weuf9uwe9fuweiufbuyw2ewgfuysvsuhweofjouhfiusdh');
-    }
-
     function onBookAuthorToogle() {
         if (datePick)
             setDatePick(false);
@@ -344,30 +336,11 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         <Form onSubmit={handleSubmit}>
             <span className="bookShape" id="idBookPage" name="idBookPage">
                 <span className='bookShapeHeader'>
-                    <span className="picture">
-                        <ImageUploading
-                            multiple
-                            onChange={onBooksImageChange}
-                            value={images}
-                            maxNumber={1}
-                            dataURLKey="data_url"
-                        >
-                            {({
-                                imageList,
-                                onImageUpload,
-                                onImageRemoveAll,
-                                onImageUpdate,
-                                onImageRemove,
-                                isDragging,
-                                dragProps,
-                            }) => (
-                                <img className="pictureSrc"
-                                    onClick={!edit ? onImageUploadViewMode : onImageUpload}
-                                    alt="Place for book's cover image..."
-                                    src={imageUploaded ? myImage : (isCoverImageDefined() ? getImageBook(book) : myImage)} />
-                            )}
-                        </ImageUploading>
-                    </span>
+                    <ImageCompon onImagePathChange={onBooksImageChange}
+                        placeholderText={"Place for book's cover image..."}
+                        imageSource={imageUploaded ? myImage : (isCoverImageDefined() ? getImageBook(book) : myImage)}
+                        viewOnly={viewOnly}
+                    />
                     <span className="icons-right">
                         <span className="book-info">
                             <span className="book-info-label">Title</span>

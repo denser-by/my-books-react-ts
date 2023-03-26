@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './authorpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
-import ImageUploading from 'react-images-uploading';
 import axios from 'axios';
 import DateCompon from '../../components/SelectDate/DateCompon.js';
 import { fineDateShort } from './../common.js';
@@ -11,11 +10,13 @@ import { BookLookup } from '../../components/BookLookup/BookLookup.js';
 import { TextListEdit, TextListView } from '../../components/TextList/TextListCompon.js';
 import '../../components/TextList/TextListCompon.css';
 import ListEditController from '../../components/TextList/ListEditController.tsx';
+import ImageCompon from '../../components/ImageCompon/ImageCompon.tsx';
 
 const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     if (pr2.indexOf("createAuthor") < 1)
         if (pr2.indexOf("Author") < 1 || pr2.indexOf("Authors") >= 0 || authorId == undefined || authorId == null || ("" + authorId).length < 1) return;
 
+    const viewOnly = pr2.indexOf("viewAuthor") >= 0;
     const [pageAuthorState, setPageAuthorState] = useState({
         authorId: authorId,
         create: create,
@@ -192,10 +193,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         setPageRef("/viewAuthorsAll");
     }
 
-    function onImageUploadViewMode() {
-        console.log('no editing');
-    }
-
     function transferBooksState() {
         author.books = state.books;
         author.bookNames = ("" + stateBooks).split("\n");
@@ -221,13 +218,8 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
             author.photo_data = myImage;
         }
 
-        if (author.id != null && ('' + author.id).length > 0)
-            author.id = Number.parseInt('' + author.id);
-        else
-            author.id = '';
-
         if (create) {
-            book.id = 0;
+            author.id = 0;
             console.log(' author to POST ' + JSON.stringify(author));
             axios.post('http://localhost:3001/authors', author).then(res => {
                 console.log(' author POST complete ' + JSON.stringify(res));
@@ -261,12 +253,10 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         closeProc();
     }
 
-    const [images, setImages] = React.useState([]);
     const [myImage, setMyImage] = React.useState("");
     const [imageUploaded, setImageUploaded] = React.useState(false);
 
     const onAuthorsPhotoPathChange = (imageList, addUpdateIndex) => {
-        // console.log('start <' + images.length + '>');
         imageList.map(ii => {
             setMyImage(ii.data_url);
             setImageUploaded(true);
@@ -323,30 +313,11 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         <Form onSubmit={handleSubmit}>
             <span className="authorShape" id="idAuthorPage" name="idAuthorPage">
                 <span className='authorShapeHeader'>
-                    <span className="picture">
-                        <ImageUploading
-                            multiple
-                            onChange={onAuthorsPhotoPathChange}
-                            value={images}
-                            maxNumber={1}
-                            dataURLKey="data_url"
-                        >
-                            {({
-                                imageList,
-                                onImageUpload,
-                                onImageRemoveAll,
-                                onImageUpdate,
-                                onImageRemove,
-                                isDragging,
-                                dragProps,
-                            }) => (
-                                <img className="pictureSrc"
-                                    onClick={!edit ? onImageUploadViewMode : onImageUpload}
-                                    alt="Place for author's photo..."
-                                    src={imageUploaded ? myImage : (isPhotoPathDefined() ? getImageAuthor(author) : myImage)} />
-                            )}
-                        </ImageUploading>
-                    </span>
+                    <ImageCompon onImagePathChange={onAuthorsPhotoPathChange}
+                        placeholderText={"Place for author's photo..."}
+                        imageSource={imageUploaded ? myImage : (isPhotoPathDefined() ? getImageAuthor(author) : myImage)}
+                        viewOnly={viewOnly}
+                    />
                     <span className="icons-right">
                         <span className="author-info">
                             <span className="author-info-label">Name</span>

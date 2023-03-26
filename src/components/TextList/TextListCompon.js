@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './TextListCompon.css'
 
-
-export function TextListEditItem({ item, selectionsList, setSelectionsList, notifySelectUpdated }) {
+export function TextListEditItem({ item, selectionsList, setSelectionsList, notifySelectUpdated, idx }) {
 
     const [stateActive, setStateActive] = React.useState(false);
 
@@ -27,7 +26,8 @@ export function TextListEditItem({ item, selectionsList, setSelectionsList, noti
     return (
         ("" + item).length > 0
             ?
-            <span className={"textListEditItem" + (stateActive ? " selected" : "")} onClick={(e) => onEditActivate({ item })}>{item}</span>
+            <span key={"textListItemKey_" + idx}
+                className={"textListEditItem" + (stateActive ? " selected" : "")} onClick={(e) => onEditActivate({ item })}>{item}</span>
             :
             <span />
     );
@@ -43,10 +43,10 @@ export function TextListEdit({ text, className, notifySelectUpdated }) {
         <span className={className + ' mainWidth'}>
             <span className='textListEdit'>
                 {
-                    listItems.map(item => {
+                    listItems.map((item, idx) => {
                         return (
                             <TextListEditItem item={item} selectionsList={selectionsList} setSelectionsList={setSelectionsList}
-                                notifySelectUpdated={notifySelectUpdated} />
+                                notifySelectUpdated={notifySelectUpdated} idx={idx} />
                         );
                     })
                 }
@@ -58,14 +58,13 @@ export function TextListEdit({ text, className, notifySelectUpdated }) {
 export function TextListView({ text }) {
 
     var listItems = [].concat(text.split("\n"));
-    let idx = 1;
 
     return (
         <ul className='textList'>
             {
-                listItems.map(item => {
+                listItems.map((item, idx) => {
                     return (
-                        <li className='textListItem' key={'listKey' + idx}>{idx++})&nbsp;<strong>{item}</strong></li>
+                        <li className='textListItem' key={'listItemKey' + idx}>{idx + 1})&nbsp;<strong>{item}</strong></li>
                     );
                 })
             }
