@@ -1,6 +1,7 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateRoleDto } from './dto/CreateRoleDto';
+import { DeleteRoleDto } from './dto/DeleteRoleDto';
 import { GetManyRoleDto } from './dto/GetManyRoleDto';
 import { RoleService } from './role.service';
 
@@ -45,8 +46,8 @@ export class RoleController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateRoleDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateRoleDto> {
+    @ApiOkResponse({ type: DeleteRoleDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteRoleDto> {
         return await this.roleService.delete(id);
     }
 }

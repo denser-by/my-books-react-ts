@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/CreateImageDto';
+import { DeleteImageDto } from './dto/DeleteImageDto';
 const image = require('../../../models/index.js').Image;
 
 @Injectable()
@@ -82,23 +83,33 @@ export class ImageService {
         return rows[0];
     }
 
-    async delete(id: number): Promise<CreateImageDto> {
+    private async prepareDtoDelete(ref: any): Promise<DeleteImageDto> {
+        let result = new DeleteImageDto();
+        result.id = ref.id;
+        result.path = ref.path;
+        return result;
+    }
+
+    async delete(id: number): Promise<DeleteImageDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await image.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
         await rows[0].destroy({ force: true, truncate: true });
-        return rows[0];
+        let result = await this.prepareDtoDelete(rows[0]);
+        return result;
     }
 
-    async deleteAll(): Promise<number> {
+    async deleteAll(): Promise<DeleteImageDto[]> {
         var { count, rows } = await image.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);
-        rows.map(img => async function () {
-            await img.destroy({ force: true, truncate: true });
-        });
-        return count;
+        let result = [];
+        for (let i = 0; i < rows.length; i++) {
+            result.push(await this.prepareDtoDelete(rows[i]));
+            await rows[i].destroy({ force: true, truncate: true });
+        }
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthorBookDto } from './dto/CreateAuthorBookDto';
+import { DeleteAuthorBookDto } from './dto/DeleteAuthorBookDto';
 const authorbook = require('../../../models/index.js').AuthorBook;
 
 @Injectable()
@@ -104,55 +105,67 @@ export class AuthorbookService {
         return rows[0];
     }
 
-    async delete(id: number): Promise<CreateAuthorBookDto> {
+    private async prepareDtoDelete(ref: any): Promise<DeleteAuthorBookDto> {
+        let result = new DeleteAuthorBookDto();
+        result.id = ref.id;
+        result.author = ref.author;
+        result.book = ref.book;
+        return result;
+    }
+
+    async delete(id: number): Promise<DeleteAuthorBookDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await authorbook.findAndCountAll({ where: { id: id } });
         if (count != 1)
             throw new Error('Object not found, ID=' + id);
         await rows[0].destroy({ force: true, truncate: true });
-        return rows[0];
+        let result = await this.prepareDtoDelete(rows[0]);
+        return result;
     }
 
-    async deleteByAuthorBook(author: number, book: number): Promise<CreateAuthorBookDto> {
+    async deleteByAuthorBook(author: number, book: number): Promise<DeleteAuthorBookDto> {
         if (author == null || author == undefined || author < 0 || book == null || book == undefined || book < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await authorbook.findAndCountAll({ where: { author: author, book: book } });
         if (count != 1)
             throw new Error('Object not found, author=' + author + ' book=' + book);
         await rows[0].destroy({ force: true, truncate: true });
-        return rows[0];
+        let result = await this.prepareDtoDelete(rows[0]);
+        return result;
     }
 
-    async deleteAll(): Promise<number> {
+    async deleteAll(): Promise<DeleteAuthorBookDto[]> {
         var { count, rows } = await authorbook.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);
-        rows.map(img => async function () {
-            await img.destroy({ force: true, truncate: true });
-        });
-        return count;
+        let result = [];
+        for (let i = 0; i < rows.length; i++) {
+            result.push(await this.prepareDtoDelete(rows[i]));
+            await rows[i].destroy({ force: true, truncate: true });
+        }
+        return result;
     }
 
-    async deleteAllByAuthor(author: number): Promise<CreateAuthorBookDto[]> {
+    async deleteAllByAuthor(author: number): Promise<DeleteAuthorBookDto[]> {
         var { count, rows } = await authorbook.findAndCountAll({ where: { author: author } });
         let result = [];
         if (count > 0) {
             for (let i = 0; i < rows.length; i++) {
+                result.push(await this.prepareDtoDelete(rows[i]));
                 await rows[i].destroy({ force: true, truncate: true });
-                result.push(rows[i]);
             }
         }
         return result;
     }
 
-    async deleteAllByBook(book: number): Promise<CreateAuthorBookDto[]> {
+    async deleteAllByBook(book: number): Promise<DeleteAuthorBookDto[]> {
         var { count, rows } = await authorbook.findAndCountAll({ where: { book: book } });
         let result = [];
         if (count > 0) {
             for (let i = 0; i < rows.length; i++) {
+                result.push(await this.prepareDtoDelete(rows[i]));
                 await rows[i].destroy({ force: true, truncate: true });
-                result.push(rows[i]);
             }
         }
         return result;

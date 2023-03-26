@@ -2,6 +2,7 @@ import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, Param, Parse
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateAppointmentDto } from './dto/CreateAppointmentDto';
 import { AppointmentService } from './appointment.service';
+import { DeleteAppointmentDto } from './dto/DeleteAppointmentDto';
 
 @Controller('appointments')
 export class AppointmentController {
@@ -44,8 +45,8 @@ export class AppointmentController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateAppointmentDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateAppointmentDto> {
+    @ApiOkResponse({ type: DeleteAppointmentDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteAppointmentDto> {
         return await this.appointmentService.delete(id);
     }
 }

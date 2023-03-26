@@ -1,6 +1,7 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateImageDto } from './dto/CreateImageDto';
+import { DeleteImageDto } from './dto/DeleteImageDto';
 import { ImageService } from './image.service';
 
 @Controller('images')
@@ -44,8 +45,8 @@ export class ImageController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateImageDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateImageDto> {
+    @ApiOkResponse({ type: DeleteImageDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteImageDto> {
         return await this.imageService.delete(id);
     }
 }

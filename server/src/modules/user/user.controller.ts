@@ -1,6 +1,7 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/CreateUserDto';
+import { DeleteUserDto } from './dto/DeleteUserDto';
 import { GetManyUserDto } from './dto/GetManyUserDto';
 import { UserService } from './user.service';
 
@@ -45,8 +46,8 @@ export class UserController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: CreateUserDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<CreateUserDto> {
+    @ApiOkResponse({ type: DeleteUserDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteUserDto> {
         return await this.userService.delete(id);
     }
 }
