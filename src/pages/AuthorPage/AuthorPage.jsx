@@ -34,6 +34,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         photo_path: '',
         photo_data: ''
     };
+    const [authorState, setAuthorState] = useState(author);
 
     useEffect(() => {
         if (!create) {
@@ -55,6 +56,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             photo_path: entireBody.photo_path,
                             photo_data: entireBody.photo_data
                         };
+                        setAuthorState(author);
                         setStateId(author.id);
                         // console.log('authorObj =' + JSON.stringify(author));
                         if (!ageSelectedModified) {
@@ -138,35 +140,41 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
             author.booksText = makeBooksText(author.bookNames);
         }
         setStateBooks(author.booksText);
-        setState({ authors: author.books });
+        setState({ books: author.books });
         setBooksModified(true);
     }
 
     function onAuthorBookDelete(e) {
         if (deleteSelection != null && deleteSelection.length > 0) {
-            var delSel = deleteSelection;
-            deleteSelection.map(delItem => {
-                let delIdx = author.bookNames.indexOf(delItem);
+            let deleteSelectionList = ("" + deleteSelection).split(",").filter(item => item.length > 0);
+            deleteSelectionList.map(delItem => {
+                let delIdx = authorState.bookNames.indexOf(delItem);
                 if (delIdx > -1) {
-                    author.books.splice(delIdx, 1);
-                    author.bookNames.splice(delIdx, 1);
+                    authorState.books.splice(delIdx, 1);
+                    authorState.bookNames.splice(delIdx, 1);
                 }
             });
-            delSel.splice(0, delSel.length);
-            setDeleteSelection(delSel);
-            author.booksText = makeBooksText(author.bookNames);
+            authorState.booksText = makeBooksText(authorState.bookNames);
         }
-        setStateBooks(author.booksText);
-        setState({ authors: author.books });
+        setStateBooks(authorState.booksText);
+        setState({ books: authorState.books });
         setBooksModified(true);
+        setDeleteSelection([]);
     }
 
     function onAuthorBookClear(e) {
-        author.books.splice(0, author.books.length);
-        author.bookNames.splice(0, author.bookNames.length);
-        author.booksText = makeBooksText(author.bookNames);
-        setStateBooks(author.booksText);
-        setState({ authors: author.books });
+        if (authorState.bookNames != null && authorState.bookNames.length > 0) {
+            [].concat(authorState.bookNames).map(delItem => {
+                let delIdx = authorState.bookNames.indexOf(delItem);
+                if (delIdx > -1) {
+                    authorState.books.splice(delIdx, 1);
+                    authorState.bookNames.splice(delIdx, 1);
+                }
+            });
+            authorState.booksText = makeBooksText(authorState.bookNames);
+        }
+        setStateBooks(authorState.booksText);
+        setState({ books: authorState.books });
         setBooksModified(true);
     }
 

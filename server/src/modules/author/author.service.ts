@@ -6,6 +6,7 @@ import { CreateAuthorDto } from './dto/CreateAuthorDto';
 import { GetManyAuthorDto } from './dto/GetManyAuthorDto';
 import { GetOneAuthorDto } from './dto/GetOneAuthorDto';
 const author = require('../../../models/index.js').Author;
+const authorbook = require('../../../models/index.js').AuthorBook;
 const book = require('../../../models/index.js').Book;
 
 @Injectable()
@@ -46,6 +47,17 @@ export class AuthorService {
                 photo: photo_id,
                 access_key: authorCreate.access_key
             });
+            if (authorCreate.books != null && authorCreate.books.length > 0) {
+                for (let i = 0; i < authorCreate.books.length; i++) {
+                    let rAd = Number(authorCreate.books[i]);
+                    const authorbookRel = await authorbook.create({
+                        book: rAd,
+                        author: value.id
+                    });
+                }
+                value.booksNum = await this.authorbookService.sizeByAuthor(value.id);
+                await value.save();
+            }
             return value;
         } catch (e) {
             throw new Error('Can not create Author, ' + e);
@@ -183,6 +195,25 @@ export class AuthorService {
             access_key: authorUpdate.access_key
         });
         rows[0].save();
+        if (authorUpdate.books != null && authorUpdate.books.length >= 0) {
+            const ready: string[] = await this.authorbookService.getAllByAuthorArrayId(id);
+            for (let i = 0; i < ready.length; i++) {
+                if (authorUpdate.books.indexOf(ready[i]) < 0 || authorUpdate.books.length < 1) {
+                    const authorbookRelDeleted = await this.authorbookService.deleteByAuthorBook(id, Number(ready[i]));
+                }
+            }
+            for (let i = 0; i < authorUpdate.books.length; i++) {
+                let rId = Number(authorUpdate.books[i]);
+                if (await this.authorbookService.hasOne(id, rId) == false) {
+                    const authorbookRel = await authorbook.create({
+                        book: rId,
+                        author: id
+                    });
+                }
+            }
+            rows[0].booksNum = await this.authorbookService.sizeByAuthor(id);
+            await rows[0].save();
+        }
         return rows[0];
     }
 

@@ -50,15 +50,15 @@ export class BookService {
                 access_key: bookCreate.access_key
             });
             if (bookCreate.authors != null && bookCreate.authors.length > 0) {
-                const id = createdBook.id;
                 for (let i = 0; i < bookCreate.authors.length; i++) {
                     let rId = Number(bookCreate.authors[i]);
                     const authorbookRel = await authorbook.create({
-                        book: id,
+                        book: createdBook.id,
                         author: rId
                     });
                 }
-                const relAuthorsNum = await this.authorbookService.sizeByBook(id);
+                createdBook.authorsNum = await this.authorbookService.sizeByBook(createdBook.id);
+                await createdBook.save();
             }
             return createdBook;
         } catch (e) {
