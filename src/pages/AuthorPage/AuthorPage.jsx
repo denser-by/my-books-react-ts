@@ -21,7 +21,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     });
 
     var author = {
-        id: '1',
+        id: '',
         name: '',
         age: '',
         books: [],
@@ -52,6 +52,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                             photo_path: entireBody.photo_path,
                             photo_data: entireBody.photo_data
                         };
+                        setStateId(author.id);
                         // console.log('authorObj =' + JSON.stringify(author));
                         if (!ageSelectedModified) {
                             setAgeSelected(new Date(author.age));
@@ -82,6 +83,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         }
     }, [pageAuthorState]);
 
+    const [stateId, setStateId] = useState('');
     const [stateName, setStateName] = useState('');
     const [stateAge, setStateAge] = useState('');
     const [stateBooks, setStateBooks] = useState('');
@@ -125,32 +127,30 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
     }
 
     function handleBooksChange(newBookId, newBookName) {
-        if (author.books.indexOf(newBookId) <0) {
+        if (author.books.indexOf(newBookId) < 0) {
             author.books.push(newBookId);
             author.bookNames.push(newBookName);
             author.booksText = makeBooksText(author.bookNames);
         }
-
         setStateBooks(author.booksText);
         setState({ authors: author.books });
         setBooksModified(true);
     }
 
     function onAuthorBookDelete(e) {
-        if(deleteSelection != null && deleteSelection.length > 0) {
+        if (deleteSelection != null && deleteSelection.length > 0) {
             var delSel = deleteSelection;
             deleteSelection.map(delItem => {
                 let delIdx = author.bookNames.indexOf(delItem);
-                if (delIdx >-1) {
-                    author.books.splice(delIdx,1);
-                    author.bookNames.splice(delIdx,1);
+                if (delIdx > -1) {
+                    author.books.splice(delIdx, 1);
+                    author.bookNames.splice(delIdx, 1);
                 }
             });
             delSel.splice(0, delSel.length);
             setDeleteSelection(delSel);
             author.booksText = makeBooksText(author.bookNames);
         }
-
         setStateBooks(author.booksText);
         setState({ authors: author.books });
         setBooksModified(true);
@@ -160,7 +160,6 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
         author.books.splice(0, author.books.length);
         author.bookNames.splice(0, author.bookNames.length);
         author.booksText = makeBooksText(author.bookNames);
-
         setStateBooks(author.booksText);
         setState({ authors: author.books });
         setBooksModified(true);
@@ -226,12 +225,15 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
             author.id = '';
 
         if (create) {
+            book.id = 0;
             console.log(' author to POST ' + JSON.stringify(author));
             axios.post('http://localhost:3001/authors', author).then(res => {
                 console.log(' author POST complete ' + JSON.stringify(res));
             });
             console.log(' create complete ');
         } else if (edit) {
+            if (author.id == null || ('' + author.id).length < 1)
+                author.id = Number.parseInt('' + stateId);
             console.log(' author to PUT ' + JSON.stringify(author));
             axios.put('http://localhost:3001/authors', author).then(res => {
                 console.log(' author PUT complete ' + JSON.stringify(res));
@@ -386,7 +388,7 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                                         className={"contextSameBtn" + (("" + (booksModified ? stateBooks : author.booksText)).length < 1 ? " disabled" : "")}
                                         onClick={onAuthorBookClear}>Clear</Button>
                                     <Button type="button"
-                                        className={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")} 
+                                        className={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")}
                                         onClick={onAuthorBookDelete}>Delete</Button>
                                 </span>
                             </span>

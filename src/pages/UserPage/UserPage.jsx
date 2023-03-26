@@ -320,16 +320,7 @@ const UserPage = ({ setPageRef, pr2, userId, edit, create, closeProc }) => {
                     <div className={create || edit ? "ctrlHidden" : "fieldCurrent userRead"}>{infoModified ? stateInfo : user.info}</div>
                 </div>
                 <div className="buttonRow">
-                    <span className={edit && !create ? "featureButton" : "ctrlHidden"}>
-                        <Button type="button" onClick={onUserView}>View</Button>
-                    </span>
-                    <span className={!edit ? "ctrlHidden" : "fieldSubmit"}>
-                        <Button type="submit">{create ? "Create" : "Save"}</Button>
-                    </span>
-                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
-                        <Button type="button" onClick={onUserEdit}>Edit</Button>
-                    </span>
-                    <span className={!edit && !create ? "featureButton" : "ctrlHidden"}>
+                    <span className="featureButton">
                         <Button type="button" onClick={onUserExport}>Export</Button>
                     </span>
                     <span className="featureButton">

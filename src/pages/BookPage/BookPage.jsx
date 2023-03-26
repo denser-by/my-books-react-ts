@@ -20,7 +20,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     });
 
     var book = {
-        id: '1',
+        id: '',
         name: '',
         year: '',
         authors: [],
@@ -51,6 +51,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             cover_img_path: entireBody.cover_img_path,
                             cover_img_data: entireBody.cover_img_data
                         };
+                        setStateId(book.id);
                         // console.log('bookObj =' + JSON.stringify(book));
                         if (!dateSelectedModified) {
                             setDateSelected(new Date('' + book.year + '-01-01'));
@@ -81,6 +82,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         }
     }, [pageBookState]);
 
+    const [stateId, setStateId] = useState('');
     const [stateName, setStateName] = useState('');
     const [stateYear, setStateYear] = useState('');
     const [stateAuthors, setStateAuthors] = useState('');
@@ -125,32 +127,30 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     }
 
     function handleAuthorsChange(newAuthorId, newAuthorName) {
-        if (book.authors.indexOf(newAuthorId) <0) {
+        if (book.authors.indexOf(newAuthorId) < 0) {
             book.authors.push(newAuthorId);
             book.authorNames.push(newAuthorName);
             book.authorsText = makeAuthorsText(book.authorNames);
         }
-
         setStateAuthors(book.authorsText);
         setState({ authors: book.authors });
         setAuthorsModified(true);
     }
 
     function onBookAuthorDelete(e) {
-        if(deleteSelection != null && deleteSelection.length > 0) {
+        if (deleteSelection != null && deleteSelection.length > 0) {
             var delSel = deleteSelection;
             deleteSelection.map(delItem => {
                 let delIdx = book.authorNames.indexOf(delItem);
-                if (delIdx >-1) {
-                    book.authors.splice(delIdx,1);
-                    book.authorNames.splice(delIdx,1);
+                if (delIdx > -1) {
+                    book.authors.splice(delIdx, 1);
+                    book.authorNames.splice(delIdx, 1);
                 }
             });
             delSel.splice(0, delSel.length);
             setDeleteSelection(delSel);
             book.authorsText = makeAuthorsText(book.authorNames);
         }
-
         setStateAuthors(book.authorsText);
         setState({ authors: book.authors });
         setAuthorsModified(true);
@@ -160,7 +160,6 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         book.authors.splice(0, book.authors.length);
         book.authorNames.splice(0, book.authorNames.length);
         book.authorsText = makeAuthorsText(book.authorNames);
-
         setStateAuthors(book.authorsText);
         setState({ authors: book.authors });
         setAuthorsModified(true);
@@ -230,23 +229,21 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             book.cover_img_data = myImage;
         }
 
-        if (book.id != null && ('' + book.id).length > 0)
-            book.id = Number.parseInt('' + book.id);
-        else
-            book.id = '';
-
         if (book.year != null && ('' + book.year).length > 0)
             book.year = Number.parseInt('' + book.year);
         else
             book.year = null;
 
         if (create) {
+            book.id = 0;
             console.log(' book to POST ' + JSON.stringify(book));
             axios.post('http://localhost:3001/books', book).then(res => {
                 console.log(' book POST complete ' + JSON.stringify(res));
             });
             console.log(' create complete ');
         } else if (edit) {
+            if (book.id == null || ('' + book.id).length < 1)
+                book.id = Number.parseInt('' + stateId);
             console.log(' book to PUT ' + JSON.stringify(book));
             axios.put('http://localhost:3001/books', book).then(res => {
                 console.log(' book PUT complete ' + JSON.stringify(res));
@@ -416,8 +413,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                     <Button type="button"
                                         className={"contextSameBtn" + (("" + (authorsModified ? stateAuthors : book.authorsText)).length < 1 ? " disabled" : "")}
                                         onClick={onBookAuthorClear}>Clear</Button>
-                                    <Button type="button" 
-                                        className={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")} 
+                                    <Button type="button"
+                                        className={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")}
                                         onClick={onBookAuthorDelete}>Delete</Button>
                                 </span>
                             </span>
