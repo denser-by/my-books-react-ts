@@ -58,8 +58,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         setStateId(book.id);
                         // console.log('bookObj =' + JSON.stringify(book));
                         if (!dateSelectedModified) {
-                            setDateSelected(new Date('' + book.year + '-01-01'));
-                            setDateSelectedModified(true);
+                            if (book.year != null && ("" + book.year).length > 0) {
+                                setDateSelected(new Date('' + book.year + '-01-01'));
+                                setDateSelectedModified(true);
+                            }
                         }
                         if (!nameModified) {
                             setStateName(book.name);

@@ -35,7 +35,7 @@ export function TextListEditItem({ item, selectionsList, setSelectionsList, noti
 
 export function TextListEdit({ text, className, notifySelectUpdated }) {
 
-    var listItems = [].concat(text.split("\n"));
+    var listItems = [].concat(text.split("\n")).filter(item => item.length > 0);
 
     const [selectionsList, setSelectionsList] = React.useState([]);
 
@@ -57,7 +57,7 @@ export function TextListEdit({ text, className, notifySelectUpdated }) {
 
 export function TextListView({ text }) {
 
-    var listItems = [].concat(text.split("\n"));
+    var listItems = [].concat(text.split("\n")).filter(item => item.length > 0);
 
     return (
         <ul className='textList'>

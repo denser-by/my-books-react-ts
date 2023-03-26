@@ -58,8 +58,10 @@ const AuthorPage = ({ setPageRef, pr2, authorId, edit, create, closeProc }) => {
                         setStateId(author.id);
                         // console.log('authorObj =' + JSON.stringify(author));
                         if (!ageSelectedModified) {
-                            setAgeSelected(new Date(author.age));
-                            setAgeSelectedModified(true);
+                            if (author.age != null && ("" + author.age).length > 0) {
+                                setAgeSelected(new Date(author.age));
+                                setAgeSelectedModified(true);
+                            }
                         }
                         if (!nameModified) {
                             setStateName(author.name);
