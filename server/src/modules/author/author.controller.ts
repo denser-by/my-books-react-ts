@@ -4,6 +4,7 @@ import { CreateAuthorDto } from './dto/CreateAuthorDto';
 import { AuthorService } from './author.service';
 import { GetOneAuthorDto } from './dto/GetOneAuthorDto';
 import { GetManyAuthorDto } from './dto/GetManyAuthorDto';
+import { DeleteAuthorDto } from './dto/DeleteAuthorDto';
 
 @Controller('authors')
 export class AuthorController {
@@ -46,16 +47,16 @@ export class AuthorController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: GetOneAuthorDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneAuthorDto> {
+    @ApiOkResponse({ type: DeleteAuthorDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteAuthorDto> {
         return await this.authorService.delete(id);
     }
 
     @Delete()
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: GetManyAuthorDto, isArray: true })
-    async deleteAll(): Promise<GetManyAuthorDto[]> {
+    @ApiOkResponse({ type: DeleteAuthorDto, isArray: true })
+    async deleteAll(): Promise<DeleteAuthorDto[]> {
         return await this.authorService.deleteAll();
     }
 }

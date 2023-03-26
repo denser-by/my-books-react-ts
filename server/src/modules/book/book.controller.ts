@@ -4,6 +4,7 @@ import { CreateBookDto } from './dto/CreateBookDto';
 import { BookService } from './book.service';
 import { GetOneBookDto } from './dto/GetOneBookDto';
 import { GetManyBookDto } from './dto/GetManyBookDto';
+import { DeleteBookDto } from './dto/DeleteBookDto';
 
 @Controller('books')
 export class BookController {
@@ -46,16 +47,16 @@ export class BookController {
     @Delete(':id')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: GetOneBookDto })
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<GetOneBookDto> {
+    @ApiOkResponse({ type: DeleteBookDto })
+    async delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteBookDto> {
         return await this.bookService.delete(id);
     }
 
     @Delete()
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    @ApiOkResponse({ type: GetManyBookDto, isArray: true })
-    async deleteAll(): Promise<GetManyBookDto[]> {
+    @ApiOkResponse({ type: DeleteBookDto, isArray: true })
+    async deleteAll(): Promise<DeleteBookDto[]> {
         return await this.bookService.deleteAll();
     }
 }

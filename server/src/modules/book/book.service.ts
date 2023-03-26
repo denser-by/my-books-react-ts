@@ -4,6 +4,7 @@ import { AuthorbookService } from '../authorbook/authorbook.service';
 import { CreateImageDto } from '../image/dto/CreateImageDto';
 import { ImageService } from '../image/image.service';
 import { CreateBookDto } from './dto/CreateBookDto';
+import { DeleteBookDto } from './dto/DeleteBookDto';
 import { GetManyBookDto } from './dto/GetManyBookDto';
 import { GetOneBookDto } from './dto/GetOneBookDto';
 const book = require('../../../models/index.js').Book;
@@ -117,6 +118,13 @@ export class BookService {
         return await this.prepareDtoFromEntity(rows[0], true);
     }
 
+    private async prepareDtoDelete(bookRef: any): Promise<DeleteBookDto> {
+        let result = new DeleteBookDto();
+        result.id = bookRef.id;
+        result.name = bookRef.name;
+        return result;
+    }
+
     private async prepareDtoManyFromEntity(bookRef: any, withImages: boolean): Promise<GetManyBookDto> {
         let result = new GetManyBookDto();
         result.id = bookRef.id;
@@ -219,7 +227,7 @@ export class BookService {
         return rows[0];
     }
 
-    async delete(id: number): Promise<GetOneBookDto> {
+    async delete(id: number): Promise<DeleteBookDto> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
@@ -227,16 +235,17 @@ export class BookService {
             throw new Error('Object not found, ID=' + id);
         await this.authorbookService.deleteAllByBook(rows[0].id);
         await rows[0].destroy({ force: true, truncate: true });
-        return rows[0];
+        let result = await this.prepareDtoDelete(rows[0]);
+        return result;
     }
 
-    async deleteAll(): Promise<GetManyBookDto[]> {
+    async deleteAll(): Promise<DeleteBookDto[]> {
         var { count, rows } = await book.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);
         let result = [];
         for (let i = 0; i < rows.length; i++) {
-            result.push(await this.prepareDtoManyFromEntity(rows[i], false));
+            result.push(await this.prepareDtoDelete(rows[i]));
             await this.authorbookService.deleteAllByBook(rows[i].id);
             await rows[i].destroy({ force: true, truncate: true });
         }
