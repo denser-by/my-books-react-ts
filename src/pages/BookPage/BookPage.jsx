@@ -44,18 +44,15 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                 .then(entireBody => {
                     if (bookId == entireBody.id) {
                         // console.log('ENTIRE=' + JSON.stringify(entireBody));
-                        book = {
-                            id: entireBody.id,
-                            name: entireBody.name,
-                            year: entireBody.year != null ? entireBody.year : '',
-                            authors: entireBody.authors,
-                            authorNames: entireBody.authorNames,
-                            authorsText: makeAuthorsText(entireBody.authorNames),
-                            info: entireBody.info,
-                            cover_img_path: entireBody.cover_img_path,
-                            cover_img_data: entireBody.cover_img_data
-                        };
-                        setBookState(book);
+                        bookState.id = entireBody.id;
+                        bookState.name = entireBody.name;
+                        bookState.year = entireBody.year != null ? entireBody.year : '';
+                        bookState.authors = entireBody.authors;
+                        bookState.authorNames = entireBody.authorNames;
+                        bookState.authorsText = makeAuthorsText(entireBody.authorNames);
+                        bookState.info = entireBody.info;
+                        bookState.cover_img_path = entireBody.cover_img_path;
+                        bookState.cover_img_data = entireBody.cover_img_data;
                         setStateId(book.id);
                         // console.log('bookObj =' + JSON.stringify(book));
                         if (!dateSelectedModified) {
@@ -134,13 +131,13 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     }
 
     function handleAuthorsChange(newAuthorId, newAuthorName) {
-        if (book.authors.indexOf(newAuthorId) < 0) {
-            book.authors.push(newAuthorId);
-            book.authorNames.push(newAuthorName);
-            book.authorsText = makeAuthorsText(book.authorNames);
+        if (bookState.authors.indexOf(newAuthorId) < 0) {
+            bookState.authors.push(newAuthorId);
+            bookState.authorNames.push(newAuthorName);
+            bookState.authorsText = makeAuthorsText(bookState.authorNames);
         }
-        setStateAuthors(book.authorsText);
-        setState({ authors: book.authors });
+        setStateAuthors(bookState.authorsText);
+        setState({ authors: bookState.authors });
         setAuthorsModified(true);
     }
 
@@ -214,7 +211,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     }
 
     function transferAuthorsState() {
-        book.authors = state.authors;
+        // book.authors = state.authors;
+        book.authors = bookState.authors;
         book.authorNames = ("" + stateAuthors).split("\n");
     }
 
