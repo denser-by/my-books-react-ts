@@ -34,3 +34,16 @@
 .mainWidth {
     width: 100%;
 }
+
+.listEditBtnsColumn {
+    display: inline-flex;
+    flex-direction: column;
+    background-color: white;
+    height: 50%;
+    padding-bottom: 5px;
+}
+
+.listEditBtn {
+    margin: 3px;
+    min-width: 85px;
+}

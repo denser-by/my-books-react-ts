@@ -8,6 +8,8 @@ import { YearCompon, MonthCompon } from '../../components/SelectDate/DateCompon.
 import { getImageBook } from './../pictureSupport.js';
 import { AuthorsLookup } from '../../components/AuthorsLookup/AuthorsLookup.js';
 import { TextListEdit, TextListView } from '../../components/TextList/TextListCompon.js';
+import ListEditController from '../../components/TextList/ListEditController.tsx';
+import '../../components/TextList/TextListCompon.css';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -407,16 +409,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
                                 <TextListEdit text={"" + (authorsModified ? stateAuthors : book.authorsText)} className={!edit ? "ctrlHidden hight" : "fieldCurrent"}
                                     notifySelectUpdated={relatedAuthorsSelectionUpdated} />
-                                <span className='contextBtnsColumn'>
-                                    <Button type="button" className='contextSameBtn ctrlHidden' onClick={onBookCreateAuthor}>Create</Button>
-                                    <Button type="button" className='contextSameBtn' onClick={onBookAuthorToogle}><strong>&lt;..&gt;</strong></Button>
-                                    <Button type="button"
-                                        className={"contextSameBtn" + (("" + (authorsModified ? stateAuthors : book.authorsText)).length < 1 ? " disabled" : "")}
-                                        onClick={onBookAuthorClear}>Clear</Button>
-                                    <Button type="button"
-                                        className={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")}
-                                        onClick={onBookAuthorDelete}>Delete</Button>
-                                </span>
+                                <ListEditController onListItemSelect={onBookAuthorToogle} onListItemsClear={onBookAuthorClear}
+                                    onListItemsSelectedDelete={onBookAuthorDelete}
+                                    cssClear={"contextSameBtn" + (("" + (authorsModified ? stateAuthors : book.authorsText)).length < 1 ? " disabled" : "")}
+                                    cssDelete={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")} />
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>
                                 <TextListView text={"" + (authorsModified ? stateAuthors : book.authorsText)} />
