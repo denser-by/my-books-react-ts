@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './bookpage.css';
 import './../common.css';
 import { Form, Input, Button } from 'reactstrap';
-import ImageUploading from 'react-images-uploading';
 import axios from 'axios';
 import { YearCompon, MonthCompon } from '../../components/SelectDate/DateCompon.js';
 import { getImageBook } from './../pictureSupport.js';
@@ -34,6 +33,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         cover_img_path: '',
         cover_img_data: ''
     };
+    const [bookState, setBookState] = useState(book);
 
     useEffect(() => {
         if (!create) {
@@ -55,6 +55,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             cover_img_path: entireBody.cover_img_path,
                             cover_img_data: entireBody.cover_img_data
                         };
+                        setBookState(book);
                         setStateId(book.id);
                         // console.log('bookObj =' + JSON.stringify(book));
                         if (!dateSelectedModified) {
@@ -145,29 +146,35 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
 
     function onBookAuthorDelete(e) {
         if (deleteSelection != null && deleteSelection.length > 0) {
-            var delSel = deleteSelection;
-            deleteSelection.map(delItem => {
-                let delIdx = book.authorNames.indexOf(delItem);
+            let deleteSelectionList = ("" + deleteSelection).split(",").filter(item => item.length > 0);
+            deleteSelectionList.map(delItem => {
+                let delIdx = bookState.authorNames.indexOf(delItem);
                 if (delIdx > -1) {
-                    book.authors.splice(delIdx, 1);
-                    book.authorNames.splice(delIdx, 1);
+                    bookState.authors.splice(delIdx, 1);
+                    bookState.authorNames.splice(delIdx, 1);
                 }
             });
-            delSel.splice(0, delSel.length);
-            setDeleteSelection(delSel);
-            book.authorsText = makeAuthorsText(book.authorNames);
+            bookState.authorsText = makeAuthorsText(bookState.authorNames);
         }
-        setStateAuthors(book.authorsText);
-        setState({ authors: book.authors });
+        setStateAuthors(bookState.authorsText);
+        setState({ authors: bookState.authors });
         setAuthorsModified(true);
+        setDeleteSelection([]);
     }
 
     function onBookAuthorClear(e) {
-        book.authors.splice(0, book.authors.length);
-        book.authorNames.splice(0, book.authorNames.length);
-        book.authorsText = makeAuthorsText(book.authorNames);
-        setStateAuthors(book.authorsText);
-        setState({ authors: book.authors });
+        if (bookState.authorNames != null && bookState.authorNames.length > 0) {
+            [].concat(bookState.authorNames).map(delItem => {
+                let delIdx = bookState.authorNames.indexOf(delItem);
+                if (delIdx > -1) {
+                    bookState.authors.splice(delIdx, 1);
+                    bookState.authorNames.splice(delIdx, 1);
+                }
+            });
+            bookState.authorsText = makeAuthorsText(bookState.authorNames);
+        }
+        setStateAuthors(bookState.authorsText);
+        setState({ authors: bookState.authors });
         setAuthorsModified(true);
     }
 

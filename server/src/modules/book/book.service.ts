@@ -197,7 +197,13 @@ export class BookService {
             access_key: bookUpdate.access_key
         });
         await rows[0].save();
-        if (bookUpdate.authors != null && bookUpdate.authors.length > 0) {
+        if (bookUpdate.authors != null && bookUpdate.authors.length >= 0) {
+            const ready: string[] = await this.authorbookService.getAllByBookArrayId(id);
+            for (let i = 0; i < ready.length; i++) {
+                if (bookUpdate.authors.indexOf(ready[i]) < 0 || bookUpdate.authors.length < 1) {
+                    const authorbookRelDeleted = await this.authorbookService.deleteByAuthorBook(Number(ready[i]), id);
+                }
+            }
             for (let i = 0; i < bookUpdate.authors.length; i++) {
                 let rId = Number(bookUpdate.authors[i]);
                 if (await this.authorbookService.hasOne(rId, id) == false) {
@@ -207,7 +213,8 @@ export class BookService {
                     });
                 }
             }
-            const relAuthorsNum = await this.authorbookService.sizeByBook(id);
+            rows[0].authorsNum = await this.authorbookService.sizeByBook(id);
+            await rows[0].save();
         }
         return rows[0];
     }

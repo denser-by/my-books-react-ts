@@ -47,4 +47,9 @@ export class CreateBookDto {
     @IsOptional()
     @ApiProperty({ required: false })
     updatedAt: string;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    authorsNum: number;
 }

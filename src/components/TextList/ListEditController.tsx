@@ -15,11 +15,11 @@ function ListEditController({ onListItemSelect, onListItemsClear, onListItemsSel
     <span className='listEditBtnsColumn'>
       <Button type="button" className='listEditBtn' onClick={onListItemSelect}><strong>&lt;..&gt;</strong></Button>
       <Button type="button"
-        className={cssClear}
-        onClick={onListItemsClear}>Clear</Button>
-      <Button type="button"
         className={cssDelete}
         onClick={onListItemsSelectedDelete}>Delete</Button>
+      <Button type="button"
+        className={cssClear}
+        onClick={onListItemsClear}>Clear</Button>
     </span>
   );
 }
