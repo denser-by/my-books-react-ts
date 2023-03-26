@@ -56,21 +56,21 @@ export class AuthorbookService {
         return [];
     }
 
-    async size() {
+    async size(): Promise<number> {
         return await authorbook.count();
     }
 
-    async sizeByAuthor(author: number) {
+    async sizeByAuthor(author: number): Promise<number> {
         var { count, rows } = await authorbook.findAndCountAll({ where: { author: author } });
         return count >= 1 ? count : 0;
     }
 
-    async sizeByBook(book: number) {
+    async sizeByBook(book: number): Promise<number> {
         var { count, rows } = await authorbook.findAndCountAll({ where: { book: book } });
         return count >= 1 ? count : 0;
     }
 
-    async hasOne(author: number, book: number) {
+    async hasOne(author: number, book: number): Promise<boolean> {
         if (author == null || author == undefined || author < 0 || book == null || book == undefined || book < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await authorbook.findAndCountAll({ where: { author: author, book: book } });
@@ -124,7 +124,7 @@ export class AuthorbookService {
         return rows[0];
     }
 
-    async deleteAll() {
+    async deleteAll(): Promise<number> {
         var { count, rows } = await authorbook.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);

@@ -50,12 +50,15 @@ export class BookService {
                 access_key: bookCreate.access_key
             });
             if (bookCreate.authors != null && bookCreate.authors.length > 0) {
+                const id = createdBook.id;
                 for (let i = 0; i < bookCreate.authors.length; i++) {
+                    let rId = Number(bookCreate.authors[i]);
                     const authorbookRel = await authorbook.create({
-                        book: createdBook.id,
-                        author: bookCreate.authors[i]
+                        book: id,
+                        author: rId
                     });
                 }
+                const relAuthorsNum = await this.authorbookService.sizeByBook(id);
             }
             return createdBook;
         } catch (e) {
@@ -158,7 +161,7 @@ export class BookService {
     }
 
     async update(bookUpdate: CreateBookDto): Promise<CreateBookDto> {
-        var id = bookUpdate.id;
+        const id = bookUpdate.id;
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await book.findAndCountAll({ where: { id: id } });
@@ -193,7 +196,19 @@ export class BookService {
             cover_img: cover_img_id,
             access_key: bookUpdate.access_key
         });
-        rows[0].save();
+        await rows[0].save();
+        if (bookUpdate.authors != null && bookUpdate.authors.length > 0) {
+            for (let i = 0; i < bookUpdate.authors.length; i++) {
+                let rId = Number(bookUpdate.authors[i]);
+                if (await this.authorbookService.hasOne(rId, id) == false) {
+                    const authorbookRel = await authorbook.create({
+                        book: id,
+                        author: rId
+                    });
+                }
+            }
+            const relAuthorsNum = await this.authorbookService.sizeByBook(id);
+        }
         return rows[0];
     }
 

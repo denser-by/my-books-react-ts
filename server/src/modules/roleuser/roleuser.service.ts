@@ -36,21 +36,21 @@ export class RoleuserService {
         return [];
     }
 
-    async size() {
+    async size(): Promise<number> {
         return await roleuser.count();
     }
 
-    async sizeByUser(user: number) {
+    async sizeByUser(user: number): Promise<number> {
         var { count, rows } = await roleuser.findAndCountAll({ where: { user: user } });
         return count >= 1 ? count : 0;
     }
 
-    async sizeByRole(role: number) {
+    async sizeByRole(role: number): Promise<number> {
         var { count, rows } = await roleuser.findAndCountAll({ where: { role: role } });
         return count >= 1 ? count : 0;
     }
 
-    async hasOne(user: number, role: number) {
+    async hasOne(user: number, role: number): Promise<boolean> {
         if (user == null || user == undefined || user < 0 || role == null || role == undefined || role < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await roleuser.findAndCountAll({ where: { user: user, role: role } });
@@ -104,7 +104,7 @@ export class RoleuserService {
         return rows[0];
     }
 
-    async deleteAll() {
+    async deleteAll(): Promise<number> {
         var { count, rows } = await roleuser.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);
@@ -114,7 +114,7 @@ export class RoleuserService {
         return count;
     }
 
-    async deleteAllByUser(user: number) {
+    async deleteAllByUser(user: number): Promise<number> {
         var { count, rows } = await roleuser.findAndCountAll({ where: { user: user } });
         if (count < 1)
             throw new Error('Objects not found, items ' + count);
@@ -124,7 +124,7 @@ export class RoleuserService {
         return count;
     }
 
-    async deleteAllByRole(role: number) {
+    async deleteAllByRole(role: number): Promise<number> {
         var { count, rows } = await roleuser.findAndCountAll({ where: { role: role } });
         if (count < 1)
             throw new Error('Objects not found, items ' + count);

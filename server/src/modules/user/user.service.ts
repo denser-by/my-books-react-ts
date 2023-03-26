@@ -39,11 +39,11 @@ export class UserService {
         return [];
     }
 
-    async size() {
+    async size(): Promise<number> {
         return await user.count();
     }
 
-    async hasOne(id: number) {
+    async hasOne(id: number): Promise<boolean> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await user.findAndCountAll({ where: { id: id } });
@@ -116,7 +116,7 @@ export class UserService {
         return rows[0];
     }
 
-    async deleteAll() {
+    async deleteAll(): Promise<number> {
         var { count, rows } = await user.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);

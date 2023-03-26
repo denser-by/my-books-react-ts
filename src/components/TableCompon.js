@@ -82,7 +82,7 @@ function TableItem({ getTableProps, headerGroups, getTableBodyProps, page, prepa
                 {page.map((row, i) => {
                     prepareRow(row)
                     return (
-                        <tr {...row.getRowProps()} className={cssRow + (i % 2 == 0 ? "" : " secondary")}>
+                        <tr {...row.getRowProps()} className={cssRow + (i % 2 == 0 ? "" : " secondary")} key={"rId_" + i}>
                             {row.cells.map(cell => {
                                 return <td {...cell.getCellProps()} className={cssCell}
                                     style={{

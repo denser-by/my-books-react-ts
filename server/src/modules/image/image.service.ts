@@ -24,11 +24,11 @@ export class ImageService {
         return [];
     }
 
-    async size() {
+    async size(): Promise<number> {
         return await image.count();
     }
 
-    async hasOne(id: number) {
+    async hasOne(id: number): Promise<boolean> {
         if (id == null || id == undefined || id < 0)
             throw new Error('Не указан ID');
         var { count, rows } = await image.findAndCountAll({ where: { id: id } });
@@ -92,7 +92,7 @@ export class ImageService {
         return rows[0];
     }
 
-    async deleteAll() {
+    async deleteAll(): Promise<number> {
         var { count, rows } = await image.findAndCountAll({});
         if (count < 1)
             throw new Error('Objects not found, items ' + count);
