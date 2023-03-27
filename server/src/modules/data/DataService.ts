@@ -240,6 +240,8 @@ export class ServiceData {
                 let curAuthorKey = authorAccessKeys[authIdx];
                 if ('auth_key_15' == curAuthorKey && curBookKey !== 'book_key_6')
                     continue;
+                if (('auth_key_16' == curAuthorKey || 'auth_key_17' == curAuthorKey) && curBookKey !== 'book_key_7')
+                    continue;
                 await this.recreateBookAuthor(curBookKey, curAuthorKey);
             }
         }
@@ -254,7 +256,7 @@ export class ServiceData {
         await this.recreateBook('Book4', 'Book Description 4', 2003, covers20[3].path, 'book_key_4');
         await this.recreateBook('Book5', 'Book Description 5', 2004, covers20[4].path, 'book_key_5');
         await this.recreateBook('Современная радиоэлектроника: научные исследования, подготовка кадров', 'Международная научно-практическая конференция\n\nВ сборнике представлены научные статьи по докладам Международной научно-практической конференции \"Современная радиоэлектроника: научные исследования и подготовка кадров\", в которых рассмотрены следующие вопросы...', 2006, covers20[5].path, 'book_key_6');
-        await this.recreateBook('Book7', 'Book Description 7', 2010, covers20[6].path, 'book_key_7');
+        await this.recreateBook('Visual C++ и MFC', '2 издание\r\nМАСТЕР\r\n\r\nКнига посвящена объектно-ориентированному программированию для...', 2000, covers20[6].path, 'book_key_7');
         await this.recreateBook('Book8', 'Book Description 8', 1992, covers20[7].path, 'book_key_8');
         await this.recreateBook('Book9', 'Book Description 9', 1995, covers20[8].path, 'book_key_9');
         await this.recreateBook('Book10', 'Book Description 10', 2011, covers20[9].path, 'book_key_10');
@@ -294,8 +296,8 @@ export class ServiceData {
         await this.recreateAuthor('Author13', 'Author Description 13', 2001, authors3[0].path, 'auth_key_13');
         await this.recreateAuthor('Author14', 'Author Description 14', 2002, authors3[1].path, 'auth_key_14');
         await this.recreateAuthor('Н. А. Цырельчук', 'Кандидат технических наук, профессор', null, null, 'auth_key_15');
-        await this.recreateAuthor('Author16', 'Author Description 16', 2004, authors3[0].path, 'auth_key_16');
-        await this.recreateAuthor('Author17', 'Author Description 17', 2005, authors3[1].path, 'auth_key_17');
+        await this.recreateAuthor('А. Мешков', '', null, null, 'auth_key_16');
+        await this.recreateAuthor('Ю. Тихомиров', '', null, null, 'auth_key_17');
         await this.recreateAuthor('Author18', 'Author Description 18', 2006, authors3[2].path, 'auth_key_18');
         await this.recreateAuthor('Author19', 'Author Description 19', 2007, authors3[0].path, 'auth_key_19');
         await this.recreateAuthor('Author20', 'Author Description 20', 2004, authors3[1].path, 'auth_key_20');
