@@ -27,7 +27,7 @@ const BooksListPage = ({ setPageRef, pr }) => {
                 entireBody.map(bookItem => {
                     bookItems.push({
                         seq_num: seq_num,
-                        numOfAuthors: bookItem.authors.length,
+                        numOfAuthors: bookItem.authors.length + (bookItem.authors.length == 1 ? ' author' : ' authors'),
                         name: bookItem.name,
                         year: bookItem.year,
                         modified: fineDate(new Date(bookItem.updatedAt)),

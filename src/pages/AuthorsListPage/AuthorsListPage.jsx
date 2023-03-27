@@ -28,9 +28,9 @@ const AuthorsListPage = ({ setPageRef, pr }) => {
                     authorItems.push({
                         seq_num: seq_num,
                         name: authorItem.name,
-                        age: fineDateShort(new Date(authorItem.age)),
+                        age: authorItem.age != null ? fineDateShort(new Date(authorItem.age)) : '',
                         modified: fineDate(new Date(authorItem.updatedAt)),
-                        numOfBooks: authorItem.books.length,
+                        numOfBooks: authorItem.books.length + (authorItem.books.length == 1 ? ' book' : ' books'),
                         view: "/viewAuthor?id=" + authorItem.id,
                         edit: "/editAuthor?id=" + authorItem.id,
                         delete: "/deleteAuthor?id=" + authorItem.id

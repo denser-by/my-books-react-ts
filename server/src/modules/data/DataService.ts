@@ -151,8 +151,11 @@ export class ServiceData {
             let dto = new CreateAuthorDto();
             dto.name = name;
             dto.info = info;
-            dto.age = new Date('' + age + '-01-01');
-            dto.age.setFullYear(age);
+            if (age != null) {
+                dto.age = new Date('' + age + '-01-01');
+                dto.age.setFullYear(age);
+            } else
+                dto.age = null;
             dto.photo_path = photo_path;
             dto.access_key = access_key;
             author = await this.svcAuthor.create(dto);
@@ -165,15 +168,15 @@ export class ServiceData {
     }
 
     async recreateBookAuthor(book_access_key, author_access_key) {
-        console.log(' book='+book_access_key + ' author=' + author_access_key);
+        console.log(' book=' + book_access_key + ' author=' + author_access_key);
         var book = await this.svcBook.findOneByAccessKey(book_access_key);
-        console.log(' book='+JSON.stringify(book));
+        console.log(' book=' + JSON.stringify(book));
         var author = await this.svcAuthor.findOneByAccessKey(author_access_key);
-        console.log(' author='+JSON.stringify(author));
+        console.log(' author=' + JSON.stringify(author));
         if (book != null && author != null) {
             let has = await this.svcAuthorBook.hasOne(author.id, book.id);
-            console.log(' HAS='+has);
-            if(!has) {                
+            console.log(' HAS=' + has);
+            if (!has) {
                 let dto = new CreateAuthorBookDto();
                 dto.book = book.id;
                 dto.author = author.id;
@@ -235,6 +238,8 @@ export class ServiceData {
                 if (authIdx >= authorAccessKeys.length)
                     authIdx = 0;
                 let curAuthorKey = authorAccessKeys[authIdx];
+                if ('auth_key_15' == curAuthorKey && curBookKey !== 'book_key_6')
+                    continue;
                 await this.recreateBookAuthor(curBookKey, curAuthorKey);
             }
         }
@@ -248,7 +253,7 @@ export class ServiceData {
         await this.recreateBook('Book3', 'Book Description 3', 2001, covers20[2].path, 'book_key_3');
         await this.recreateBook('Book4', 'Book Description 4', 2003, covers20[3].path, 'book_key_4');
         await this.recreateBook('Book5', 'Book Description 5', 2004, covers20[4].path, 'book_key_5');
-        await this.recreateBook('Book6', 'Book Description 6', 2001, covers20[5].path, 'book_key_6');
+        await this.recreateBook('Современная радиоэлектроника: научные исследования, подготовка кадров', 'Международная научно-практическая конференция\n\nВ сборнике представлены научные статьи по докладам Международной научно-практической конференции \"Современная радиоэлектроника: научные исследования и подготовка кадров\", в которых рассмотрены следующие вопросы...', 2006, covers20[5].path, 'book_key_6');
         await this.recreateBook('Book7', 'Book Description 7', 2010, covers20[6].path, 'book_key_7');
         await this.recreateBook('Book8', 'Book Description 8', 1992, covers20[7].path, 'book_key_8');
         await this.recreateBook('Book9', 'Book Description 9', 1995, covers20[8].path, 'book_key_9');
@@ -288,7 +293,7 @@ export class ServiceData {
         await this.recreateAuthor('Author12', 'Author Description 12', 2007, authors3[2].path, 'auth_key_12');
         await this.recreateAuthor('Author13', 'Author Description 13', 2001, authors3[0].path, 'auth_key_13');
         await this.recreateAuthor('Author14', 'Author Description 14', 2002, authors3[1].path, 'auth_key_14');
-        await this.recreateAuthor('Author15', 'Author Description 15', 2003, authors3[2].path, 'auth_key_15');
+        await this.recreateAuthor('Н. А. Цырельчук', 'Кандидат технических наук, профессор', null, null, 'auth_key_15');
         await this.recreateAuthor('Author16', 'Author Description 16', 2004, authors3[0].path, 'auth_key_16');
         await this.recreateAuthor('Author17', 'Author Description 17', 2005, authors3[1].path, 'auth_key_17');
         await this.recreateAuthor('Author18', 'Author Description 18', 2006, authors3[2].path, 'auth_key_18');

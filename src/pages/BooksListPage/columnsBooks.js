@@ -53,7 +53,7 @@ export function getColumns(mouseClickBook) {
             Filter: TableColumnFilter,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
-                return <center>{row.cell.value} authors</center>;
+                return <center>{row.cell.value}</center>;
             },
         },
         {

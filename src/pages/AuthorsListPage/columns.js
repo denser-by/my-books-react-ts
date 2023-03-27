@@ -52,7 +52,7 @@ export function getColumns(mouseClickAuthor) {
             Filter: TableColumnFilter,
             sortType: 'basic',
             Cell: (row: CellProps<any>) => {
-                return <center><nobr>{row.cell.value} books</nobr></center>;
+                return <center><nobr>{row.cell.value}</nobr></center>;
             },
         },
         {
