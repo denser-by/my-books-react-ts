@@ -1,14 +1,23 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "../src/db.sqlite"
+    "username": "my_books_admin",
+    "password": "root",
+    "database": "my_books2",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   },
   "test": {
-    "dialect": "sqlite",
-    "storage": "../src/db.sqlite"
+    "username": "my_books_admin",
+    "password": "root",
+    "database": "my_books2",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   },
   "production": {
-    "dialect": "sqlite",
-    "storage": "../src/db.sqlite"
+    "username": "my_books_admin",
+    "password": "root",
+    "database": "my_books2",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   }
 }
