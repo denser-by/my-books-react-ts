@@ -18,6 +18,9 @@ module.exports = {
       year: {
         type: Sequelize.INTEGER
       },
+      pages_num: {
+        type: Sequelize.INTEGER
+      },
       cover_img: {
         type: Sequelize.INTEGER
       },

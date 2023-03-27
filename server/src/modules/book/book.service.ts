@@ -48,6 +48,7 @@ export class BookService {
                 info: bookCreate.info,
                 year: bookCreate.year,
                 cover_img: cover_img_id,
+                pages_num: bookCreate.pages_num,
                 access_key: bookCreate.access_key
             });
             if (bookCreate.authors != null && bookCreate.authors.length > 0) {
@@ -131,6 +132,7 @@ export class BookService {
         result.name = bookRef.name;
         result.info = bookRef.info;
         result.year = bookRef.year;
+        result.pages_num = bookRef.pages_num;
         result.authors = await this.authorbookService.getAllByBookArrayId(bookRef.id);
         result.cover_img_path = '';
         result.cover_img_data = '';
@@ -149,6 +151,7 @@ export class BookService {
         result.name = bookRef.name;
         result.info = bookRef.info;
         result.year = bookRef.year;
+        result.pages_num = bookRef.pages_num;
         result.authors = await this.authorbookService.getAllByBookArrayId(bookRef.id);
         result.authorNames = [];
         for (let i = 0; i < result.authors.length; i++) {
@@ -202,6 +205,7 @@ export class BookService {
             info: bookUpdate.info,
             year: bookUpdate.year,
             cover_img: cover_img_id,
+            pages_num: bookUpdate.pages_num,
             access_key: bookUpdate.access_key
         });
         await rows[0].save();

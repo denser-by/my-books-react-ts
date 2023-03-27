@@ -23,6 +23,11 @@ export class CreateBookDto {
     @ApiProperty({ required: false })
     year: number;
 
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty({ required: false })
+    pages_num: number;
+
     @IsArray()
     @IsOptional()
     @ApiProperty({ required: false })

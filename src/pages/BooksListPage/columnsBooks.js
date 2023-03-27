@@ -39,6 +39,15 @@ export function getColumns(mouseClickBook) {
             sortType: 'basic',
         },
         {
+            Header: 'Pages',
+            accessor: 'pages_num',
+            Filter: TableColumnFilter,
+            sortType: 'basic',
+            Cell: (row: CellProps<any>) => {
+                return <center>{row.cell.value}</center>;
+            },
+        },
+        {
             Header: 'Year',
             accessor: 'year',
             Filter: TableColumnFilter,
@@ -48,7 +57,7 @@ export function getColumns(mouseClickBook) {
             },
         },
         {
-            Header: 'Num.',
+            Header: 'Authors',
             accessor: 'numOfAuthors',
             Filter: TableColumnFilter,
             sortType: 'basic',

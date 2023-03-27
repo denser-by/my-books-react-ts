@@ -30,6 +30,7 @@ const BooksListPage = ({ setPageRef, pr }) => {
                         numOfAuthors: bookItem.authors.length + (bookItem.authors.length == 1 ? ' author' : ' authors'),
                         name: bookItem.name,
                         year: bookItem.year,
+                        pages_num: (bookItem.pages_num != null ? bookItem.pages_num + ' p.' : ''),
                         modified: fineDate(new Date(bookItem.updatedAt)),
                         view: "/viewBook?id=" + bookItem.id,
                         edit: "/editBook?id=" + bookItem.id,

@@ -127,7 +127,7 @@ export class ServiceData {
         }
     }
 
-    async recreateBook(name, info, year, cover_img_path, access_key) {
+    async recreateBook(name, info, year, cover_img_path, pages_num, access_key) {
         var book = await this.svcBook.findOneByAccessKey(access_key);
         if (!book) {
             let dto = new CreateBookDto();
@@ -135,11 +135,19 @@ export class ServiceData {
             dto.info = info;
             dto.year = year;
             dto.cover_img_path = cover_img_path;
+            dto.pages_num = pages_num;
             dto.access_key = access_key;
             book = await this.svcBook.create(dto);
             console.log('after create ' + JSON.stringify(book));
         } else {
-            book.set({ name: name, info: info, year: year, cover_img_path: cover_img_path, access_key: access_key });
+            book.set({
+                name: name,
+                info: info,
+                year: year,
+                cover_img_path: cover_img_path,
+                pages_num: pages_num,
+                access_key: access_key
+            });
             book.save();
             console.log('after save ' + JSON.stringify(book));
         }
@@ -250,36 +258,40 @@ export class ServiceData {
 
     async lunchBooksAuthors(covers20, authors3) {
         console.log('...service check books and authors...');
-        await this.recreateBook('Book1', 'Book Description 1', 1999, covers20[0].path, 'book_key_1');
-        await this.recreateBook('Book2', 'Book Description 2', 1995, covers20[1].path, 'book_key_2');
-        await this.recreateBook('Book3', 'Book Description 3', 2001, covers20[2].path, 'book_key_3');
-        await this.recreateBook('Book4', 'Book Description 4', 2003, covers20[3].path, 'book_key_4');
-        await this.recreateBook('Book5', 'Book Description 5', 2004, covers20[4].path, 'book_key_5');
-        await this.recreateBook('Современная радиоэлектроника: научные исследования, подготовка кадров', 'Международная научно-практическая конференция\n\nВ сборнике представлены научные статьи по докладам Международной научно-практической конференции \"Современная радиоэлектроника: научные исследования и подготовка кадров\", в которых рассмотрены следующие вопросы...', 2006, covers20[5].path, 'book_key_6');
-        await this.recreateBook('Visual C++ и MFC', '2 издание\r\nМАСТЕР\r\n\r\nКнига посвящена объектно-ориентированному программированию для...', 2000, covers20[6].path, 'book_key_7');
-        await this.recreateBook('Book8', 'Book Description 8', 1992, covers20[7].path, 'book_key_8');
-        await this.recreateBook('Book9', 'Book Description 9', 1995, covers20[8].path, 'book_key_9');
-        await this.recreateBook('Book10', 'Book Description 10', 2011, covers20[9].path, 'book_key_10');
-        await this.recreateBook('Book11', 'Book Description 11', 1999, covers20[10].path, 'book_key_11');
-        await this.recreateBook('Book12', 'Book Description 12', 1995, covers20[11].path, 'book_key_12');
-        await this.recreateBook('Book13', 'Book Description 13', 1998, covers20[12].path, 'book_key_13');
-        await this.recreateBook('Book14', 'Book Description 14', 1992, covers20[13].path, 'book_key_14');
-        await this.recreateBook('Book15', 'Book Description 15', 2003, covers20[14].path, 'book_key_15');
-        await this.recreateBook('Book16', 'Book Description 16', 2001, covers20[15].path, 'book_key_16');
-        await this.recreateBook('Book17', 'Book Description 17', 2005, covers20[16].path, 'book_key_17');
-        await this.recreateBook('Book18', 'Book Description 18', 2002, covers20[17].path, 'book_key_18');
-        await this.recreateBook('Book19', 'Book Description 19', 2007, covers20[18].path, 'book_key_19');
-        await this.recreateBook('Book20', 'Book Description 20', 1998, covers20[19].path, 'book_key_20');
-        await this.recreateBook('Book21', 'Book Description 21', 1993, covers20[0].path, 'book_key_21');
-        await this.recreateBook('Book22', 'Book Description 22', 2013, covers20[1].path, 'book_key_22');
-        await this.recreateBook('Book23', 'Book Description 23', 1992, covers20[2].path, 'book_key_23');
-        await this.recreateBook('Book24', 'Book Description 24', 1996, covers20[3].path, 'book_key_24');
-        await this.recreateBook('Book25', 'Book Description 25', 1998, covers20[4].path, 'book_key_25');
-        await this.recreateBook('Book26', 'Book Description 26', 1992, covers20[5].path, 'book_key_26');
-        await this.recreateBook('Book27', 'Book Description 27', 2003, covers20[6].path, 'book_key_27');
-        await this.recreateBook('Book28', 'Book Description 28', 2001, covers20[7].path, 'book_key_28');
-        await this.recreateBook('Book29', 'Book Description 29', 2005, covers20[8].path, 'book_key_29');
-        await this.recreateBook('Book30', 'Book Description 30', 2002, covers20[9].path, 'book_key_30');
+        await this.recreateBook('Book1', 'Book Description 1', 1999, covers20[0].path, 100, 'book_key_1');
+        await this.recreateBook('Book2', 'Book Description 2', 1995, covers20[1].path, 100, 'book_key_2');
+        await this.recreateBook('Book3', 'Book Description 3', 2001, covers20[2].path, 100, 'book_key_3');
+        await this.recreateBook('Book4', 'Book Description 4', 2003, covers20[3].path, 100, 'book_key_4');
+        await this.recreateBook('Book5', 'Book Description 5', 2004, covers20[4].path, 100, 'book_key_5');
+        await this.recreateBook('Современная радиоэлектроника: научные исследования, подготовка кадров',
+            'Международная научно-практическая конференция\n\nВ сборнике представлены научные статьи по докладам Международной научно-практической конференции \"Современная радиоэлектроника: научные исследования и подготовка кадров\", в которых рассмотрены следующие вопросы...',
+            2006, covers20[5].path, 294, 'book_key_6');
+        await this.recreateBook('Visual C++ и MFC',
+            '2 издание\r\nМАСТЕР\r\n\r\nКнига посвящена объектно-ориентированному программированию для...',
+            2000, covers20[6].path, 1040, 'book_key_7');
+        await this.recreateBook('Book8', 'Book Description 8', 1992, covers20[7].path, 100, 'book_key_8');
+        await this.recreateBook('Book9', 'Book Description 9', 1995, covers20[8].path, 100, 'book_key_9');
+        await this.recreateBook('Book10', 'Book Description 10', 2011, covers20[9].path, 100, 'book_key_10');
+        await this.recreateBook('Book11', 'Book Description 11', 1999, covers20[10].path, 100, 'book_key_11');
+        await this.recreateBook('Book12', 'Book Description 12', 1995, covers20[11].path, 100, 'book_key_12');
+        await this.recreateBook('Book13', 'Book Description 13', 1998, covers20[12].path, 100, 'book_key_13');
+        await this.recreateBook('Book14', 'Book Description 14', 1992, covers20[13].path, 100, 'book_key_14');
+        await this.recreateBook('Book15', 'Book Description 15', 2003, covers20[14].path, 100, 'book_key_15');
+        await this.recreateBook('Book16', 'Book Description 16', 2001, covers20[15].path, 100, 'book_key_16');
+        await this.recreateBook('Book17', 'Book Description 17', 2005, covers20[16].path, 100, 'book_key_17');
+        await this.recreateBook('Book18', 'Book Description 18', 2002, covers20[17].path, 100, 'book_key_18');
+        await this.recreateBook('Book19', 'Book Description 19', 2007, covers20[18].path, 100, 'book_key_19');
+        await this.recreateBook('Book20', 'Book Description 20', 1998, covers20[19].path, 100, 'book_key_20');
+        await this.recreateBook('Book21', 'Book Description 21', 1993, covers20[0].path, 100, 'book_key_21');
+        await this.recreateBook('Book22', 'Book Description 22', 2013, covers20[1].path, 100, 'book_key_22');
+        await this.recreateBook('Book23', 'Book Description 23', 1992, covers20[2].path, 100, 'book_key_23');
+        await this.recreateBook('Book24', 'Book Description 24', 1996, covers20[3].path, 100, 'book_key_24');
+        await this.recreateBook('Book25', 'Book Description 25', 1998, covers20[4].path, 100, 'book_key_25');
+        await this.recreateBook('Book26', 'Book Description 26', 1992, covers20[5].path, 100, 'book_key_26');
+        await this.recreateBook('Book27', 'Book Description 27', 2003, covers20[6].path, 100, 'book_key_27');
+        await this.recreateBook('Book28', 'Book Description 28', 2001, covers20[7].path, 100, 'book_key_28');
+        await this.recreateBook('Book29', 'Book Description 29', 2005, covers20[8].path, 100, 'book_key_29');
+        await this.recreateBook('Book30', 'Book Description 30', 2002, covers20[9].path, 100, 'book_key_30');
 
         await this.recreateAuthor('Author1', 'Author Description 1', 1999, authors3[0].path, 'auth_key_1');
         await this.recreateAuthor('Author2', 'Author Description 2', 2000, authors3[1].path, 'auth_key_2');
@@ -312,17 +324,17 @@ export class ServiceData {
         await this.recreateAuthor('Author29', 'Author Description 29', 2007, authors3[1].path, 'auth_key_29');
         await this.recreateAuthor('Author30', 'Author Description 30', 2003, authors3[2].path, 'auth_key_30');
 
-        await this.recreateBook('Book31', 'Book Description 31', 2007, covers20[10].path, 'book_key_31');
-        await this.recreateBook('Book32', 'Book Description 32', 1998, covers20[11].path, 'book_key_32');
-        await this.recreateBook('Book33', 'Book Description 33', 1993, covers20[12].path, 'book_key_33');
-        await this.recreateBook('Book34', 'Book Description 34', 2013, covers20[13].path, 'book_key_34');
-        await this.recreateBook('Book35', 'Book Description 35', 1992, covers20[14].path, 'book_key_35');
-        await this.recreateBook('Book36', 'Book Description 36', 1996, covers20[15].path, 'book_key_36');
-        await this.recreateBook('Book37', 'Book Description 37', 1996, covers20[16].path, 'book_key_37');
-        await this.recreateBook('Book38', 'Book Description 38', 1997, covers20[17].path, 'book_key_38');
-        await this.recreateBook('Book39', 'Book Description 39', 2003, covers20[18].path, 'book_key_39');
-        await this.recreateBook('Book40', 'Book Description 40', 2001, covers20[19].path, 'book_key_40');
-        await this.recreateBook('Book41', 'Book Description 41', 2003, covers20[5].path, 'book_key_41');
+        await this.recreateBook('Book31', 'Book Description 31', 2007, covers20[10].path, 100, 'book_key_31');
+        await this.recreateBook('Book32', 'Book Description 32', 1998, covers20[11].path, 100, 'book_key_32');
+        await this.recreateBook('Book33', 'Book Description 33', 1993, covers20[12].path, 100, 'book_key_33');
+        await this.recreateBook('Book34', 'Book Description 34', 2013, covers20[13].path, 100, 'book_key_34');
+        await this.recreateBook('Book35', 'Book Description 35', 1992, covers20[14].path, 100, 'book_key_35');
+        await this.recreateBook('Book36', 'Book Description 36', 1996, covers20[15].path, 100, 'book_key_36');
+        await this.recreateBook('Book37', 'Book Description 37', 1996, covers20[16].path, 100, 'book_key_37');
+        await this.recreateBook('Book38', 'Book Description 38', 1997, covers20[17].path, 100, 'book_key_38');
+        await this.recreateBook('Book39', 'Book Description 39', 2003, covers20[18].path, 100, 'book_key_39');
+        await this.recreateBook('Book40', 'Book Description 40', 2001, covers20[19].path, 100, 'book_key_40');
+        await this.recreateBook('Book41', 'Book Description 41', 2003, covers20[5].path, 100, 'book_key_41');
 
         await this.recreateAuthor('Author31', 'Author Description 31', 2007, authors3[2].path, 'auth_key_31');
         console.log('...service check books and authors complete...books=' + (await this.svcBook.size()) + '-authors=' + (await this.svcAuthor.size()));

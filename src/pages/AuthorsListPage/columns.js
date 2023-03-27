@@ -47,7 +47,7 @@ export function getColumns(mouseClickAuthor) {
             },
         },
         {
-            Header: 'Num.',
+            Header: 'Books',
             accessor: 'numOfBooks',
             Filter: TableColumnFilter,
             sortType: 'basic',

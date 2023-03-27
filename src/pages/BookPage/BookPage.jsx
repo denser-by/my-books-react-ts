@@ -26,6 +26,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         id: '',
         name: '',
         year: '',
+        pages_num: '',
         authors: [],
         authorNames: [],
         authorsText: '',
@@ -47,6 +48,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                         bookState.id = entireBody.id;
                         bookState.name = entireBody.name;
                         bookState.year = entireBody.year != null ? entireBody.year : '';
+                        bookState.pages_num = entireBody.pages_num != null ? entireBody.pages_num : '';
                         bookState.authors = entireBody.authors;
                         bookState.authorNames = entireBody.authorNames;
                         bookState.authorsText = makeAuthorsText(entireBody.authorNames);
@@ -69,6 +71,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                             setStateYear(book.year);
                             setYearModified(true);
                         }
+                        if (!pagesModified) {
+                            setStatePages(book.pages_num);
+                            setPagesModified(true);
+                        }
                         if (!authorsModified) {
                             setStateAuthors(book.authorsText);
                             setAuthorsModified(true);
@@ -89,17 +95,20 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     const [stateId, setStateId] = useState('');
     const [stateName, setStateName] = useState('');
     const [stateYear, setStateYear] = useState('');
+    const [statePages, setStatePages] = useState('');
     const [stateAuthors, setStateAuthors] = useState('');
     const [stateInfo, setStateInfo] = useState('');
 
     const [nameModified, setNameModified] = React.useState(false);
     const [yearModified, setYearModified] = React.useState(false);
+    const [pagesModified, setPagesModified] = React.useState(false);
     const [authorsModified, setAuthorsModified] = React.useState(false);
     const [infoModified, setInfoModified] = React.useState(false);
 
     const [state, setState] = useState({
         name: '',
         year: '',
+        pages_num: '',
         authors: [],
         info: ''
     })
@@ -117,6 +126,13 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setStateYear(year);
         setState({ year: year });
         setYearModified(true);
+    }
+
+    function handlePagesChange(event) {
+        let pages_num = event.target.value;
+        setStatePages(pages_num);
+        setState({ pages_num: pages_num });
+        setPagesModified(true);
     }
 
     function makeAuthorsText(authorNames) {
@@ -227,6 +243,8 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             book.name = stateName;
         if (yearModified)
             book.year = stateYear;
+        if (pagesModified)
+            book.pages_num = statePages;
         if (authorsModified)
             transferAuthorsState();
         if (infoModified)
@@ -240,6 +258,11 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
             book.year = Number.parseInt('' + book.year);
         else
             book.year = null;
+
+        if (book.pages_num != null && ('' + book.pages_num).length > 0)
+            book.pages_num = Number.parseInt('' + book.pages_num);
+        else
+            book.pages_num = null;
 
         if (create) {
             book.id = 0;
@@ -264,6 +287,9 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setStateYear('');
         setState({ year: '' });
         setYearModified(false);
+        setStatePages('');
+        setState({ pages_num: '' });
+        setPagesModified(false);
         setStateAuthors('');
         setState({ authors: [] });
         setAuthorsModified(false);
@@ -380,6 +406,17 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                 </span>
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>{yearModified ? stateYear : book.year}</span>
+                        </span>
+
+                        <span className="book-info">
+                            <span className="book-info-label">Book's volume</span>
+                            <span className={create || edit ? "authorSelector withContextBtn" : "authorSelector ctrlHidden"}>
+                                <Input type="textarea" id="bookVolume" name="bookVolume" readOnly={!edit} placeholder="Pages in this book"
+                                    className={!edit ? "ctrlHidden" : "fieldCurrent"}
+                                    value={pagesModified ? statePages : book.pages_num} onChange={handlePagesChange}
+                                />
+                            </span>
+                            <span className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>{pagesModified ? statePages : book.pages_num}&nbsp;pages</span>
                         </span>
                         <span className={create || edit ? "book-info high" : "book-info"}>
                             <AuthorsLookup
