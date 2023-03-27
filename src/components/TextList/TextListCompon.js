@@ -55,7 +55,7 @@ export function TextListEdit({ text, className, notifySelectUpdated }) {
     );
 };
 
-export function TextListView({ text }) {
+export function TextListView({ text, arIds, lnkPage, onClick }) {
 
     var listItems = [].concat(text.split("\n")).filter(item => item.length > 0);
 
@@ -63,8 +63,9 @@ export function TextListView({ text }) {
         <ul className='textList'>
             {
                 listItems.map((item, idx) => {
+                    const link = lnkPage + arIds[idx];
                     return (
-                        <li className='textListItem' key={'listItemKey' + idx}>{idx + 1})&nbsp;<strong>{item}</strong></li>
+                        <li className='textListItem' key={'listItemKey' + idx}>{idx + 1})&nbsp;<strong id={link} onClick={onClick}>{item}</strong></li>
                     );
                 })
             }

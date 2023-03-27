@@ -339,6 +339,10 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
         setDeleteSelection(selectedItems);
     }
 
+    function mouseClickAuthor(e) {
+        setPageRef(e.target.id);
+    }
+
     return (
         <Form onSubmit={handleSubmit}>
             <span className="bookShape" id="idBookPage" name="idBookPage">
@@ -395,7 +399,7 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                                     cssDelete={"contextSameBtn" + (!(deleteSelection != null && deleteSelection.length > 0) ? " disabled" : "")} />
                             </span>
                             <span className={create || edit ? "ctrlHidden" : "fieldCurrent"}>
-                                <TextListView text={"" + (authorsModified ? stateAuthors : book.authorsText)} />
+                                <TextListView text={"" + (authorsModified ? stateAuthors : book.authorsText)} arIds={bookState.authors} lnkPage={"/viewAuthor?id="} onClick={mouseClickAuthor} />
                             </span>
                         </span>
                     </span>

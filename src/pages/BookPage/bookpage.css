@@ -5,6 +5,7 @@
     display: inline-flex;
     flex-direction: column;
     background-color: #f8f4e4;
+    max-width: 866px;
 }
 
 .bookShapeHeader {
