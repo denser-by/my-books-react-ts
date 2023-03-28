@@ -16,6 +16,8 @@ import AuthorStatPage from '../AuthorStatPage/AuthorStatPage';
 import LocationPage from '../LocationPage/LocationPage';
 import UsersListPage from '../UsersListPage/UsersListPage';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     const [pageRef, setPageRef] = useState("")
@@ -127,6 +129,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     function deleteBookOk(bookId) {
         console.log(' book to DELETE ' + bookId);
         axios.delete('http://localhost:3001/books/' + bookId).then(res => {
+            toast("Book record " + res.data.name + " has been deleted successfully.");
             console.log(' book DELETE complete ' + JSON.stringify(res));
         });
         setPageRef(contextOpsBooks[0].href);
@@ -135,6 +138,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
     function deleteAuthorOk(authorId) {
         console.log(' author to DELETE ' + authorId);
         axios.delete('http://localhost:3001/authors/' + authorId).then(res => {
+            toast("Author record " + res.data.name + " has been deleted.");
             console.log(' author DELETE complete ' + JSON.stringify(res));
         });
         setPageRef(contextOpsAuthors[0].href);
@@ -239,6 +243,7 @@ const MainPage = ({ selectedItem, setSelectedItem, navigator }) => {
                 <span className={pageRef == "/bookStat" ? "pageVisible" : "pageHidden"}><BookStatPage pr={refPage()} /></span>
                 <span className={pageRef == "/authorStat" ? "pageVisible" : "pageHidden"}><AuthorStatPage pr={refPage()} /></span>
             </div>
+            <ToastContainer />
         </div>
     );
 };

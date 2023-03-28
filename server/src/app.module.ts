@@ -21,10 +21,12 @@ import { AuthorbookService } from './modules/authorbook/authorbook.service';
 import { AuthorbookController } from './modules/authorbook/authorbook.controller';
 import { RoleuserService } from './modules/roleuser/roleuser.service';
 import { RoleuserController } from './modules/roleuser/roleuser.controller';
+import { SettingsService } from './modules/settings/settings.service';
+import { SettingsController } from './modules/settings/settings.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController, RoleController, UserController, BookController, AuthorController, ImageController, CityController, AppointmentController, DataController, AuthorbookController, RoleuserController],
-  providers: [AppService, RoleService, UserService, BookService, AuthorService, ImageService, CityService, AppointmentService, ServiceData, AuthorbookService, RoleuserService],
+  controllers: [AppController, RoleController, UserController, BookController, AuthorController, ImageController, CityController, AppointmentController, DataController, AuthorbookController, RoleuserController, SettingsController],
+  providers: [AppService, RoleService, UserService, BookService, AuthorService, ImageService, CityService, AppointmentService, ServiceData, AuthorbookService, RoleuserService, SettingsService],
 })
 export class AppModule {}

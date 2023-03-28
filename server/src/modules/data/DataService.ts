@@ -13,6 +13,8 @@ import { CreateImageDto } from "../image/dto/CreateImageDto";
 import { ImageService } from "../image/image.service";
 import { CreateRoleDto } from "../role/dto/CreateRoleDto";
 import { RoleService } from "../role/role.service";
+import { CreateSettingsDto } from "../settings/dto/CreateSettingsDto";
+import { SettingsService } from "../settings/settings.service";
 import { CreateUserDto } from "../user/dto/CreateUserDto";
 import { UserService } from "../user/user.service";
 
@@ -27,7 +29,8 @@ export class ServiceData {
         private readonly svcAppointment: AppointmentService,
         private readonly svcCity: CityService,
         private readonly svcRole: RoleService,
-        private readonly svcUser: UserService
+        private readonly svcUser: UserService,
+        private readonly svcSettings: SettingsService
     ) { }
 
     async recreateImage(path, image_type, file_size, imagesArray) {
@@ -87,6 +90,33 @@ export class ServiceData {
             user.save();
             console.log('after save ' + JSON.stringify(user));
         }
+    }
+
+    async recreateSettings(login, toasts, lang, logout_timeout, table_page_size) {
+        let user = await this.svcUser.findOneByLogin(login);
+        if (user != null) {
+            let settings = await this.svcSettings.getOneByUserId(user.id);
+            if (settings != null) {
+                settings.set({
+                    toasts: toasts,
+                    lang: lang,
+                    logout_timeout: logout_timeout,
+                    table_page_size: table_page_size,
+                });
+                settings.save();
+                console.log('after save ' + JSON.stringify(settings));
+            } else {
+                let dto = new CreateSettingsDto();
+                dto.userId = user.id;
+                dto.toasts = toasts;
+                dto.lang = lang;
+                dto.logout_timeout = logout_timeout;
+                dto.table_page_size = table_page_size;
+                settings = await this.svcSettings.create(dto);
+                console.log('after create ' + JSON.stringify(settings));
+            }
+        } else
+            console.log('not found ' + + login + ' ' + JSON.stringify(user));
     }
 
     async recreateCity(name, description, sightseen, location) {
@@ -359,6 +389,15 @@ export class ServiceData {
         console.log('...service check users complete...' + (await this.svcUser.size()));
     }
 
+    async lunchUserSetts() {
+        console.log('...service check settings...');
+        await this.recreateSettings('user1', false, 'ru', null, null);
+        await this.recreateSettings('user2', false, 'en', null, 10);
+        await this.recreateSettings('user3', false, 'ru', 15, 15);
+        await this.recreateSettings('user4', true, 'en', 15, 10);
+        console.log('...service check settings complete...' + (await this.svcSettings.size()));
+    }
+
     async lunchCities() {
         console.log('...service check cities...');
         await this.recreateCity('City1', 'Beautiful and located at ...', 321, '(121.21, 32.232)');
@@ -384,6 +423,7 @@ export class ServiceData {
         await this.lunchBookAuthorRelations();
         await this.lunchRoles();
         await this.lunchUsers();
+        await this.lunchUserSetts();
         await this.lunchCities();
         await this.lunchAppointments();
         console.log('...service check finish...');
@@ -392,6 +432,7 @@ export class ServiceData {
 
 function basePoint() {
     let ims = new ImageService();
+    let usr = new UserService(ims);
     let auboos = new AuthorbookService();
     let aus = new AuthorService(ims, auboos);
     let sd = new ServiceData(
@@ -402,7 +443,8 @@ function basePoint() {
         new AppointmentService(ims),
         new CityService(ims),
         new RoleService(),
-        new UserService(ims)
+        usr,
+        new SettingsService(usr)
     );
     sd.lunchStart();
 }
