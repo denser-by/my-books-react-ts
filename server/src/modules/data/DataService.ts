@@ -280,6 +280,8 @@ export class ServiceData {
                     continue;
                 if (('auth_key_16' == curAuthorKey || 'auth_key_17' == curAuthorKey) && curBookKey !== 'book_key_7')
                     continue;
+                if (('auth_key_1' == curAuthorKey || 'auth_key_2' == curAuthorKey || 'auth_key_3' == curAuthorKey || 'auth_key_4' == curAuthorKey) && curBookKey !== 'book_key_1')
+                    continue;
                 await this.recreateBookAuthor(curBookKey, curAuthorKey);
             }
         }
@@ -288,16 +290,18 @@ export class ServiceData {
 
     async lunchBooksAuthors(covers20, authors3) {
         console.log('...service check books and authors...');
-        await this.recreateBook('Book1', 'Book Description 1', 1999, covers20[0].path, 100, 'book_key_1');
+        await this.recreateBook('Приёмы объектно-ориентированного проектирования. Паттерны проектирования',
+            'паттерное проектирование как возможность повторного применения удачных решений\nпринципы применения паттернов проектирования\nклассификация паттернов\nразличные подходы к выбору паттернов для решения конкретных задач\nпример проектирования редактора документов\nкаталог паттернов с детальным описанием\nи множество конкретных примеров',
+            2004, covers20[0].path, 366, 'book_key_1');
         await this.recreateBook('Book2', 'Book Description 2', 1995, covers20[1].path, 100, 'book_key_2');
         await this.recreateBook('Book3', 'Book Description 3', 2001, covers20[2].path, 100, 'book_key_3');
         await this.recreateBook('Book4', 'Book Description 4', 2003, covers20[3].path, 100, 'book_key_4');
         await this.recreateBook('Book5', 'Book Description 5', 2004, covers20[4].path, 100, 'book_key_5');
         await this.recreateBook('Современная радиоэлектроника: научные исследования, подготовка кадров',
-            'Международная научно-практическая конференция\n\nВ сборнике представлены научные статьи по докладам Международной научно-практической конференции \"Современная радиоэлектроника: научные исследования и подготовка кадров\", в которых рассмотрены следующие вопросы...',
+            'Международная научно-практическая конференция\nВ сборнике представлены научные статьи по докладам Международной научно-практической конференции \"Современная радиоэлектроника: научные исследования и подготовка кадров\", в которых рассмотрены следующие вопросы...',
             2006, covers20[5].path, 294, 'book_key_6');
         await this.recreateBook('Visual C++ и MFC',
-            '2 издание\r\nМАСТЕР\r\n\r\nКнига посвящена объектно-ориентированному программированию для...',
+            '2 издание\nМАСТЕР\nКнига посвящена объектно-ориентированному программированию для...',
             2000, covers20[6].path, 1040, 'book_key_7');
         await this.recreateBook('Book8', 'Book Description 8', 1992, covers20[7].path, 100, 'book_key_8');
         await this.recreateBook('Book9', 'Book Description 9', 1995, covers20[8].path, 100, 'book_key_9');
@@ -323,10 +327,10 @@ export class ServiceData {
         await this.recreateBook('Book29', 'Book Description 29', 2005, covers20[8].path, 100, 'book_key_29');
         await this.recreateBook('Book30', 'Book Description 30', 2002, covers20[9].path, 100, 'book_key_30');
 
-        await this.recreateAuthor('Author1', 'Author Description 1', 1999, authors3[0].path, 'auth_key_1');
-        await this.recreateAuthor('Author2', 'Author Description 2', 2000, authors3[1].path, 'auth_key_2');
-        await this.recreateAuthor('Author3', 'Author Description 3', 2001, authors3[2].path, 'auth_key_3');
-        await this.recreateAuthor('Author4', 'Author Description 4', 2002, authors3[0].path, 'auth_key_4');
+        await this.recreateAuthor('Э. Гамма', 'Маунтин Вью, штат Калифорния', null, null, 'auth_key_1');
+        await this.recreateAuthor('Р. Хелм', 'Монреаль, Квебек', null, null, 'auth_key_2');
+        await this.recreateAuthor('Р. Джонсон', 'Урбана, штат Иллинойс', null, null, 'auth_key_3');
+        await this.recreateAuthor('Дж. Влиссидес', 'Готорн, штат Нью-Йорк', null, null, 'auth_key_4');
         await this.recreateAuthor('Author5', 'Author Description 5', 2003, authors3[1].path, 'auth_key_5');
         await this.recreateAuthor('Author6', 'Author Description 6', 2004, authors3[2].path, 'auth_key_6');
         await this.recreateAuthor('Author7', 'Author Description 7', 2005, authors3[0].path, 'auth_key_7');

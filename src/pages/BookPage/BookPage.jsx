@@ -10,6 +10,7 @@ import { TextListEdit, TextListView } from '../../components/TextList/TextListCo
 import ListEditController from '../../components/TextList/ListEditController.tsx';
 import '../../components/TextList/TextListCompon.css';
 import ImageCompon from '../../components/ImageCompon/ImageCompon.tsx';
+import MultilineInfo from '../../components/MultilineInfo/MultilineInfo';
 
 const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
     if (pr.indexOf("createBook") < 1)
@@ -446,7 +447,9 @@ const BookPage = ({ setPageRef, pr, bookId, edit, create, closeProc }) => {
                     <Input type="textarea" id="bookInfo" name="bookInfo" readOnly={!edit} placeholder="Short content description"
                         className={!edit ? "ctrlHidden" : "fieldCurrent"}
                         value={infoModified ? stateInfo : book.info} onChange={handleInfoChange} />
-                    <div className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>{infoModified ? stateInfo : book.info}</div>
+                    <span className={create || edit ? "ctrlHidden" : "fieldCurrent bookRead"}>
+                        <MultilineInfo text={infoModified ? stateInfo : book.info} />
+                    </span>
                 </div>
                 <div className="buttonRow">
                     <span className={edit && !create ? "featureButton" : "ctrlHidden"}>
